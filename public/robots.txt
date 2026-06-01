@@ -1,0 +1,22 @@
+# InviteHub.in robots.txt - Allow all bots, prioritize Googlebot
+
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /_next/
+Crawl-delay: 1
+
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Crawl-delay: 1
+
+Sitemap: https://invitehub.in/sitemap.xml
