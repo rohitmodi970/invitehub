@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-import { motion } from "framer-motion";
+import { easeOut, motion } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -22,7 +22,7 @@ import {
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
-  transition: { duration: 0.55, ease: "easeOut" },
+  transition: { duration: 0.55, ease: easeOut },
 };
 
 const featureCards = [
