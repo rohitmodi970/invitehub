@@ -141,10 +141,10 @@ export function LandingPage() {
             </div>
           </div>
           <Link
-            href="#pricing"
+            href="/templates"
             className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#6f2216]"
           >
-            Create Your Invitation Card
+            Browse Templates
             <ArrowRight className="h-4 w-4" />
           </Link>
         </motion.div>
@@ -181,10 +181,10 @@ export function LandingPage() {
               className="mt-8 flex flex-wrap gap-4"
             >
               <Link
-                href="#templates"
+                href="/templates"
                 className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-[rgba(140,47,29,0.22)] transition hover:-translate-y-0.5 hover:bg-[#6f2216]"
               >
-                Create Your Invitation Card
+                Browse Templates
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
