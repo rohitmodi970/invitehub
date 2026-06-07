@@ -7,6 +7,7 @@ import { easeOut, motion } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
+  Check,
   CreditCard,
   HeartHandshake,
   LayoutTemplate,
@@ -74,19 +75,28 @@ const templatePreviews = [
 const steps = [
   {
     number: "01",
-    title: "Choose a template",
-    text: "Pick a wedding style that matches the tone of the event.",
+    title: "Choose a Template",
+    text: "Select from our variety of culturally appropriate and professionally designed templates.",
   },
   {
     number: "02",
-    title: "Add event details",
-    text: "Enter names, venue, timing, RSVP information, and photos.",
+    title: "Fill Your Details",
+    text: "Enter your personal information, family details, and event timings in our simple form.",
   },
   {
     number: "03",
-    title: "Preview and publish",
-    text: "Review the card, then share or download the final invitation.",
+    title: "Download & Share",
+    text: "Preview, download, and share your invitation digitally or print it.",
   },
+];
+
+const featuresList = [
+  { title: "Multi-language Support", desc: "English, Hindi, Marathi, Gujarati, Telugu, Bengali and more." },
+  { title: "Beautiful Templates", desc: "Professionally designed templates that make your invitation stand out." },
+  { title: "Multiple Formats", desc: "Download your invitation in PDF, HD image, or share it digitally." },
+  { title: "All Communities", desc: "Templates for Hindu, Muslim, Christian, Sikh, Buddhist, and Jain communities." },
+  { title: "Data Privacy", desc: "Your personal information is secure. We don't store your data unnecessarily." },
+  { title: "Easy Customization", desc: "Simple editor to add, edit or remove sections. Create a truly personalized profile." }
 ];
 
 const testimonials = [
@@ -157,7 +167,7 @@ export function LandingPage() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-medium text-black/70 shadow-sm"
             >
               <BadgeCheck className="h-4 w-4 text-[var(--accent)]" />
-              SEO-first wedding invitation platform
+              Premium wedding invitation maker
             </motion.div>
 
             <motion.h1
@@ -165,7 +175,7 @@ export function LandingPage() {
               transition={{ ...fadeUp.transition, delay: 0.05 }}
               className="text-balance text-5xl font-semibold tracking-tight text-[var(--foreground)] sm:text-6xl lg:text-7xl"
             >
-              Beautiful wedding invitation cards, published fast.
+              Create your invitation card now.
             </motion.h1>
 
             <motion.p
@@ -173,7 +183,7 @@ export function LandingPage() {
               transition={{ ...fadeUp.transition, delay: 0.1 }}
               className="mt-6 max-w-xl text-lg leading-8 text-black/70 sm:text-xl"
             >
-              InviteHub.in helps couples create elegant digital invitations in minutes with live preview, shareable invite pages, and premium downloads powered by a clean SEO-focused landing experience.
+              Choose a beautiful template, personalize your event details, and instantly preview your design. Download premium high-resolution cards or share your unique link directly with friends and family.
             </motion.p>
 
             <motion.div
@@ -202,16 +212,16 @@ export function LandingPage() {
               className="mt-10 grid gap-4 sm:grid-cols-3"
             >
               <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-                <p className="text-2xl font-semibold">5+</p>
-                <p className="mt-1 text-sm text-black/65">Wedding template styles</p>
+                <p className="text-2xl font-semibold">100%</p>
+                <p className="mt-1 text-sm text-black/65">Customizable</p>
               </div>
               <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
                 <p className="text-2xl font-semibold">2 min</p>
-                <p className="mt-1 text-sm text-black/65">To create a draft invitation</p>
+                <p className="mt-1 text-sm text-black/65">To create your invite</p>
               </div>
               <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-4 shadow-sm">
-                <p className="text-2xl font-semibold">Starting ₹49</p>
-                <p className="mt-1 text-sm text-black/65">Entry premium plan</p>
+                <p className="text-2xl font-semibold">Multiple</p>
+                <p className="mt-1 text-sm text-black/65">Export formats</p>
               </div>
             </motion.div>
           </div>
@@ -286,10 +296,17 @@ export function LandingPage() {
       </section>
 
       <section id="templates" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
-        <motion.div {...fadeUp} className="mb-8 max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Featured templates</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Designed to feel premium from the first glance.</h2>
-        </motion.div>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+          <motion.div {...fadeUp} className="max-w-2xl">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Templates</p>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Browse Templates.</h2>
+          </motion.div>
+          <motion.div {...fadeUp} transition={{ delay: 0.1 }}>
+            <Link href="/templates" className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white px-5 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)] shadow-sm">
+              View all <ArrowRight className="h-4 w-4" />
+            </Link>
+          </motion.div>
+        </div>
 
         <div className="grid gap-6 lg:grid-cols-4">
           {templatePreviews.map((t, index) => (
@@ -317,10 +334,37 @@ export function LandingPage() {
         </div>
       </section>
 
+      <section id="why-choose" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
+        <motion.div {...fadeUp} className="max-w-2xl">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Features</p>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Why Choose Our Invitation Maker?</h2>
+          <p className="mt-4 text-lg text-black/70">
+            Our invitation maker is designed to make the process of creating a professional and attractive wedding invitation as simple as possible.
+          </p>
+        </motion.div>
+
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {featuresList.map((feature, index) => (
+            <motion.div
+              key={feature.title}
+              {...fadeUp}
+              transition={{ ...fadeUp.transition, delay: index * 0.05 }}
+              className="rounded-[1.5rem] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
+            >
+              <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)]/10 text-[var(--accent)] mb-4">
+                <Check className="h-5 w-5" />
+              </div>
+              <h3 className="text-lg font-semibold">{feature.title}</h3>
+              <p className="mt-2 text-sm text-black/65 leading-relaxed">{feature.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
       <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
         <motion.div {...fadeUp} className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">How it works</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">A simple flow that keeps the wedding invite journey under control.</h2>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">How to Create Your Wedding Invitation</h2>
         </motion.div>
 
         <div className="mt-8 grid gap-6 lg:grid-cols-3">
@@ -339,41 +383,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      <section id="pricing" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
-        <motion.div {...fadeUp} className="max-w-2xl">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Pricing preview</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Simple pricing for wedding invitation cards.</h2>
-        </motion.div>
-
-        <div className="mt-8 grid gap-6 lg:grid-cols-3">
-          <motion.article
-            {...fadeUp}
-            className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
-          >
-            <p className="text-sm font-semibold text-[var(--accent)]">Free</p>
-            <p className="mt-4 text-4xl font-semibold">INR 0</p>
-            <p className="mt-3 text-sm text-black/65">Watermarked invitation card and a shareable link.</p>
-          </motion.article>
-          <motion.article
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.05 }}
-            className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[0_18px_50px_rgba(140,47,29,0.12)]"
-          >
-            <p className="text-sm font-semibold text-[var(--accent)]">Premium</p>
-            <p className="mt-4 text-4xl font-semibold">INR 49</p>
-            <p className="mt-3 text-sm text-black/65">HD PNG download with no watermark.</p>
-          </motion.article>
-          <motion.article
-            {...fadeUp}
-            transition={{ ...fadeUp.transition, delay: 0.1 }}
-            className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 shadow-sm"
-          >
-            <p className="text-sm font-semibold text-[var(--accent)]">Premium Plus</p>
-            <p className="mt-4 text-4xl font-semibold">INR 99</p>
-            <p className="mt-3 text-sm text-black/65">HD PNG, PDF, envelope design, and no watermark.</p>
-          </motion.article>
-        </div>
-      </section>
+      {/* Pricing section removed as requested */}
 
       <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
         <motion.div {...fadeUp} className="max-w-2xl">
@@ -431,7 +441,7 @@ export function LandingPage() {
         >
           <div className="max-w-2xl">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">Get started</p>
-            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Create a beautiful wedding invitation in minutes.</h2>
+            <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Create Your Invitation Now.</h2>
             <p className="mt-4 text-sm leading-7 text-white/85">
               Choose a template, personalize your details, preview instantly, and share your invitation link with guests.
             </p>
@@ -439,17 +449,11 @@ export function LandingPage() {
 
           <div className="flex flex-col gap-3 sm:flex-row">
             <Link
-              href="#templates"
+              href="/templates"
               className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-6 py-3 text-sm font-semibold text-[var(--accent)] transition hover:-translate-y-0.5"
             >
-              Start with SEO
+              Create Invitation Now
               <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href="#pricing"
-              className="inline-flex items-center justify-center gap-2 rounded-full border border-white/30 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-            >
-              Review pricing
             </Link>
           </div>
         </motion.div>
