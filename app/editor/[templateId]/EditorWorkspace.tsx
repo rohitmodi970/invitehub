@@ -196,16 +196,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             Edit
           </button>
 
-          {/* Free download (watermarked) */}
-          <button
-            onClick={handleFreeDownload}
-            disabled={isDownloading}
-            title="Download free (with watermark)"
-            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 disabled:opacity-60"
-          >
-            <ImageDown size={16} />
-            <span className="hidden sm:inline">Free</span>
-          </button>
+
 
           {/* Premium download */}
           <button
