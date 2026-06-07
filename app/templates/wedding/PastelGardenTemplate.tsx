@@ -163,15 +163,79 @@ export function PastelGardenTemplate({ data, isPremium = false }: TemplateProps)
         )}
       </motion.div>
 
+      {/* ═══════════════════════════════════════════════════════════════════
+        WATERMARK SYSTEM — MANDATORY 
+        ═══════════════════════════════════════════════════════════════════ 
+      */}
       {!isPremium && (
         <>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 50, pointerEvents: 'none', overflow: 'hidden', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px 20px', padding: '20px' }}>
+          {/* LAYER 1: Full-Card Diagonal Tiled Overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 50,
+              pointerEvents: 'none',
+              overflow: 'hidden',
+              backgroundImage: `repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 60px,
+                rgba(0,0,0,0.04) 60px,
+                rgba(0,0,0,0.04) 61px
+              )`,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '30px 20px',
+              padding: '20px',
+              width: '100%',
+              height: '100%',
+            }}
+          >
             {Array.from({ length: 32 }).map((_, i) => (
-              <span key={i} style={{ transform: 'rotate(-35deg)', fontSize: '11px', color: 'rgba(90,122,82,0.15)', fontWeight: 'bold', letterSpacing: '0.05em', userSelect: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', whiteSpace: 'nowrap' }}>InviteHub.in</span>
+              <span
+                key={i}
+                style={{
+                  transform: 'rotate(-35deg)',
+                  fontSize: '11px',
+                  color: 'rgba(90,122,82,0.15)',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.05em',
+                  userSelect: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                InviteHub.in
+              </span>
             ))}
           </div>
-          <div style={{ position: 'relative', width: '100%', padding: '10px 0', backgroundColor: 'rgba(58,90,50,0.88)', zIndex: 51, textAlign: 'center' }}>
-            <span style={{ fontSize: '13px', fontWeight: 700, color: '#d4e8cf', letterSpacing: '0.03em', fontFamily: 'sans-serif' }}>🔒 Created with InviteHub.in — Upgrade to remove watermark</span>
+
+          {/* LAYER 2: Bottom Strip Watermark */}
+          <div
+            style={{
+              position: 'relative',
+              marginTop: 'auto',
+              width: '100%',
+              padding: '10px 0',
+              backgroundColor: 'rgba(58,90,50,0.88)',
+              zIndex: 51,
+              textAlign: 'center'
+            }}
+          >
+            <span
+              style={{
+                fontSize: '13px',
+                fontWeight: 700,
+                color: '#d4e8cf',
+                letterSpacing: '0.03em',
+                fontFamily: 'sans-serif',
+              }}
+            >
+              🔒 Created with InviteHub.in — Upgrade to remove watermark
+            </span>
           </div>
         </>
       )}

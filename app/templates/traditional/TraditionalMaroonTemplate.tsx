@@ -170,15 +170,79 @@ export function TraditionalMaroonTemplate({ data, isPremium = false }: TemplateP
 
       <BottomBand />
 
+      {/* ═══════════════════════════════════════════════════════════════════
+        WATERMARK SYSTEM — MANDATORY 
+        ═══════════════════════════════════════════════════════════════════ 
+      */}
       {!isPremium && (
         <>
-          <div style={{ position: 'absolute', inset: 0, zIndex: 50, pointerEvents: 'none', overflow: 'hidden', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '30px 20px', padding: '20px' }}>
+          {/* LAYER 1: Full-Card Diagonal Tiled Overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              zIndex: 50,
+              pointerEvents: 'none',
+              overflow: 'hidden',
+              backgroundImage: `repeating-linear-gradient(
+                -45deg,
+                transparent,
+                transparent 60px,
+                rgba(0,0,0,0.04) 60px,
+                rgba(0,0,0,0.04) 61px
+              )`,
+              display: 'grid',
+              gridTemplateColumns: 'repeat(4, 1fr)',
+              gap: '30px 20px',
+              padding: '20px',
+              width: '100%',
+              height: '100%',
+            }}
+          >
             {Array.from({ length: 32 }).map((_, i) => (
-              <span key={i} style={{ transform: 'rotate(-35deg)', fontSize: '11px', color: 'rgba(200,146,42,0.2)', fontWeight: 'bold', letterSpacing: '0.05em', userSelect: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', whiteSpace: 'nowrap' }}>InviteHub.in</span>
+              <span
+                key={i}
+                style={{
+                  transform: 'rotate(-35deg)',
+                  fontSize: '11px',
+                  color: 'rgba(200,146,42,0.2)',
+                  fontWeight: 'bold',
+                  letterSpacing: '0.05em',
+                  userSelect: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                InviteHub.in
+              </span>
             ))}
           </div>
-          <div style={{ position: 'relative', width: '100%', padding: '10px 0', backgroundColor: 'rgba(107,15,26,0.9)', zIndex: 51, textAlign: 'center' }}>
-            <span style={{ fontSize: '13px', fontWeight: 700, color: '#c8922a', letterSpacing: '0.03em', fontFamily: 'sans-serif' }}>🔒 Created with InviteHub.in — Upgrade to remove watermark</span>
+
+          {/* LAYER 2: Bottom Strip Watermark */}
+          <div
+            style={{
+              position: 'relative',
+              marginTop: 'auto',
+              width: '100%',
+              padding: '10px 0',
+              backgroundColor: 'rgba(107,15,26,0.9)',
+              zIndex: 51,
+              textAlign: 'center'
+            }}
+          >
+            <span
+              style={{
+                fontSize: '13px',
+                fontWeight: 700,
+                color: '#c8922a',
+                letterSpacing: '0.03em',
+                fontFamily: 'sans-serif',
+              }}
+            >
+              🔒 Created with InviteHub.in — Upgrade to remove watermark
+            </span>
           </div>
         </>
       )}
