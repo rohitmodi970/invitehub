@@ -132,13 +132,14 @@ export function LandingPage() {
           className="flex items-center justify-between gap-4 rounded-full border border-[var(--border)] bg-[color:var(--surface)]/85 px-4 py-3 shadow-[0_10px_40px_rgba(120,64,42,0.08)] backdrop-blur"
         >
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[var(--accent)] text-white shadow-lg shadow-[rgba(140,47,29,0.25)]">
-              <Sparkles className="h-5 w-5" />
-            </div>
-            <div>
-              <p className="text-sm font-semibold tracking-tight">InviteHub.in</p>
-              <p className="text-xs text-black/60">Premium invitation cards for weddings</p>
-            </div>
+            <Image
+              src="/elegant_logo_with_domain_written.png"
+              alt="InviteHub.in Logo"
+              width={160}
+              height={40}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </div>
           <Link
             href="/templates"

@@ -8,6 +8,7 @@ import { getTemplateComponent } from '@/lib/templates/registry';
 import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
 import { EditorForm } from '@/app/editor/[templateId]/EditorForm';
 import { CheckoutFlow, PlanType } from '@/app/components/checkout/CheckoutFlow';
+import Image from 'next/image';
 
 const defaultData: InvitationData = {
   brideName: 'Priya',
@@ -74,8 +75,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
       {/* ── Top Bar ── */}
       <div className="shrink-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-10 shadow-sm">
         <div className="flex items-center gap-2">
-          <span className="text-xl">💍</span>
-          <span className="font-bold text-gray-900 text-base tracking-tight">InviteHub</span>
+          <Image src="/elegant_logo_with_domain_written.png" alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain" />
           <span className="hidden sm:inline text-gray-400 text-sm ml-2">/ Editor</span>
         </div>
         <div className="flex items-center gap-2">

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart, Mail } from 'lucide-react';
 
 const InstagramIcon = ({ size = 16 }: { size?: number }) => (
@@ -43,10 +44,7 @@ export function Footer() {
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4 group">
-              <span className="text-2xl">💍</span>
-              <span className="text-white font-bold text-lg tracking-tight group-hover:text-rose-300 transition-colors">
-                InviteHub.in
-              </span>
+              <Image src="/elegant_logo_with_domain_written.png" alt="InviteHub.in" width={160} height={40} className="h-10 w-auto object-contain" />
             </Link>
             <p className="text-sm leading-relaxed text-white/50">
               Beautiful wedding invitation cards, designed and shared in minutes.
