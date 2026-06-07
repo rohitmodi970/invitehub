@@ -36,6 +36,10 @@ import { BabyShowerFloralPinkTemplate } from '@/app/templates/events/baby-shower
 import { BabyShowerMinimalNurseryTemplate } from '@/app/templates/events/baby-shower/BabyShowerMinimalNurseryTemplate';
 import { CorporateExecutiveNavyTemplate } from '@/app/templates/events/corporate/CorporateExecutiveNavyTemplate';
 import { CorporateTechSummitTemplate } from '@/app/templates/events/corporate/CorporateTechSummitTemplate';
+import { BirthdayMagazineTemplate } from '@/app/templates/events/birthday/BirthdayMagazineTemplate';
+import { BirthdayVintageTemplate } from '@/app/templates/events/birthday/BirthdayVintageTemplate';
+import { CorporateExecutiveGlassTemplate } from '@/app/templates/events/corporate/CorporateExecutiveGlassTemplate';
+import { CorporateCinematicGalaTemplate } from '@/app/templates/events/corporate/CorporateCinematicGalaTemplate';
 import type { InvitationData, TemplateProps } from '@/lib/invitations/types';
 
 export type { InvitationData, TemplateProps };
@@ -86,6 +90,10 @@ export const TEMPLATE_COMPONENTS: Record<string, React.FC<TemplateProps>> = {
   'baby-shower-minimal-nursery-036': BabyShowerMinimalNurseryTemplate,
   'corporate-executive-navy-037': CorporateExecutiveNavyTemplate,
   'corporate-tech-summit-038': CorporateTechSummitTemplate,
+  'birthday-magazine-cover-039': BirthdayMagazineTemplate,
+  'birthday-vintage-film-040': BirthdayVintageTemplate,
+  'corporate-executive-glass-041': CorporateExecutiveGlassTemplate,
+  'corporate-cinematic-gala-042': CorporateCinematicGalaTemplate,
 };
 
 export function getTemplateComponent(id: string): React.FC<TemplateProps> {
