@@ -14,8 +14,17 @@ export interface SEOPageContent {
   ogTitle: string;
   ogDescription: string;
   ogImage?: string;
+  heroImage?: string;
+  highlights?: PageHighlight[];
   sections: ContentSection[];
   faqs: FAQ[];
+  relatedPages?: RelatedPage[];
+}
+
+export interface PageHighlight {
+  icon: string;
+  label: string;
+  desc: string;
 }
 
 export interface ContentSection {
@@ -33,4 +42,9 @@ export interface ContentSection {
 export interface FAQ {
   question: string;
   answer: string;
+}
+
+export interface RelatedPage {
+  title: string;
+  href: string;
 }
