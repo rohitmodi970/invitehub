@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { Lora, Montserrat, Great_Vibes } from 'next/font/google';
 
 const lora = Lora({ 
@@ -105,7 +105,7 @@ const HexBadge = ({ bride, groom }: { bride: string; groom: string }) => (
 );
 
 export function ModernFloralGeometricTemplate({ data, isPremium = false }: TemplateProps) {
-  const containerVariants = {
+  const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -113,7 +113,7 @@ export function ModernFloralGeometricTemplate({ data, isPremium = false }: Templ
     }
   };
 
-  const itemFadeUp = {
+  const itemFadeUp: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
