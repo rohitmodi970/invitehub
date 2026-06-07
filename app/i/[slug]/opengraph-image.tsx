@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og';
-import { getInvitationBySlug } from '@/lib/db/mock-invitations';
+import { getInvitationBySlug } from '@/lib/db/invitations';
 
 // Route segment config
 export const runtime = 'edge';

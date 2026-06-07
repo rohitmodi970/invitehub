@@ -5,19 +5,34 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 type AttendanceValue = 'yes' | 'no' | '';
 
-export function RSVPForm() {
+export function RSVPForm({ invitationId }: { invitationId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [name, setName] = useState('');
   const [attendance, setAttendance] = useState<AttendanceValue>('');
   const [guests, setGuests] = useState('1');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
+    
+    try {
+      const res = await fetch('/api/rsvps', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ invitationId, name, attending: attendance, guests, message })
+      });
+      
+      if (!res.ok) throw new Error('Failed to submit RSVP');
+      
       setSubmitted(true);
-    }, 1500);
+    } catch (error) {
+      console.error(error);
+      alert('There was an issue submitting your RSVP. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const glassCard = {
@@ -83,6 +98,8 @@ export function RSVPForm() {
                 <input
                   type="text"
                   required
+                  value={name}
+                  onChange={e => setName(e.target.value)}
                   placeholder="Your full name"
                   style={inputStyle}
                   onFocus={e => (e.target.style.borderColor = 'rgba(201,168,76,0.6)')}
@@ -151,6 +168,8 @@ export function RSVPForm() {
                 </label>
                 <textarea
                   rows={3}
+                  value={message}
+                  onChange={e => setMessage(e.target.value)}
                   placeholder="Write your heartfelt wishes..."
                   style={{ ...inputStyle, resize: 'none' } as React.CSSProperties}
                   onFocus={e => (e.target.style.borderColor = 'rgba(201,168,76,0.6)')}

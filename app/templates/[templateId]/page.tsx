@@ -7,8 +7,20 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Download, Share2 } from 'lucide-react';
 import { getTemplateById, getRelatedTemplates } from '@/lib/utils/template-helpers';
+import { getTemplateComponent } from '@/lib/templates/registry';
 import { TemplateCard } from '@/app/components/TemplateCard';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
+import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+
+const sampleData: InvitationData = {
+  brideName: 'Priya',
+  groomName: 'Rahul',
+  weddingDate: '24th November 2026',
+  weddingTime: '7:00 PM Onwards',
+  venueName: 'The Grand Taj Palace',
+  venueAddress: 'Diplomatic Enclave, New Delhi',
+  additionalMessage: 'Join us to celebrate our new beginning.',
+};
 
 interface TemplateDetailPageProps {
   params: Promise<{ templateId: string }>;
@@ -24,6 +36,7 @@ export default function TemplateDetailPage({ params }: TemplateDetailPageProps) 
 
   const relatedTemplates = getRelatedTemplates(templateId);
   const tier = TEMPLATE_TIERS[template.tier];
+  const TemplateComponent = getTemplateComponent(template.id);
 
   return (
     <div className="min-h-screen bg-white">
@@ -43,16 +56,14 @@ export default function TemplateDetailPage({ params }: TemplateDetailPageProps) 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Preview Image */}
+          {/* Live Component Preview */}
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
-            <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-gray-100 shadow-lg">
-              <Image
-                src={template.previewUrl}
-                alt={template.name}
-                fill
-                className="object-cover"
-                priority
-              />
+            <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-[#f8f9fa] shadow-2xl flex items-center justify-center">
+              <div className="origin-top scale-[0.6] sm:scale-[0.8] w-full h-full absolute inset-0 flex items-center justify-center">
+                <TemplateComponent data={sampleData} isPremium={false} />
+              </div>
+              {/* Click Shield to prevent interactions */}
+              <div className="absolute inset-0 z-50 cursor-pointer" />
             </div>
           </motion.div>
 
@@ -106,10 +117,10 @@ export default function TemplateDetailPage({ params }: TemplateDetailPageProps) 
 
             {/* CTA Buttons */}
             <div className="space-y-3 pt-6 border-t border-gray-200">
-              <button className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors">
+              <Link href={`/editor/${template.id}`} className="w-full flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition-colors">
                 <ArrowRight size={20} />
                 Use This Template
-              </button>
+              </Link>
               <div className="grid grid-cols-2 gap-3">
                 <button className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg border border-gray-300 hover:bg-gray-50 text-gray-700 font-medium transition-colors">
                   <Download size={18} />

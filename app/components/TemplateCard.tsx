@@ -6,6 +6,17 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Crown, Sparkles } from 'lucide-react';
 import type { Template } from '@/lib/templates/types';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
+import { getTemplateComponent } from '@/lib/templates/registry';
+import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+
+const sampleData: InvitationData = {
+  brideName: 'Priya',
+  groomName: 'Rahul',
+  weddingDate: '24th November 2026',
+  weddingTime: '7:00 PM',
+  venueName: 'Taj Palace',
+  venueAddress: 'New Delhi',
+};
 
 interface TemplateCardProps {
   template: Template;
@@ -19,6 +30,7 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
     premium: 'bg-blue-100 text-blue-800',
     'premium-plus': 'bg-purple-100 text-purple-800',
   };
+  const TemplateComponent = getTemplateComponent(template.id);
 
   return (
     <motion.div
@@ -29,15 +41,13 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
     >
       <Link href={`/templates/${template.id}`}>
         <div className="h-full rounded-lg overflow-hidden bg-white border border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-lg cursor-pointer">
-          {/* Image Container */}
-          <div className="relative w-full aspect-[3/4] overflow-hidden bg-gray-100">
-            <Image
-              src={template.thumbnailUrl}
-              alt={template.name}
-              fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-            />
+          {/* Live Component Preview */}
+          <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#f8f9fa] flex items-center justify-center">
+            <div className="origin-top scale-[0.4] sm:scale-[0.45] w-full h-full absolute inset-0 flex items-center justify-center group-hover:scale-[0.42] sm:group-hover:scale-[0.48] transition-transform duration-500">
+              <TemplateComponent data={sampleData} isPremium={false} />
+            </div>
+            {/* Click Shield */}
+            <div className="absolute inset-0 z-40 bg-transparent" />
 
             {/* Badges */}
             <div className="absolute top-3 left-3 flex gap-2">

@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getInvitationBySlug } from '@/lib/db/mock-invitations';
+import { getInvitationBySlug, incrementViewCount } from '@/lib/db/invitations';
 import { ElegantGoldTemplate } from '@/app/templates/elegant-gold-001/components/ElegantGoldTemplate';
 import { ModernGeometricTemplate } from '@/app/templates/modern-geometric-002/components/ModernGeometricTemplate';
 import { RomanticVintageTemplate } from '@/app/templates/romantic-vintage-003/components/RomanticVintageTemplate';
@@ -56,6 +56,9 @@ export default async function PublicInvitePage({ params }: PublicInvitePageProps
   const { slug } = await params;
   const invite = await getInvitationBySlug(slug);
   if (!invite) notFound();
+
+  // Increment analytics view count asynchronously
+  incrementViewCount(slug);
 
   const TemplateComponent = TEMPLATE_MAP[invite.templateId] ?? ElegantGoldTemplate;
 
@@ -113,7 +116,7 @@ export default async function PublicInvitePage({ params }: PublicInvitePageProps
 
         {/* ── RSVP ── */}
         <div className="px-4 pb-2">
-          <RSVPForm />
+          <RSVPForm invitationId={invite.id} />
         </div>
 
         {/* ── Section divider label ── */}
