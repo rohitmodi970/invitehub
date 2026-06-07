@@ -24,14 +24,14 @@ export interface InvitationRecord {
 
 // Temporary mock database until Phase 3 (DB Setup) is implemented
 export const mockInvitations: Record<string, InvitationRecord> = {
-  'rohit-priya': {
+  'rohit-shraddha': {
     id: 'inv_001',
-    slug: 'rohit-priya',
+    slug: 'rohit-shraddha',
     templateId: 'elegant-gold-001',
     isPremium: false,
     createdAt: '2026-06-01T10:00:00Z',
     data: {
-      brideName: 'Priya',
+      brideName: 'Shraddha',
       groomName: 'Rohit',
       weddingDate: 'Saturday, 14th February 2026',
       weddingTime: '7:00 PM onwards',
