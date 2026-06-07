@@ -3,7 +3,13 @@ export type SEOPageSlug =
   | 'marriage-invitation-card'
   | 'digital-wedding-card'
   | 'online-wedding-invitation'
-  | 'wedding-card-maker';
+  | 'wedding-card-maker'
+  | 'birthday-invitation-card'
+  | 'engagement-invitation'
+  | 'baby-shower-invitation'
+  | 'housewarming-invitation'
+  | 'anniversary-invitation'
+  | 'corporate-event-invitation';
 
 export interface SEOPageContent {
   slug: SEOPageSlug;

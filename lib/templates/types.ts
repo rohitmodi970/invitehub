@@ -1,3 +1,5 @@
+import type { EventType } from '@/lib/events/types';
+
 export type TemplateCategory = 'wedding' | 'royal' | 'floral' | 'traditional-indian' | 'modern';
 export type TemplateTier = 'free' | 'premium' | 'premium-plus';
 
@@ -5,6 +7,7 @@ export interface Template {
   id: string;
   name: string;
   description: string;
+  eventType?: EventType;
   category: TemplateCategory;
   previewUrl: string;
   thumbnailUrl: string;

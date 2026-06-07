@@ -14,24 +14,9 @@ const poppins = Poppins({
   weight: ['300', '400', '500', '600', '700'],
 });
 
-export interface InvitationData {
-  brideName: string;
-  groomName: string;
-  weddingDate: string;
-  weddingTime: string;
-  venueName: string;
-  venueAddress: string;
-  contactNumber?: string;
-  additionalMessage?: string;
-  couplePhotoUrl?: string;
-  familyDetails?: string;
-  rsvpDetails?: string;
-}
+import type { InvitationData, TemplateProps } from '@/lib/invitations/types';
 
-export interface TemplateProps {
-  data: InvitationData;
-  isPremium?: boolean;
-}
+export type { InvitationData, TemplateProps };
 
 const MandalaSVG = ({ className }: { className?: string }) => (
   <svg 

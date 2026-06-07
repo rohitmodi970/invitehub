@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import crypto from 'crypto';
 import { supabase } from '@/lib/supabase/client';
 import { generateUniqueSlug } from '@/lib/db/invitations';
+import type { EventType } from '@/lib/events/types';
 
 async function getAuthEmail(): Promise<string | null> {
   try {
@@ -23,26 +24,24 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const { templateId, data } = body;
+    const eventType: EventType = data?.eventType ?? 'wedding';
 
     if (!templateId || !data || !data.brideName || !data.groomName) {
       return NextResponse.json(
-        { error: 'Missing required fields (templateId, brideName, groomName)' },
+        { error: 'Missing required fields (templateId, primary name, secondary name)' },
         { status: 400 }
       );
     }
 
-    // Get the authenticated user's email
     const userEmail = await getAuthEmail();
-
-    // Generate a unique slug based on their names
     const slug = await generateUniqueSlug(data.brideName, data.groomName);
 
-    // Insert into Supabase
     const { error } = await supabase
       .from('invitations')
       .insert({
         slug,
         templateId,
+        eventType,
         userEmail: userEmail || null,
         brideName: data.brideName,
         groomName: data.groomName,

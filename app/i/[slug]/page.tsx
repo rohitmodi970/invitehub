@@ -1,38 +1,43 @@
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
-import { getInvitationBySlug, incrementViewCount } from '@/lib/db/invitations';
-import { ElegantGoldTemplate } from '@/app/templates/elegant-gold-001/components/ElegantGoldTemplate';
-import { ModernGeometricTemplate } from '@/app/templates/modern-geometric-002/components/ModernGeometricTemplate';
-import { RomanticVintageTemplate } from '@/app/templates/romantic-vintage-003/components/RomanticVintageTemplate';
-import { TraditionalIndianTemplate } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
-import { RoyalPurpleTemplate } from '@/app/templates/royal-purple-005/components/RoyalPurpleTemplate';
+import { getInvitationBySlug, incrementViewCount, getInvitationTitle } from '@/lib/db/invitations';
+import { getTemplateComponent } from '@/lib/templates/registry';
 import { CountdownTimer } from '@/app/components/CountdownTimer';
 import { RSVPForm } from '@/app/components/RSVPForm';
 import { ShareButtons } from '@/app/components/ShareButtons';
 import { GoogleMapEmbed } from '@/app/components/GoogleMapEmbed';
-import type { InvitationData } from '@/lib/db/mock-invitations';
+import { getEventTypeDef } from '@/lib/events/types';
+import type { EventType } from '@/lib/events/types';
 
 interface PublicInvitePageProps {
   params: Promise<{ slug: string }>;
 }
 
-const TEMPLATE_MAP: Record<
-  string,
-  React.ComponentType<{ data: InvitationData; isPremium?: boolean }>
-> = {
-  'elegant-gold-001': ElegantGoldTemplate,
-  'modern-geometric-002': ModernGeometricTemplate,
-  'romantic-vintage-003': RomanticVintageTemplate,
-  'traditional-indian-004': TraditionalIndianTemplate,
-  'royal-purple-005': RoyalPurpleTemplate,
-};
+function getHeroHeading(eventType: EventType, data: { brideName: string; groomName: string }) {
+  const eventDef = getEventTypeDef(eventType);
+  if (eventType === 'wedding' || eventType === 'engagement' || eventType === 'anniversary') {
+    return (
+      <>
+        {data.brideName}
+        <span className="mx-3 text-3xl" style={{ color: '#c9a84c' }}>&amp;</span>
+        {data.groomName}
+      </>
+    );
+  }
+  return (
+    <>
+      {data.brideName}
+      <span className="block text-2xl mt-2 text-white/70 font-normal">{data.groomName}</span>
+    </>
+  );
+}
 
 export async function generateMetadata({ params }: PublicInvitePageProps): Promise<Metadata> {
   const { slug } = await params;
   const invite = await getInvitationBySlug(slug);
   if (!invite) return { title: 'Invitation Not Found' };
 
-  const title = `${invite.data.brideName} & ${invite.data.groomName}'s Wedding Invitation 💍`;
+  const title = getInvitationTitle(invite.eventType, invite.data);
   const description = `Join us on ${invite.data.weddingDate} at ${invite.data.venueName}. Click to view details and RSVP!`;
 
   return {
@@ -60,7 +65,8 @@ export default async function PublicInvitePage({ params }: PublicInvitePageProps
   // Increment analytics view count asynchronously
   incrementViewCount(slug);
 
-  const TemplateComponent = TEMPLATE_MAP[invite.templateId] ?? ElegantGoldTemplate;
+  const TemplateComponent = getTemplateComponent(invite.templateId);
+  const eventDef = getEventTypeDef(invite.eventType);
 
   return (
     <div className="min-h-screen" style={{ background: 'linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%)' }}>
@@ -79,11 +85,11 @@ export default async function PublicInvitePage({ params }: PublicInvitePageProps
 
         {/* ── Hero section ── */}
         <div className="pt-16 pb-8 text-center px-4">
-          <p className="text-xs tracking-[0.4em] uppercase text-white/40 mb-4 font-light">You&apos;re Invited</p>
+          <p className="text-xs tracking-[0.4em] uppercase text-white/40 mb-4 font-light">
+            {eventDef.emoji} You&apos;re Invited
+          </p>
           <h1 className="text-4xl sm:text-5xl font-bold text-white mb-3 tracking-tight">
-            {invite.data.brideName}
-            <span className="mx-3 text-3xl" style={{ color: '#c9a84c' }}>&amp;</span>
-            {invite.data.groomName}
+            {getHeroHeading(invite.eventType, invite.data)}
           </h1>
           <p className="text-white/50 text-sm tracking-wider">{invite.data.weddingDate} &bull; {invite.data.venueName}</p>
         </div>

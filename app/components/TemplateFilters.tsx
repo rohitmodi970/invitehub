@@ -80,7 +80,7 @@ export function TemplateFilters({
               }`}
             >
               <span className="font-medium">{category.label}</span>
-              <span className="text-sm opacity-75 ml-2">({category.label})</span>
+              <span className="text-sm opacity-75 ml-2">({category.description})</span>
             </button>
           ))}
         </div>

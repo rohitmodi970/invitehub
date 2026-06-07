@@ -1,6 +1,14 @@
 import { MetadataRoute } from 'next';
+import { getSEOPageSlugs } from '@/lib/seo/pages';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const seoPages = getSEOPageSlugs().map((slug) => ({
+    url: `https://invitehub.in/${slug}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.85,
+  }));
+
   return [
     {
       url: 'https://invitehub.in',
@@ -14,36 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'daily',
       priority: 0.9,
     },
-    {
-      url: 'https://invitehub.in/wedding-invitation-card-maker',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: 'https://invitehub.in/marriage-invitation-card',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: 'https://invitehub.in/digital-wedding-card',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: 'https://invitehub.in/online-wedding-invitation',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
-    {
-      url: 'https://invitehub.in/wedding-card-maker',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.85,
-    },
+    ...seoPages,
     {
       url: 'https://invitehub.in/about',
       lastModified: new Date(),

@@ -5,28 +5,24 @@ import { useRouter } from 'next/navigation';
 import { Pencil, Download, Check, ChevronLeft, ChevronRight, ImageDown } from 'lucide-react';
 import { TEMPLATES } from '@/lib/templates/data';
 import { getTemplateComponent } from '@/lib/templates/registry';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import type { InvitationData } from '@/lib/invitations/types';
+import { getDefaultInvitationData } from '@/lib/events/defaults';
+import { getTemplateById, getTemplateEventType } from '@/lib/utils/template-helpers';
 import { EditorForm } from '@/app/editor/[templateId]/EditorForm';
 import { CheckoutFlow, PlanType } from '@/app/components/checkout/CheckoutFlow';
 import { getEnvelopeComponent } from '@/lib/templates/envelopes';
 import { downloadInvitation } from '@/lib/download';
 import Image from 'next/image';
 
-const defaultData: InvitationData = {
-  brideName: 'Priya',
-  groomName: 'Rahul',
-  weddingDate: '15th February 2027',
-  weddingTime: '7:00 PM Onwards',
-  venueName: 'The Grand Taj Palace',
-  venueAddress: 'Diplomatic Enclave, New Delhi',
-  additionalMessage: 'Join us to celebrate our new beginning.',
-};
-
 export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: string }) {
+  const initialTemplate = getTemplateById(initialTemplateId);
+  const initialEventType = initialTemplate ? getTemplateEventType(initialTemplate) : 'wedding';
+
   const router = useRouter();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeTemplateId, setActiveTemplateId] = useState(initialTemplateId);
-  const [data, setData] = useState<InvitationData>(defaultData);
+  const [eventType, setEventType] = useState(initialEventType);
+  const [data, setData] = useState<InvitationData>(() => getDefaultInvitationData(initialEventType));
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -36,7 +32,11 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
     setIsMounted(true);
     const saved = localStorage.getItem('invitehub-draft');
     if (saved) {
-      try { setData(JSON.parse(saved)); } catch { /* ignore */ }
+      try {
+        const parsed = JSON.parse(saved) as InvitationData;
+        setData(parsed);
+        if (parsed.eventType) setEventType(parsed.eventType);
+      } catch { /* ignore */ }
     }
   }, []);
 
@@ -47,9 +47,25 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
   }, [activeTemplateId, isMounted]);
 
   const handleDataChange = (newData: InvitationData) => {
-    setData(newData);
-    localStorage.setItem('invitehub-draft', JSON.stringify(newData));
+    const withEvent = { ...newData, eventType };
+    setData(withEvent);
+    localStorage.setItem('invitehub-draft', JSON.stringify(withEvent));
   };
+
+  const handleTemplateSwitch = (templateId: string) => {
+    const template = getTemplateById(templateId);
+    if (!template) return;
+    const newEventType = getTemplateEventType(template);
+    setActiveTemplateId(templateId);
+    if (newEventType !== eventType) {
+      setEventType(newEventType);
+      const defaults = getDefaultInvitationData(newEventType);
+      setData(defaults);
+      localStorage.setItem('invitehub-draft', JSON.stringify(defaults));
+    }
+  };
+
+  const carouselTemplates = TEMPLATES.filter((t) => getTemplateEventType(t) === eventType);
 
   const handleCheckoutSuccess = useCallback((plan: PlanType, slug?: string) => {
     setIsCheckoutOpen(false);
@@ -141,12 +157,13 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             className="flex gap-3 p-3 overflow-x-auto no-scrollbar px-8"
             style={{ scrollbarWidth: 'none' }}
           >
-            {TEMPLATES.map((t) => {
+            {carouselTemplates.map((t) => {
               const TplComponent = getTemplateComponent(t.id);
+              const previewData = getDefaultInvitationData(eventType);
               return (
                 <button
                   key={t.id}
-                  onClick={() => setActiveTemplateId(t.id)}
+                  onClick={() => handleTemplateSwitch(t.id)}
                   className={`group relative flex flex-col items-center gap-1.5 shrink-0 transition-all duration-200 ${
                     activeTemplateId === t.id ? 'opacity-100' : 'opacity-50 hover:opacity-80'
                   }`}
@@ -160,7 +177,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
                       className="absolute inset-0 pointer-events-none"
                       style={{ transform: 'scale(0.13)', transformOrigin: 'top left', width: '770%', height: '770%' }}
                     >
-                      <TplComponent data={defaultData} isPremium={false} />
+                      <TplComponent data={previewData} isPremium={false} />
                     </div>
                     {activeTemplateId === t.id && (
                       <div className="absolute inset-0 bg-blue-600/15 flex items-center justify-center">
@@ -218,6 +235,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
           <div className="w-full max-w-xl bg-white rounded-t-3xl sm:rounded-2xl shadow-2xl max-h-[92vh] flex flex-col animate-in slide-in-from-bottom-10 sm:zoom-in-95 duration-300">
             <EditorForm
               data={data}
+              eventType={eventType}
               onDataChange={handleDataChange}
               onClose={() => setIsFormOpen(false)}
             />

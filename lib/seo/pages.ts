@@ -1,6 +1,7 @@
 import type { SEOPageContent, SEOPageSlug } from './types';
+import { EVENT_SEO_PAGES } from './event-pages';
 
-export const SEO_PAGES: Record<SEOPageSlug, SEOPageContent> = {
+const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
   'wedding-invitation-card-maker': {
     slug: 'wedding-invitation-card-maker',
     title: 'Wedding Invitation Card Maker – Design Beautiful Cards Online | InviteHub.in',
@@ -556,7 +557,7 @@ export const SEO_PAGES: Record<SEOPageSlug, SEOPageContent> = {
       {
         question: 'Can I use InviteHub to make birthday or engagement invitation cards?',
         answer:
-          'Currently InviteHub focuses on wedding invitations. Support for birthday, engagement, baby shower, and other event types is on our roadmap and coming soon.',
+          'Yes! InviteHub supports birthday, engagement, baby shower, housewarming, anniversary, and corporate event invitations. Browse by event type in our template gallery.',
       },
       {
         question: 'What payment methods are accepted for premium downloads?',
@@ -577,6 +578,11 @@ export const SEO_PAGES: Record<SEOPageSlug, SEOPageContent> = {
       { title: 'Online Wedding Invitation', href: '/online-wedding-invitation' },
     ],
   },
+};
+
+export const SEO_PAGES: Record<SEOPageSlug, SEOPageContent> = {
+  ...(WEDDING_SEO_PAGES as Record<SEOPageSlug, SEOPageContent>),
+  ...(EVENT_SEO_PAGES as Record<SEOPageSlug, SEOPageContent>),
 };
 
 export function getSEOPageBySlug(slug: SEOPageSlug): SEOPageContent | undefined {

@@ -47,7 +47,7 @@ export function Footer() {
               <Image src="/elegant_logo_with_domain_written.png" alt="InviteHub.in" width={160} height={40} className="h-10 w-auto object-contain" />
             </Link>
             <p className="text-sm leading-relaxed text-white/50">
-              Beautiful wedding invitation cards, designed and shared in minutes.
+              Beautiful invitation cards for every occasion — designed and shared in minutes.
             </p>
             <div className="flex items-center gap-3 mt-4">
               <a
@@ -80,10 +80,11 @@ export function Footer() {
             <h3 className="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Templates</h3>
             <ul className="space-y-2.5 text-sm">
               {[
-                { label: 'Wedding Templates', href: '/templates?category=wedding' },
-                { label: 'Traditional Indian', href: '/templates?category=traditional-indian' },
-                { label: 'Modern Designs', href: '/templates?category=modern' },
-                { label: 'Royal Themes', href: '/templates?category=royal' },
+                { label: 'Wedding Templates', href: '/templates?event=wedding' },
+                { label: 'Birthday Invitations', href: '/templates?event=birthday' },
+                { label: 'Engagement Invitations', href: '/templates?event=engagement' },
+                { label: 'Baby Shower', href: '/templates?event=baby-shower' },
+                { label: 'Housewarming', href: '/templates?event=housewarming' },
                 { label: 'All Templates', href: '/templates' },
               ].map(link => (
                 <li key={link.href}>
