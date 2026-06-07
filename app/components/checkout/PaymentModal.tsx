@@ -74,7 +74,7 @@ export function PaymentModal({
       setShowExitIntent(true);
       setExitShown(true);
     }, 15000);
-    return () => clearTimeout(timerRef.current);
+    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
   }, [exitShown, discountApplied]);
 
   // Exit-intent: mouse leave top of viewport
@@ -84,7 +84,7 @@ export function PaymentModal({
       if (e.clientY <= 5) {
         setShowExitIntent(true);
         setExitShown(true);
-        clearTimeout(timerRef.current);
+        if (timerRef.current) clearTimeout(timerRef.current);
       }
     };
     document.addEventListener('mouseleave', handleMouseLeave);
