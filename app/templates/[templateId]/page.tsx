@@ -1,5 +1,6 @@
 'use client';
 
+import { use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -13,8 +14,8 @@ interface TemplateDetailPageProps {
   params: Promise<{ templateId: string }>;
 }
 
-export default async function TemplateDetailPage({ params }: TemplateDetailPageProps) {
-  const { templateId } = await params;
+export default function TemplateDetailPage({ params }: TemplateDetailPageProps) {
+  const { templateId } = use(params);
   const template = getTemplateById(templateId);
 
   if (!template) {
