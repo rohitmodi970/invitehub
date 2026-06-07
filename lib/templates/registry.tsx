@@ -24,6 +24,18 @@ import { BabyShowerCloudTemplate } from '@/app/templates/events/BabyShowerCloudT
 import { HousewarmingHomeTemplate } from '@/app/templates/events/HousewarmingHomeTemplate';
 import { AnniversaryHeartsTemplate } from '@/app/templates/events/AnniversaryHeartsTemplate';
 import { CorporateMinimalTemplate } from '@/app/templates/events/CorporateMinimalTemplate';
+import { BirthdayNeonGlowTemplate } from '@/app/templates/events/birthday/BirthdayNeonGlowTemplate';
+import { BirthdayBalloonBurstTemplate } from '@/app/templates/events/birthday/BirthdayBalloonBurstTemplate';
+import { BirthdayGoldGlamTemplate } from '@/app/templates/events/birthday/BirthdayGoldGlamTemplate';
+import { BirthdayGardenPartyTemplate } from '@/app/templates/events/birthday/BirthdayGardenPartyTemplate';
+import { BirthdayRetroDiscoTemplate } from '@/app/templates/events/birthday/BirthdayRetroDiscoTemplate';
+import { BabyShowerSafariTemplate } from '@/app/templates/events/baby-shower/BabyShowerSafariTemplate';
+import { BabyShowerPastelRainbowTemplate } from '@/app/templates/events/baby-shower/BabyShowerPastelRainbowTemplate';
+import { BabyShowerMoonStarsTemplate } from '@/app/templates/events/baby-shower/BabyShowerMoonStarsTemplate';
+import { BabyShowerFloralPinkTemplate } from '@/app/templates/events/baby-shower/BabyShowerFloralPinkTemplate';
+import { BabyShowerMinimalNurseryTemplate } from '@/app/templates/events/baby-shower/BabyShowerMinimalNurseryTemplate';
+import { CorporateExecutiveNavyTemplate } from '@/app/templates/events/corporate/CorporateExecutiveNavyTemplate';
+import { CorporateTechSummitTemplate } from '@/app/templates/events/corporate/CorporateTechSummitTemplate';
 import type { InvitationData, TemplateProps } from '@/lib/invitations/types';
 
 export type { InvitationData, TemplateProps };
@@ -62,6 +74,18 @@ export const TEMPLATE_COMPONENTS: Record<string, React.FC<TemplateProps>> = {
   'housewarming-home-024': HousewarmingHomeTemplate,
   'anniversary-hearts-025': AnniversaryHeartsTemplate,
   'corporate-minimal-026': CorporateMinimalTemplate,
+  'birthday-neon-glow-027': BirthdayNeonGlowTemplate,
+  'birthday-balloon-burst-028': BirthdayBalloonBurstTemplate,
+  'birthday-gold-glam-029': BirthdayGoldGlamTemplate,
+  'birthday-garden-party-030': BirthdayGardenPartyTemplate,
+  'birthday-retro-disco-031': BirthdayRetroDiscoTemplate,
+  'baby-shower-safari-032': BabyShowerSafariTemplate,
+  'baby-shower-pastel-rainbow-033': BabyShowerPastelRainbowTemplate,
+  'baby-shower-moon-stars-034': BabyShowerMoonStarsTemplate,
+  'baby-shower-floral-pink-035': BabyShowerFloralPinkTemplate,
+  'baby-shower-minimal-nursery-036': BabyShowerMinimalNurseryTemplate,
+  'corporate-executive-navy-037': CorporateExecutiveNavyTemplate,
+  'corporate-tech-summit-038': CorporateTechSummitTemplate,
 };
 
 export function getTemplateComponent(id: string): React.FC<TemplateProps> {
