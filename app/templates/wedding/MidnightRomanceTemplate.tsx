@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Josefin_Sans, Alex_Brush } from 'next/font/google';
 
@@ -15,18 +16,41 @@ export interface TemplateProps { data: InvitationData; isPremium?: boolean; }
 
 const fade = (delay = 0) => ({ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, delay, ease: 'easeOut' as const } } });
 
+interface Star {
+  width: number;
+  height: number;
+  top: string;
+  left: string;
+  duration: number;
+  delay: number;
+}
+
 export function MidnightRomanceTemplate({ data, isPremium = false }: TemplateProps) {
+  const [stars, setStars] = useState<Star[]>([]);
+
+  useEffect(() => {
+    const generatedStars = Array.from({ length: 30 }).map(() => ({
+      width: Math.random() * 2 + 1,
+      height: Math.random() * 2 + 1,
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      duration: 2 + Math.random() * 3,
+      delay: Math.random() * 4,
+    }));
+    setStars(generatedStars);
+  }, []);
+
   return (
     <div className={`relative overflow-hidden w-full max-w-[420px] min-h-[640px] mx-auto flex flex-col shadow-2xl ${josefin.className}`}
       style={{ background: 'linear-gradient(160deg, #1a0a2e 0%, #16213e 50%, #0f3460 100%)' }}>
 
       {/* Star particle field */}
-      {[...Array(30)].map((_, i) => (
+      {stars.map((star, i) => (
         <motion.div key={i}
           className="absolute rounded-full bg-white pointer-events-none"
-          style={{ width: Math.random() * 2 + 1, height: Math.random() * 2 + 1, top: `${Math.random() * 100}%`, left: `${Math.random() * 100}%`, opacity: 0 }}
+          style={{ width: star.width, height: star.height, top: star.top, left: star.left, opacity: 0 }}
           animate={{ opacity: [0, 0.6, 0] }}
-          transition={{ duration: 2 + Math.random() * 3, repeat: Infinity, delay: Math.random() * 4 }}
+          transition={{ duration: star.duration, repeat: Infinity, delay: star.delay }}
         />
       ))}
 

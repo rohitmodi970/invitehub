@@ -12,6 +12,7 @@ import { TypewriterNeoBrutalTemplate } from '@/app/templates/modern/TypewriterNe
 import { GoldenPaisleyTemplate } from '@/app/templates/traditional/GoldenPaisleyTemplate';
 import { MarigoldFiestaTemplate } from '@/app/templates/traditional/MarigoldFiestaTemplate';
 import { KeralaTempleTemplate } from '@/app/templates/traditional/KeralaTempleTemplate';
+import { ModernFloralGeometricTemplate } from '@/app/templates/modern/Modern_geometric_wedding_invitation';
 import { InvitationData, TemplateProps } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
 
 // Fallback empty component for missing ones
@@ -36,6 +37,7 @@ export const TEMPLATE_COMPONENTS: Record<string, React.FC<TemplateProps>> = {
   'golden-paisley-017': GoldenPaisleyTemplate,
   'marigold-fiesta-018': MarigoldFiestaTemplate,
   'kerala-temple-019': KeralaTempleTemplate,
+  'modern-floral-020': ModernFloralGeometricTemplate,
 };
 
 export function getTemplateComponent(id: string): React.FC<TemplateProps> {

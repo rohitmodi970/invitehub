@@ -242,6 +242,19 @@ export const TEMPLATES: Template[] = [
     features: ['Temple arch bands', 'Mandala corners', 'Noto Serif', 'Saffron palette'],
     isNew: true,
   },
+  {
+    id: 'modern-floral-020',
+    name: 'Modern Floral Geometric',
+    description: 'Bold geometric corner triangles in coral, teal & purple with gold floral line art. A modern-meets-traditional fusion.',
+    category: 'modern',
+    previewUrl: '/images/templates/modern-floral.png',
+    thumbnailUrl: '/images/templates/modern-floral.png',
+    tier: 'premium',
+    tags: ['modern', 'floral', 'geometric', 'colorful', 'fusion'],
+    features: ['Bold corner geometry', 'Floral SVG art', 'Diamond photo frame', 'Great Vibes script'],
+    isNew: true,
+    isPopular: true,
+  },
 ];
 
 
