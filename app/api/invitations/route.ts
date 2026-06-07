@@ -1,6 +1,23 @@
 import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
+import crypto from 'crypto';
 import { supabase } from '@/lib/supabase/client';
 import { generateUniqueSlug } from '@/lib/db/invitations';
+
+async function getAuthEmail(): Promise<string | null> {
+  try {
+    const OTP_SECRET = process.env.OTP_SECRET || 'invitehub-secret-key-123';
+    const cookieStore = await cookies();
+    const authToken = cookieStore.get('invitehub_auth')?.value;
+    if (!authToken) return null;
+    const [email, signature] = authToken.split('.');
+    if (!email || !signature) return null;
+    const expectedSig = crypto.createHmac('sha256', OTP_SECRET).update(email).digest('hex');
+    return expectedSig === signature ? email : null;
+  } catch {
+    return null;
+  }
+}
 
 export async function POST(request: Request) {
   try {
@@ -14,6 +31,9 @@ export async function POST(request: Request) {
       );
     }
 
+    // Get the authenticated user's email
+    const userEmail = await getAuthEmail();
+
     // Generate a unique slug based on their names
     const slug = await generateUniqueSlug(data.brideName, data.groomName);
 
@@ -23,6 +43,7 @@ export async function POST(request: Request) {
       .insert({
         slug,
         templateId,
+        userEmail: userEmail || null,
         brideName: data.brideName,
         groomName: data.groomName,
         weddingDate: data.weddingDate,
@@ -34,7 +55,7 @@ export async function POST(request: Request) {
         couplePhotoUrl: data.couplePhotoUrl,
         familyDetails: data.familyDetails,
         rsvpDetails: data.rsvpDetails,
-        isPremium: false, // Default for new creations until they pay
+        isPremium: false,
       });
 
     if (error) {
@@ -42,7 +63,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Database error' }, { status: 500 });
     }
 
-    // Return the generated slug so the client can redirect
     return NextResponse.json({ success: true, slug });
   } catch (error) {
     console.error('API Error:', error);

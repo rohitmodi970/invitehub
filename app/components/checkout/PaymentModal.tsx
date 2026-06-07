@@ -2,10 +2,11 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ShieldCheck, Loader2, CheckCircle2, Download, Share2 } from 'lucide-react';
+import { ArrowLeft, ShieldCheck, Loader2, CheckCircle2, Download, Share2, FileText } from 'lucide-react';
 import { Plan, PlanType } from './CheckoutFlow';
 import { ExitIntentModal } from './ExitIntentModal';
 import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import { downloadInvitation } from '@/lib/download';
 
 // Extend Window to include Razorpay
 declare global {
@@ -56,6 +57,8 @@ export function PaymentModal({
   const [showExitIntent, setShowExitIntent] = useState(false);
   const [exitShown, setExitShown] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
+  const [paidSlug, setPaidSlug] = useState<string | undefined>();
+  const [isDownloading, setIsDownloading] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load Razorpay SDK
@@ -130,7 +133,10 @@ export function PaymentModal({
         theme: { color: '#c9a84c' },
         handler: async (response: RazorpayResponse) => {
           try {
-            // 3. Verify payment server-side
+            // 3. Save invitation first to get slug
+            const slug = await saveInvitation();
+
+            // 4. Verify payment server-side (passes slug so isPremium gets flipped)
             const verifyRes = await fetch('/api/payments/verify', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -141,19 +147,19 @@ export function PaymentModal({
                 planType: plan.id,
                 amountPaid: effectivePrice,
                 userEmail,
+                invitationSlug: slug,
               }),
             });
             if (!verifyRes.ok) throw new Error('Payment verification failed');
 
-            // 4. Save invitation + get slug
-            const slug = await saveInvitation();
+            setPaidSlug(slug);
             setPaymentDone(true);
 
+            // Auto-trigger download after short delay
             setTimeout(() => {
+              triggerDownload('png');
               if (plan.id === 'digital-suite') {
                 onSuccess(slug);
-              } else {
-                onSuccess();
               }
             }, 1200);
           } catch (err) {
@@ -179,6 +185,21 @@ export function PaymentModal({
     }
   };
 
+  const triggerDownload = useCallback(async (format: 'png' | 'pdf') => {
+    setIsDownloading(true);
+    try {
+      const brideName = invitationData.brideName || 'invite';
+      const groomName = invitationData.groomName || 'card';
+      const filename = `invitehub-${brideName}-${groomName}`.toLowerCase().replace(/\s+/g, '-');
+      await downloadInvitation('download-container', filename, format);
+    } catch (err) {
+      console.error('Download error:', err);
+      alert('Download failed. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  }, [invitationData]);
+
   const handleAcceptDiscount = () => {
     setShowExitIntent(false);
     onExitDiscount();
@@ -190,23 +211,82 @@ export function PaymentModal({
   };
 
   if (paymentDone) {
+    const hasPdf = plan.id === 'print-ready' || plan.id === 'digital-suite';
+    const hasEnvelope = plan.id === 'print-ready' || plan.id === 'digital-suite';
+
     return (
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl text-center"
+        className="w-full max-w-sm rounded-3xl overflow-hidden shadow-2xl"
         style={cardStyle}
       >
-        <div className="px-8 py-12">
+        <div className="px-8 py-10">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20, delay: 0.1 }}
           >
-            <CheckCircle2 size={64} className="mx-auto mb-6" style={{ color: '#c9a84c' }} />
+            <CheckCircle2 size={56} className="mx-auto mb-5" style={{ color: '#c9a84c' }} />
           </motion.div>
-          <h2 className="text-white font-black text-2xl mb-2">Payment Successful! 🎉</h2>
-          <p className="text-white/50 text-sm">Your invitation is ready.</p>
+          <h2 className="text-white font-black text-2xl mb-1 text-center">Payment Successful! 🎉</h2>
+          <p className="text-white/40 text-sm text-center mb-7">Your premium invitation is ready.</p>
+
+          {/* Download buttons */}
+          <div className="flex flex-col gap-3">
+            <motion.button
+              whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+              onClick={() => triggerDownload('png')}
+              disabled={isDownloading}
+              className="w-full py-3.5 rounded-2xl font-bold text-[#1a0e00] flex items-center justify-center gap-2 disabled:opacity-60 transition-all"
+              style={{ background: 'linear-gradient(135deg, #c9a84c 0%, #f0d080 100%)' }}
+            >
+              {isDownloading ? <Loader2 size={16} className="animate-spin" /> : <Download size={16} />}
+              Download PNG (HD)
+            </motion.button>
+
+            {hasPdf && (
+              <motion.button
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                onClick={() => triggerDownload('pdf')}
+                disabled={isDownloading}
+                className="w-full py-3.5 rounded-2xl font-bold text-white flex items-center justify-center gap-2 disabled:opacity-60 transition-all"
+                style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}
+              >
+                {isDownloading ? <Loader2 size={16} className="animate-spin" /> : <FileText size={16} />}
+                Download Print-Ready PDF
+              </motion.button>
+            )}
+
+            {hasEnvelope && (
+              <motion.button
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                onClick={() => downloadInvitation('envelope-container', `invitehub-envelope-${invitationData.brideName}`, 'png')}
+                disabled={isDownloading}
+                className="w-full py-3.5 rounded-2xl font-bold text-white flex items-center justify-center gap-2 disabled:opacity-60 transition-all"
+                style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}
+              >
+                <Share2 size={16} />
+                Download Envelope Design
+              </motion.button>
+            )}
+
+            {paidSlug && plan.id === 'digital-suite' && (
+              <motion.button
+                whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
+                onClick={() => onSuccess(paidSlug)}
+                className="w-full py-3.5 rounded-2xl font-bold text-white flex items-center justify-center gap-2 transition-all"
+                style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)' }}
+              >
+                <Share2 size={16} />
+                View Shareable Page →
+              </motion.button>
+            )}
+          </div>
+
+          <p className="text-white/20 text-xs text-center mt-6">
+            All downloads are watermark-free ✨
+          </p>
         </div>
       </motion.div>
     );
@@ -261,13 +341,16 @@ export function PaymentModal({
             <p className="text-[#c9a84c] text-xs font-semibold uppercase tracking-wider mb-2">You&apos;ll get</p>
             <div className="flex flex-wrap gap-2">
               {plan.id !== 'digital-suite'
-                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Download size={11} /> HD Download (No Watermark)</span>
+                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Download size={11} /> HD PNG (No Watermark)</span>
                 : null}
               {plan.id === 'print-ready' || plan.id === 'digital-suite'
-                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Download size={11} /> Print-Quality PDF</span>
+                ? <span className="flex items-center gap-1 text-white/60 text-xs"><FileText size={11} /> Print-Quality PDF</span>
+                : null}
+              {plan.id === 'print-ready' || plan.id === 'digital-suite'
+                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Share2 size={11} /> Envelope Design</span>
                 : null}
               {plan.id === 'digital-suite'
-                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Share2 size={11} /> Ad-Free Shareable Link + RSVP</span>
+                ? <span className="flex items-center gap-1 text-white/60 text-xs"><Share2 size={11} /> Ad-Free Link + RSVP</span>
                 : null}
             </div>
           </div>

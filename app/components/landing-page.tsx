@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 
 import { easeOut, motion } from "framer-motion";
 import {
@@ -10,6 +11,7 @@ import {
   Check,
   CreditCard,
   HeartHandshake,
+  LayoutDashboard,
   LayoutTemplate,
   MonitorSmartphone,
   PartyPopper,
@@ -131,6 +133,14 @@ const faqs = [
 ];
 
 export function LandingPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/auth/me', { cache: 'no-store' })
+      .then(res => { if (res.ok) setIsLoggedIn(true); })
+      .catch(() => {});
+  }, []);
+
   return (
     <main className="relative overflow-hidden">
       <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.88),_transparent_30%),radial-gradient(circle_at_right,_rgba(247,198,168,0.45),_transparent_24%)]" />
@@ -151,13 +161,24 @@ export function LandingPage() {
               priority
             />
           </div>
-          <Link
-            href="/templates"
-            className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#6f2216]"
-          >
-            Browse Templates
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            {isLoggedIn && (
+              <Link
+                href="/dashboard"
+                className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white/90 px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Link>
+            )}
+            <Link
+              href="/templates"
+              className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#6f2216]"
+            >
+              Browse Templates
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </motion.div>
 
         <div className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">

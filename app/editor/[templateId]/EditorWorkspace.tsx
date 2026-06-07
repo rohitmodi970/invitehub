@@ -2,12 +2,14 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Pencil, Download, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Pencil, Download, Check, ChevronLeft, ChevronRight, ImageDown } from 'lucide-react';
 import { TEMPLATES } from '@/lib/templates/data';
 import { getTemplateComponent } from '@/lib/templates/registry';
 import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
 import { EditorForm } from '@/app/editor/[templateId]/EditorForm';
 import { CheckoutFlow, PlanType } from '@/app/components/checkout/CheckoutFlow';
+import { getEnvelopeComponent } from '@/lib/templates/envelopes';
+import { downloadInvitation } from '@/lib/download';
 import Image from 'next/image';
 
 const defaultData: InvitationData = {
@@ -19,8 +21,6 @@ const defaultData: InvitationData = {
   venueAddress: 'Diplomatic Enclave, New Delhi',
   additionalMessage: 'Join us to celebrate our new beginning.',
 };
-
-import html2canvas from 'html2canvas';
 
 export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: string }) {
   const router = useRouter();
@@ -36,7 +36,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
     setIsMounted(true);
     const saved = localStorage.getItem('invitehub-draft');
     if (saved) {
-      try { setData(JSON.parse(saved)); } catch (e) { /* ignore */ }
+      try { setData(JSON.parse(saved)); } catch { /* ignore */ }
     }
   }, []);
 
@@ -53,40 +53,24 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
 
   const handleCheckoutSuccess = useCallback((plan: PlanType, slug?: string) => {
     setIsCheckoutOpen(false);
-    localStorage.removeItem('invitehub-draft');
     if (plan === 'digital-suite' && slug) {
+      localStorage.removeItem('invitehub-draft');
       router.push(`/i/${slug}`);
-    } else {
-      downloadImage();
     }
+    // Downloads are now handled inside PaymentModal success screen
   }, [router]);
 
-  const downloadImage = async () => {
-    const el = document.getElementById('download-container');
-    if (!el) {
-      alert('Could not prepare the invitation for download.');
-      return;
-    }
-    
+  const handleFreeDownload = useCallback(async () => {
     setIsDownloading(true);
     try {
-      const canvas = await html2canvas(el, {
-        scale: 2,
-        useCORS: true,
-        backgroundColor: null
-      });
-      const link = document.createElement('a');
-      link.download = `invitehub-${activeTemplateId}.png`;
-      link.href = canvas.toDataURL('image/png');
-      link.click();
-      alert('Payment successful! Your invitation has been downloaded.');
-    } catch (err) {
-      console.error('Download error:', err);
-      alert('Failed to generate download image. Please try again.');
+      const filename = `invitehub-preview-${data.brideName}-${data.groomName}`.toLowerCase().replace(/\s+/g, '-');
+      await downloadInvitation('free-download-container', filename, 'png');
+    } catch {
+      alert('Download failed. Please try again.');
     } finally {
       setIsDownloading(false);
     }
-  };
+  }, [data]);
 
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -97,6 +81,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
   if (!isMounted) return null;
 
   const ActiveComponent = getTemplateComponent(activeTemplateId);
+  const EnvelopeComponent = getEnvelopeComponent(activeTemplateId);
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#f0f2f5]">
@@ -108,7 +93,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
           <span className="hidden sm:inline text-gray-400 text-sm ml-2">/ Editor</span>
         </div>
         <div className="flex items-center gap-2">
-          {isDownloading && <span className="text-xs text-blue-500 font-medium mr-2 animate-pulse">Downloading...</span>}
+          {isDownloading && <span className="text-xs text-blue-500 font-medium mr-2 animate-pulse">Preparing...</span>}
           <span className="text-xs text-gray-400 hidden sm:block">Changes auto-saved</span>
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
         </div>
@@ -118,10 +103,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
       <div className="flex-1 overflow-hidden flex items-center justify-center p-4 sm:p-6 min-h-0">
         <div
           className="relative shadow-2xl rounded-xl overflow-hidden"
-          style={{
-            maxHeight: '100%',
-            maxWidth: '100%',
-          }}
+          style={{ maxHeight: '100%', maxWidth: '100%' }}
         >
           <div
             style={{
@@ -133,6 +115,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             <ActiveComponent data={data} isPremium={false} />
           </div>
 
+          {/* Watermark overlay */}
           <div className="absolute inset-x-0 bottom-0 py-2.5 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-3 z-50">
             <span className="text-white/90 text-xs font-semibold tracking-wide flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
               <span className="text-amber-400">✨</span> Watermark removed on download
@@ -204,18 +187,30 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
         </div>
 
         {/* Action Buttons */}
-        <div className="p-3 sm:p-4 flex items-center justify-center gap-3 max-w-md mx-auto">
+        <div className="p-3 sm:p-4 flex items-center justify-center gap-2 max-w-lg mx-auto">
           <button
             onClick={() => setIsFormOpen(true)}
-            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg active:scale-95"
+            className="flex-1 flex items-center justify-center gap-2 py-3 px-3 rounded-xl bg-gray-900 hover:bg-gray-800 text-white font-semibold text-sm transition-all shadow-md hover:shadow-lg active:scale-95"
           >
             <Pencil size={16} />
-            Edit Details
+            Edit
           </button>
 
+          {/* Free download (watermarked) */}
+          <button
+            onClick={handleFreeDownload}
+            disabled={isDownloading}
+            title="Download free (with watermark)"
+            className="flex items-center justify-center gap-1.5 py-3 px-3 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-600 font-semibold text-sm transition-all shadow-sm hover:shadow-md active:scale-95 disabled:opacity-60"
+          >
+            <ImageDown size={16} />
+            <span className="hidden sm:inline">Free</span>
+          </button>
+
+          {/* Premium download */}
           <button
             onClick={() => setIsCheckoutOpen(true)}
-            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-sm transition-all shadow-md shadow-orange-400/30 hover:shadow-lg active:scale-95"
+            className="flex-[2] flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-sm transition-all shadow-md shadow-orange-400/30 hover:shadow-lg active:scale-95"
           >
             <Download size={16} />
             Download / Share
@@ -249,11 +244,22 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
         />
       )}
 
-      {/* ── Hidden Premium Render for Download ── */}
-      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', pointerEvents: 'none' }}>
+      {/* ── Hidden renders for download ── */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', pointerEvents: 'none', zIndex: -1 }}>
+        {/* Premium (no watermark) for paid downloads */}
         <div id="download-container">
           <ActiveComponent data={data} isPremium={true} />
         </div>
+        {/* Free (with watermark) */}
+        <div id="free-download-container">
+          <ActiveComponent data={data} isPremium={false} />
+        </div>
+        {/* Envelope design */}
+        {EnvelopeComponent && (
+          <div id="envelope-container">
+            <EnvelopeComponent data={data} />
+          </div>
+        )}
       </div>
 
     </div>
