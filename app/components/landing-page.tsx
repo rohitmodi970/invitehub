@@ -131,13 +131,13 @@ export function LandingPage() {
           transition={{ duration: 0.45 }}
           className="flex items-center justify-between gap-4 rounded-full border border-[var(--border)] bg-[color:var(--surface)]/85 px-4 py-3 shadow-[0_10px_40px_rgba(120,64,42,0.08)] backdrop-blur"
         >
-          <div className="flex items-center gap-3">
+          <div className="flex items-center w-40 sm:w-56 h-10 relative">
             <Image
               src="/elegant_logo_with_domain_written.png"
               alt="InviteHub.in Logo"
-              width={160}
-              height={40}
-              className="h-10 w-auto object-contain"
+              width={400}
+              height={120}
+              className="absolute -left-2 top-1/2 -translate-y-1/2 w-[180%] max-w-none h-auto object-contain drop-shadow-sm"
               priority
             />
           </div>
