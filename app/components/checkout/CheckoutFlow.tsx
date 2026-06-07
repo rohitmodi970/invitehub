@@ -64,7 +64,7 @@ export function CheckoutFlow({ templateId, invitationData, onClose, onSuccess }:
   const [discountApplied, setDiscountApplied] = useState(false);
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', { cache: 'no-store' })
       .then((res) => {
         if (res.ok) return res.json();
         throw new Error('Not authenticated');

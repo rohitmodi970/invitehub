@@ -20,6 +20,8 @@ const defaultData: InvitationData = {
   additionalMessage: 'Join us to celebrate our new beginning.',
 };
 
+import html2canvas from 'html2canvas';
+
 export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: string }) {
   const router = useRouter();
   const carouselRef = useRef<HTMLDivElement>(null);
@@ -28,6 +30,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   useEffect(() => {
     setIsMounted(true);
@@ -54,10 +57,36 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
     if (plan === 'digital-suite' && slug) {
       router.push(`/i/${slug}`);
     } else {
-      // For basic/print-ready: show a brief success state (download handled by backend/future)
-      alert('Payment successful! Your invitation download will begin shortly. (Download feature coming soon — check your email)');
+      downloadImage();
     }
   }, [router]);
+
+  const downloadImage = async () => {
+    const el = document.getElementById('download-container');
+    if (!el) {
+      alert('Could not prepare the invitation for download.');
+      return;
+    }
+    
+    setIsDownloading(true);
+    try {
+      const canvas = await html2canvas(el, {
+        scale: 2,
+        useCORS: true,
+        backgroundColor: null
+      });
+      const link = document.createElement('a');
+      link.download = `invitehub-${activeTemplateId}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      alert('Payment successful! Your invitation has been downloaded.');
+    } catch (err) {
+      console.error('Download error:', err);
+      alert('Failed to generate download image. Please try again.');
+    } finally {
+      setIsDownloading(false);
+    }
+  };
 
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -79,6 +108,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
           <span className="hidden sm:inline text-gray-400 text-sm ml-2">/ Editor</span>
         </div>
         <div className="flex items-center gap-2">
+          {isDownloading && <span className="text-xs text-blue-500 font-medium mr-2 animate-pulse">Downloading...</span>}
           <span className="text-xs text-gray-400 hidden sm:block">Changes auto-saved</span>
           <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
         </div>
@@ -89,12 +119,10 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
         <div
           className="relative shadow-2xl rounded-xl overflow-hidden"
           style={{
-            /* Scale the preview so it fits perfectly in the available space */
             maxHeight: '100%',
             maxWidth: '100%',
           }}
         >
-          {/* Scale wrapper — the template renders at its natural size, then we scale it down */}
           <div
             style={{
               transform: 'scale(var(--preview-scale, 0.72))',
@@ -105,7 +133,6 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             <ActiveComponent data={data} isPremium={false} />
           </div>
 
-          {/* Watermark overlay at the bottom of the preview */}
           <div className="absolute inset-x-0 bottom-0 py-2.5 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-3 z-50">
             <span className="text-white/90 text-xs font-semibold tracking-wide flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
               <span className="text-amber-400">✨</span> Watermark removed on download
@@ -119,7 +146,6 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
 
         {/* Template Carousel */}
         <div className="relative border-b border-gray-100">
-          {/* Left Arrow */}
           <button
             onClick={() => scrollCarousel('left')}
             className="absolute left-0 top-0 bottom-0 z-10 px-1.5 bg-gradient-to-r from-white to-transparent text-gray-500 hover:text-gray-800 flex items-center"
@@ -147,7 +173,6 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
                       ? 'border-blue-600 shadow-lg shadow-blue-500/20 scale-105'
                       : 'border-transparent hover:border-gray-300'
                   }`}>
-                    {/* Mini live render of the template */}
                     <div
                       className="absolute inset-0 pointer-events-none"
                       style={{ transform: 'scale(0.13)', transformOrigin: 'top left', width: '770%', height: '770%' }}
@@ -170,7 +195,6 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             })}
           </div>
 
-          {/* Right Arrow */}
           <button
             onClick={() => scrollCarousel('right')}
             className="absolute right-0 top-0 bottom-0 z-10 px-1.5 bg-gradient-to-l from-white to-transparent text-gray-500 hover:text-gray-800 flex items-center"
@@ -224,6 +248,14 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
           onSuccess={handleCheckoutSuccess}
         />
       )}
+
+      {/* ── Hidden Premium Render for Download ── */}
+      <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', pointerEvents: 'none' }}>
+        <div id="download-container">
+          <ActiveComponent data={data} isPremium={true} />
+        </div>
+      </div>
+
     </div>
   );
 }
