@@ -7,16 +7,8 @@ import { ArrowRight, Crown, Sparkles } from 'lucide-react';
 import type { Template } from '@/lib/templates/types';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
 import { getTemplateComponent } from '@/lib/templates/registry';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
-
-const sampleData: InvitationData = {
-  brideName: 'Priya',
-  groomName: 'Rahul',
-  weddingDate: '15th February 2027',
-  weddingTime: '7:00 PM',
-  venueName: 'Taj Palace',
-  venueAddress: 'New Delhi',
-};
+import { getSampleDataForTemplate, getTemplateEventType } from '@/lib/utils/template-helpers';
+import { getEventTypeDef } from '@/lib/events/types';
 
 interface TemplateCardProps {
   template: Template;
@@ -44,7 +36,7 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
           {/* Live Component Preview */}
           <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#f8f9fa] flex items-center justify-center">
             <div className="origin-top scale-[0.4] sm:scale-[0.45] w-full h-full absolute inset-0 flex items-center justify-center group-hover:scale-[0.42] sm:group-hover:scale-[0.48] transition-transform duration-500">
-              <TemplateComponent data={sampleData} isPremium={false} />
+              <TemplateComponent data={getSampleDataForTemplate(template)} isPremium={false} />
             </div>
             {/* Click Shield */}
             <div className="absolute inset-0 z-40 bg-transparent" />
@@ -76,6 +68,10 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
             <h3 className="font-semibold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors">
               {template.name}
             </h3>
+            <p className="text-xs text-blue-600 font-medium mb-1">
+              {getEventTypeDef(getTemplateEventType(template)).emoji}{' '}
+              {getEventTypeDef(getTemplateEventType(template)).label}
+            </p>
             <p className="text-sm text-gray-600 mb-3 line-clamp-2">{template.description}</p>
 
             {/* Tags */}

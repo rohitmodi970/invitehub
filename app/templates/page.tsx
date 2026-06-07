@@ -1,9 +1,11 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { TemplateGallery } from '@/app/components/TemplateGallery';
-import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates/data';
+import { TEMPLATES } from '@/lib/templates/data';
 
-const title = 'Wedding Invitation Templates';
-const description = 'Browse our collection of beautiful wedding invitation templates. Choose from modern, traditional, floral, and royal designs. All templates are fully customizable.';
+const title = 'Invitation Templates – Wedding, Birthday & More';
+const description =
+  'Browse invitation templates for weddings, birthdays, engagements, baby showers, housewarmings, anniversaries, and corporate events. Fully customizable designs.';
 
 export const metadata: Metadata = {
   title,
@@ -12,12 +14,11 @@ export const metadata: Metadata = {
     canonical: '/templates',
   },
   keywords: [
+    'invitation templates',
     'wedding invitation templates',
-    'invitation card designs',
-    'digital wedding invitations',
-    'customizable templates',
-    'free templates',
-    'premium templates',
+    'birthday invitation templates',
+    'engagement invitation templates',
+    'digital invitation designs',
   ],
   openGraph: {
     title,
@@ -30,7 +31,7 @@ export const metadata: Metadata = {
 const templateSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
-  name: 'Wedding Invitation Templates',
+  name: 'Invitation Templates',
   description,
   url: 'https://invitehub.in/templates',
   numberOfItems: TEMPLATES.length,
@@ -69,7 +70,9 @@ const breadcrumbSchema = {
 export default function TemplatesPage() {
   return (
     <>
-      <TemplateGallery />
+      <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
+        <TemplateGallery />
+      </Suspense>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(templateSchema) }}

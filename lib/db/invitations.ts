@@ -1,7 +1,7 @@
 import { supabase } from '@/lib/supabase/client';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import type { InvitationData } from '@/lib/invitations/types';
+import type { EventType } from '@/lib/events/types';
 
-// We map our Supabase database schema back to the InvitationData interface
 export async function getInvitationBySlug(slug: string) {
   const { data, error } = await supabase
     .from('invitations')
@@ -16,8 +16,10 @@ export async function getInvitationBySlug(slug: string) {
   return {
     id: data.id,
     templateId: data.templateId,
+    eventType: (data.eventType as EventType) ?? 'wedding',
     isPremium: data.isPremium,
     data: {
+      eventType: (data.eventType as EventType) ?? 'wedding',
       brideName: data.brideName,
       groomName: data.groomName,
       weddingDate: data.weddingDate,
@@ -29,19 +31,18 @@ export async function getInvitationBySlug(slug: string) {
       couplePhotoUrl: data.couplePhotoUrl || undefined,
       familyDetails: data.familyDetails || undefined,
       rsvpDetails: data.rsvpDetails || undefined,
-    } as InvitationData
+    } as InvitationData,
   };
 }
 
-// Function to generate a unique slug
-export async function generateUniqueSlug(brideName: string, groomName: string): Promise<string> {
-  const baseSlug = `${brideName.toLowerCase().trim()}-${groomName.toLowerCase().trim()}`.replace(/[^a-z0-9-]/g, '-');
+export async function generateUniqueSlug(primaryName: string, secondaryName: string): Promise<string> {
+  const baseSlug = `${primaryName.toLowerCase().trim()}-${secondaryName.toLowerCase().trim()}`.replace(/[^a-z0-9-]/g, '-');
   let slug = baseSlug;
   let counter = 1;
 
   while (true) {
     const { data } = await supabase.from('invitations').select('slug').eq('slug', slug).single();
-    if (!data) break; // Slug is unique
+    if (!data) break;
     slug = `${baseSlug}-${counter}`;
     counter++;
   }
@@ -55,7 +56,28 @@ export async function incrementViewCount(slug: string) {
     if (data) {
       await supabase.from('invitations').update({ viewCount: (data.viewCount || 0) + 1 }).eq('slug', slug);
     }
-  } catch (e) {
+  } catch {
     // Ignore analytics errors silently
   }
 }
+
+function getInvitationTitle(eventType: EventType, data: InvitationData): string {
+  switch (eventType) {
+    case 'birthday':
+      return `${data.brideName}'s Birthday Invitation 🎂`;
+    case 'engagement':
+      return `${data.brideName} & ${data.groomName}'s Engagement 💍`;
+    case 'baby-shower':
+      return `${data.brideName} — Baby Shower 👶`;
+    case 'housewarming':
+      return `${data.brideName} — Housewarming 🏠`;
+    case 'anniversary':
+      return `${data.brideName} & ${data.groomName}'s Anniversary ❤️`;
+    case 'corporate':
+      return `${data.brideName} | ${data.groomName} 🏢`;
+    default:
+      return `${data.brideName} & ${data.groomName}'s Wedding Invitation 💍`;
+  }
+}
+
+export { getInvitationTitle };

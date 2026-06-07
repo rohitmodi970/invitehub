@@ -1,0 +1,85 @@
+import type { InvitationData } from '@/lib/invitations/types';
+import type { EventType } from './types';
+
+export const DEFAULT_INVITATION_DATA: Record<EventType, InvitationData> = {
+  wedding: {
+    eventType: 'wedding',
+    brideName: 'Priya',
+    groomName: 'Rahul',
+    weddingDate: '15th February 2027',
+    weddingTime: '7:00 PM Onwards',
+    venueName: 'The Grand Taj Palace',
+    venueAddress: 'Diplomatic Enclave, New Delhi',
+    additionalMessage: 'Join us to celebrate our new beginning.',
+  },
+  birthday: {
+    eventType: 'birthday',
+    brideName: 'Aarav',
+    groomName: 'Turning 25',
+    weddingDate: '20th March 2027',
+    weddingTime: '6:00 PM Onwards',
+    venueName: 'Sky Lounge, Bandra',
+    venueAddress: 'Mumbai, Maharashtra',
+    additionalMessage: 'Come celebrate with cake, music, and good vibes!',
+    familyDetails: 'Hosted by the Sharma Family',
+  },
+  engagement: {
+    eventType: 'engagement',
+    brideName: 'Ananya',
+    groomName: 'Vikram',
+    weddingDate: '5th April 2027',
+    weddingTime: '7:30 PM Onwards',
+    venueName: 'The Leela Palace',
+    venueAddress: 'Chanakyapuri, New Delhi',
+    additionalMessage: 'We said yes! Join us for our ring ceremony.',
+    familyDetails: 'Daughter of Mr. & Mrs. Patel',
+  },
+  'baby-shower': {
+    eventType: 'baby-shower',
+    brideName: 'Sarah & James',
+    groomName: 'Baby Shower',
+    weddingDate: '12th May 2027',
+    weddingTime: '11:00 AM Onwards',
+    venueName: 'Garden Terrace Cafe',
+    venueAddress: 'Koramangala, Bengaluru',
+    additionalMessage: 'Help us shower the parents-to-be with love!',
+    familyDetails: 'Registry details shared on RSVP',
+  },
+  housewarming: {
+    eventType: 'housewarming',
+    brideName: 'The Mehta Family',
+    groomName: 'Griha Pravesh',
+    weddingDate: '1st June 2027',
+    weddingTime: '10:00 AM · Muhurat',
+    venueName: 'Our New Home',
+    venueAddress: 'Sector 62, Noida, UP',
+    additionalMessage: 'Bless our new home with your presence.',
+    familyDetails: 'Flat 402, Tower B, Green Valley Apartments',
+  },
+  anniversary: {
+    eventType: 'anniversary',
+    brideName: 'Ravi',
+    groomName: 'Meera',
+    weddingDate: '18th July 2027',
+    weddingTime: '7:00 PM Onwards',
+    venueName: 'The Oberoi',
+    venueAddress: 'Gurgaon, Haryana',
+    additionalMessage: 'Join us as we celebrate decades of love.',
+    familyDetails: 'Celebrating 25 Years Together',
+  },
+  corporate: {
+    eventType: 'corporate',
+    brideName: 'Annual Tech Summit 2026',
+    groomName: 'Acme Corp',
+    weddingDate: '22nd August 2026',
+    weddingTime: '9:00 AM – 5:00 PM',
+    venueName: 'Convention Centre Hall A',
+    venueAddress: 'Hyderabad, Telangana',
+    additionalMessage: 'Network, learn, and grow with industry leaders.',
+    familyDetails: 'Business casual · Keynote at 10 AM',
+  },
+};
+
+export function getDefaultInvitationData(eventType: EventType = 'wedding'): InvitationData {
+  return { ...DEFAULT_INVITATION_DATA[eventType] };
+}

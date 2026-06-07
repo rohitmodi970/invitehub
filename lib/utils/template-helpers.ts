@@ -1,5 +1,20 @@
 import { TEMPLATES } from '@/lib/templates/data';
+import type { EventType } from '@/lib/events/types';
+import { getDefaultInvitationData } from '@/lib/events/defaults';
 import type { Template, TemplateCategory } from '@/lib/templates/types';
+import type { InvitationData } from '@/lib/invitations/types';
+
+export function getTemplateEventType(template: Template): EventType {
+  return template.eventType ?? 'wedding';
+}
+
+export function getTemplatesByEventType(eventType: EventType): Template[] {
+  return TEMPLATES.filter((t) => getTemplateEventType(t) === eventType);
+}
+
+export function getSampleDataForTemplate(template: Template): InvitationData {
+  return getDefaultInvitationData(getTemplateEventType(template));
+}
 
 export function getTemplatesByCategory(category: TemplateCategory): Template[] {
   return TEMPLATES.filter((t) => t.category === category);
@@ -35,5 +50,15 @@ export function getRelatedTemplates(templateId: string, limit: number = 4): Temp
   const template = getTemplateById(templateId);
   if (!template) return [];
 
-  return TEMPLATES.filter((t) => t.id !== templateId && t.category === template.category).slice(0, limit);
+  const eventType = getTemplateEventType(template);
+  const sameEvent = TEMPLATES.filter(
+    (t) => t.id !== templateId && getTemplateEventType(t) === eventType
+  );
+  if (sameEvent.length >= limit) {
+    return sameEvent.slice(0, limit);
+  }
+  const sameCategory = TEMPLATES.filter(
+    (t) => t.id !== templateId && t.category === template.category
+  );
+  return [...sameEvent, ...sameCategory.filter((t) => !sameEvent.includes(t))].slice(0, limit);
 }

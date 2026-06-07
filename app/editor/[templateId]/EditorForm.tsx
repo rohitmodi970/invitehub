@@ -2,11 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { X, Upload, Loader2, User, CalendarDays, Sparkles, ChevronRight, ChevronLeft, Check } from 'lucide-react';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import type { InvitationData } from '@/lib/invitations/types';
+import type { EventType } from '@/lib/events/types';
+import { EVENT_FIELD_CONFIG } from '@/lib/events/config';
+import { getEventTypeDef } from '@/lib/events/types';
 import { supabase } from '@/lib/supabase/client';
 
 interface EditorFormProps {
   data: InvitationData;
+  eventType?: EventType;
   onDataChange: (data: InvitationData) => void;
   onClose: () => void;
 }
@@ -28,16 +32,22 @@ const Input = ({
   </div>
 );
 
-const steps = [
-  { id: 1, label: 'Couple', icon: User, description: 'Names & photo' },
-  { id: 2, label: 'Event',  icon: CalendarDays, description: 'Date, time & venue' },
-  { id: 3, label: 'Extras', icon: Sparkles, description: 'Message & RSVP' },
-];
+const buildSteps = (eventType: EventType) => {
+  const fields = EVENT_FIELD_CONFIG[eventType];
+  return [
+    { id: 1, label: fields.step1Label, icon: User, description: fields.step1Description },
+    { id: 2, label: 'Event', icon: CalendarDays, description: 'Date, time & venue' },
+    { id: 3, label: 'Extras', icon: Sparkles, description: 'Message & RSVP' },
+  ];
+};
 
-export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
+export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose }: EditorFormProps) {
   const [step, setStep] = useState(1);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fields = EVENT_FIELD_CONFIG[eventType];
+  const steps = buildSteps(eventType);
+  const eventDef = getEventTypeDef(eventType);
 
   const handleChange = (field: keyof InvitationData, value: string) => {
     onDataChange({ ...data, [field]: value });
@@ -82,7 +92,7 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
         <div className="flex items-start justify-between mb-4">
           <div>
             <h2 className="text-lg font-bold text-gray-900">Customize Invitation</h2>
-            <p className="text-xs text-gray-400 mt-0.5">Live preview updates as you type</p>
+            <p className="text-xs text-gray-400 mt-0.5">{eventDef.emoji} {eventDef.label} · Live preview updates as you type</p>
           </div>
           <button
             onClick={onClose}
@@ -139,22 +149,22 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="grid grid-cols-2 gap-3">
               <Input
-                label="Bride / Partner 1"
+                label={fields.primaryNameLabel}
                 value={data.brideName || ''}
                 onChange={(val) => handleChange('brideName', val)}
-                placeholder="e.g. Priya"
+                placeholder={fields.primaryNamePlaceholder}
               />
               <Input
-                label="Groom / Partner 2"
+                label={fields.secondaryNameLabel}
                 value={data.groomName || ''}
                 onChange={(val) => handleChange('groomName', val)}
-                placeholder="e.g. Rahul"
+                placeholder={fields.secondaryNamePlaceholder}
               />
             </div>
 
             {/* Photo Upload */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Couple Photo (Optional)</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{fields.photoLabel}</label>
               <div
                 onClick={() => fileInputRef.current?.click()}
                 className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 ${
@@ -193,7 +203,7 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-gray-700">
-                          {isUploading ? 'Uploading...' : 'Upload Couple Photo'}
+                          {isUploading ? 'Uploading...' : `Upload Photo`}
                         </p>
                         <p className="text-xs text-gray-400 mt-0.5">JPG, PNG up to 5MB</p>
                       </div>
@@ -204,10 +214,10 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
             </div>
 
             <Input
-              label="Family Details (Optional)"
+              label={fields.familyDetailsLabel}
               value={data.familyDetails || ''}
               onChange={(val) => handleChange('familyDetails', val)}
-              placeholder="e.g. Son of Mr. & Mrs. Sharma"
+              placeholder={fields.familyDetailsPlaceholder}
             />
           </div>
         )}
@@ -217,7 +227,7 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="grid grid-cols-2 gap-3">
               <Input
-                label="Wedding Date"
+                label={fields.dateLabel}
                 value={data.weddingDate || ''}
                 onChange={(val) => handleChange('weddingDate', val)}
                 placeholder="e.g. 24th Nov 2026"
@@ -274,7 +284,7 @@ export function EditorForm({ data, onDataChange, onClose }: EditorFormProps) {
             <div className="bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl p-4 border border-rose-100">
               <p className="text-xs font-semibold text-rose-700 uppercase tracking-wider mb-3">Preview Summary</p>
               <div className="space-y-1.5 text-sm text-gray-700">
-                <p>💍 <span className="font-medium">{data.brideName || '—'}</span> & <span className="font-medium">{data.groomName || '—'}</span></p>
+                <p>{eventDef.emoji} <span className="font-medium">{data.brideName || '—'}</span> {fields.summaryConnector} <span className="font-medium">{data.groomName || '—'}</span></p>
                 <p>📅 {data.weddingDate || '—'} at {data.weddingTime || '—'}</p>
                 <p>📍 {data.venueName || '—'}</p>
               </div>

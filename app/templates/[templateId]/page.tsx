@@ -6,21 +6,11 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Download, Share2 } from 'lucide-react';
-import { getTemplateById, getRelatedTemplates } from '@/lib/utils/template-helpers';
+import { getTemplateById, getRelatedTemplates, getSampleDataForTemplate, getTemplateEventType } from '@/lib/utils/template-helpers';
 import { getTemplateComponent } from '@/lib/templates/registry';
 import { TemplateCard } from '@/app/components/TemplateCard';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
-
-const sampleData: InvitationData = {
-  brideName: 'Priya',
-  groomName: 'Rahul',
-  weddingDate: '15th February 2027',
-  weddingTime: '7:00 PM Onwards',
-  venueName: 'The Grand Taj Palace',
-  venueAddress: 'Diplomatic Enclave, New Delhi',
-  additionalMessage: 'Join us to celebrate our new beginning.',
-};
+import { getEventTypeDef } from '@/lib/events/types';
 
 interface TemplateDetailPageProps {
   params: Promise<{ templateId: string }>;
@@ -37,6 +27,8 @@ export default function TemplateDetailPage({ params }: TemplateDetailPageProps) 
   const relatedTemplates = getRelatedTemplates(templateId);
   const tier = TEMPLATE_TIERS[template.tier];
   const TemplateComponent = getTemplateComponent(template.id);
+  const sampleData = getSampleDataForTemplate(template);
+  const eventDef = getEventTypeDef(getTemplateEventType(template));
 
   return (
     <div className="min-h-screen bg-white">
@@ -71,7 +63,10 @@ export default function TemplateDetailPage({ params }: TemplateDetailPageProps) 
           <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-8">
             {/* Title Section */}
             <div>
-              <div className="flex items-center gap-2 mb-4">
+              <div className="flex items-center gap-2 mb-4 flex-wrap">
+                <span className="inline-block px-3 py-1 rounded-full bg-rose-100 text-rose-700 text-sm font-semibold">
+                  {eventDef.emoji} {eventDef.label}
+                </span>
                 <span className="inline-block px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm font-semibold">
                   {template.category.replace('-', ' ').toUpperCase()}
                 </span>

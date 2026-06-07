@@ -18,7 +18,15 @@ import { ModernBlushTemplate } from '@/app/templates/modern/ModernBlushTemplate'
 import { TraditionalMaroonTemplate } from '@/app/templates/traditional/TraditionalMaroonTemplate';
 import { LuxuryBlackTemplate } from '@/app/templates/modern/LuxuryBlackTemplate';
 import { PastelGardenTemplate } from '@/app/templates/wedding/PastelGardenTemplate';
-import { InvitationData, TemplateProps } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import { BirthdayConfettiTemplate } from '@/app/templates/events/BirthdayConfettiTemplate';
+import { EngagementRingsTemplate } from '@/app/templates/events/EngagementRingsTemplate';
+import { BabyShowerCloudTemplate } from '@/app/templates/events/BabyShowerCloudTemplate';
+import { HousewarmingHomeTemplate } from '@/app/templates/events/HousewarmingHomeTemplate';
+import { AnniversaryHeartsTemplate } from '@/app/templates/events/AnniversaryHeartsTemplate';
+import { CorporateMinimalTemplate } from '@/app/templates/events/CorporateMinimalTemplate';
+import type { InvitationData, TemplateProps } from '@/lib/invitations/types';
+
+export type { InvitationData, TemplateProps };
 
 // Fallback empty component for missing ones
 const PlaceholderTemplate = ({ data }: TemplateProps) => (
@@ -48,6 +56,12 @@ export const TEMPLATE_COMPONENTS: Record<string, React.FC<TemplateProps>> = {
   'marigold-fiesta-018': MarigoldFiestaTemplate,
   'kerala-temple-019': KeralaTempleTemplate,
   'modern-floral-020': ModernFloralGeometricTemplate,
+  'birthday-confetti-021': BirthdayConfettiTemplate,
+  'engagement-rings-022': EngagementRingsTemplate,
+  'baby-shower-cloud-023': BabyShowerCloudTemplate,
+  'housewarming-home-024': HousewarmingHomeTemplate,
+  'anniversary-hearts-025': AnniversaryHeartsTemplate,
+  'corporate-minimal-026': CorporateMinimalTemplate,
 };
 
 export function getTemplateComponent(id: string): React.FC<TemplateProps> {
