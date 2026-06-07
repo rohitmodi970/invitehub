@@ -56,7 +56,7 @@ export function PaymentModal({
   const [showExitIntent, setShowExitIntent] = useState(false);
   const [exitShown, setExitShown] = useState(false);
   const [paymentDone, setPaymentDone] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Load Razorpay SDK
   useEffect(() => {
