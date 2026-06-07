@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { PricingModal } from './PricingModal';
 import { AuthModal } from './AuthModal';
 import { PaymentModal } from './PaymentModal';
@@ -58,16 +58,41 @@ interface CheckoutFlowProps {
 export function CheckoutFlow({ templateId, invitationData, onClose, onSuccess }: CheckoutFlowProps) {
   const [stage, setStage] = useState<Stage>('pricing');
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [discountApplied, setDiscountApplied] = useState(false);
 
-  const handlePlanSelected = useCallback((plan: Plan) => {
-    setSelectedPlan(plan);
-    setStage('auth');
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then((res) => {
+        if (res.ok) return res.json();
+        throw new Error('Not authenticated');
+      })
+      .then((data) => {
+        if (data.authenticated && data.email) {
+          setIsAuthenticated(true);
+          setUserEmail(data.email);
+          const savedName = localStorage.getItem('invitehub-user-name');
+          if (savedName) setUserName(savedName);
+        }
+      })
+      .catch(() => {
+        setIsAuthenticated(false);
+      });
   }, []);
 
+  const handlePlanSelected = useCallback((plan: Plan) => {
+    setSelectedPlan(plan);
+    if (isAuthenticated && userEmail && userName) {
+      setStage('payment');
+    } else {
+      setStage('auth');
+    }
+  }, [isAuthenticated, userEmail, userName]);
+
   const handleAuthSuccess = useCallback((email: string, name: string) => {
+    setIsAuthenticated(true);
     setUserEmail(email);
     setUserName(name);
     setStage('payment');
