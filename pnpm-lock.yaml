@@ -35,6 +35,9 @@ importers:
       react-dom:
         specifier: 19.2.4
         version: 19.2.4(react@19.2.4)
+      react-transliterate:
+        specifier: ^1.1.9
+        version: 1.1.9(react@19.2.4)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4
@@ -1791,6 +1794,12 @@ packages:
   react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
 
+  react-transliterate@1.1.9:
+    resolution: {integrity: sha512-5z98xmo9fEWk++6A4o6FjoLVj6bpec8sFdQvjri9BSxqXq/r/5pwNNVWUZUzrY1DWAE++zAiJWhNuyuGxgrplw==}
+    engines: {node: '>=10'}
+    peerDependencies:
+      react: ^16.0.0
+
   react@19.2.4:
     resolution: {integrity: sha512-9nfp2hYpCwOjAN+8TZFGhtWEwgvWHXqESH8qT89AT/lWklpLON22Lc8pEtnpsZz7VmawabSU0gCjnj8aC0euHQ==}
     engines: {node: '>=0.10.0'}
@@ -1955,6 +1964,9 @@ packages:
   tapable@2.3.3:
     resolution: {integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==}
     engines: {node: '>=6'}
+
+  textarea-caret@3.1.0:
+    resolution: {integrity: sha512-cXAvzO9pP5CGa6NKx0WYHl+8CHKZs8byMkt3PCJBCmq2a34YA9pO1NrQET5pzeqnBjBdToF5No4rrmkDUgQC2Q==}
 
   tinyglobby@0.2.17:
     resolution: {integrity: sha512-wXR/dYpcqKmfWpEdZjiKJOwCNFndD0DMnrW/cYjVGttEkBfVgcLFHoNrlj47mjOVic9yyNu65alsgF4NQyTa2g==}
@@ -3904,6 +3916,11 @@ snapshots:
 
   react-is@16.13.1: {}
 
+  react-transliterate@1.1.9(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+      textarea-caret: 3.1.0
+
   react@19.2.4: {}
 
   reflect.getprototypeof@1.0.10:
@@ -4137,6 +4154,8 @@ snapshots:
   tailwindcss@4.3.0: {}
 
   tapable@2.3.3: {}
+
+  textarea-caret@3.1.0: {}
 
   tinyglobby@0.2.17:
     dependencies:
