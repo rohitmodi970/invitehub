@@ -13,6 +13,11 @@ import { GoldenPaisleyTemplate } from '@/app/templates/traditional/GoldenPaisley
 import { MarigoldFiestaTemplate } from '@/app/templates/traditional/MarigoldFiestaTemplate';
 import { KeralaTempleTemplate } from '@/app/templates/traditional/KeralaTempleTemplate';
 import { ModernFloralGeometricTemplate } from '@/app/templates/modern/Modern_geometric_wedding_invitation';
+import { FloralBloomTemplate } from '@/app/templates/wedding/FloralBloomTemplate';
+import { ModernBlushTemplate } from '@/app/templates/modern/ModernBlushTemplate';
+import { TraditionalMaroonTemplate } from '@/app/templates/traditional/TraditionalMaroonTemplate';
+import { LuxuryBlackTemplate } from '@/app/templates/modern/LuxuryBlackTemplate';
+import { PastelGardenTemplate } from '@/app/templates/wedding/PastelGardenTemplate';
 import { InvitationData, TemplateProps } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
 
 // Fallback empty component for missing ones
@@ -28,6 +33,11 @@ export const TEMPLATE_COMPONENTS: Record<string, React.FC<TemplateProps>> = {
   'romantic-vintage-003': RomanticVintageTemplate,
   'traditional-indian-004': TraditionalIndianTemplate,
   'royal-purple-005': RoyalPurpleTemplate,
+  'floral-bloom-006': FloralBloomTemplate,
+  'modern-blush-007': ModernBlushTemplate,
+  'traditional-maroon-008': TraditionalMaroonTemplate,
+  'luxury-black-009': LuxuryBlackTemplate,
+  'pastel-garden-010': PastelGardenTemplate,
   'white-elegance-011': WhiteEleganceTemplate,
   'botanical-garden-012': BotanicalGardenTemplate,
   'midnight-romance-013': MidnightRomanceTemplate,

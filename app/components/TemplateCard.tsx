@@ -12,7 +12,7 @@ import { InvitationData } from '@/app/templates/traditional-indian-004/component
 const sampleData: InvitationData = {
   brideName: 'Priya',
   groomName: 'Rahul',
-  weddingDate: '24th November 2026',
+  weddingDate: '15th February 2027',
   weddingTime: '7:00 PM',
   venueName: 'Taj Palace',
   venueAddress: 'New Delhi',

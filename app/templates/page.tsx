@@ -1,8 +1,8 @@
-﻿import type { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { TemplateGallery } from '@/app/components/TemplateGallery';
 import { TEMPLATES, TEMPLATE_CATEGORIES } from '@/lib/templates/data';
 
-const title = 'Wedding Invitation Templates | InviteHub.in';
+const title = 'Wedding Invitation Templates';
 const description = 'Browse our collection of beautiful wedding invitation templates. Choose from modern, traditional, floral, and royal designs. All templates are fully customizable.';
 
 export const metadata: Metadata = {
