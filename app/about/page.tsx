@@ -50,6 +50,29 @@ export default function AboutPage() {
             </motion.div>
           ))}
         </div>
+
+        {/* Our Mission Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          viewport={{ once: true }}
+          className="mt-16 rounded-3xl p-8 sm:p-12 text-left"
+          style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)' }}
+        >
+          <h2 className="text-3xl font-bold text-white mb-6">Our Mission</h2>
+          <div className="text-white/70 space-y-5 leading-relaxed text-lg">
+            <p>
+              At InviteHub, we believe that every great celebration begins with the perfect invitation. Traditionally, creating premium invitations meant dealing with expensive designers, long printing delays, and hidden costs. We built InviteHub to change that.
+            </p>
+            <p>
+              Our mission is to democratize beautiful design. Whether you are planning a grand Indian wedding, an intimate birthday party, or a professional corporate summit, our platform empowers you to create stunning, personalized digital invitations in minutes. We provide the tools, you provide the vision.
+            </p>
+            <p>
+              With features like live previews, HD downloads, built-in RSVP tracking, and instant WhatsApp sharing, we are bringing the invitation process into the digital age while maintaining the elegance and tradition of printed cards. Join thousands of happy customers who have trusted InviteHub to announce their most cherished moments.
+            </p>
+          </div>
+        </motion.div>
       </div>
       
       <Footer />

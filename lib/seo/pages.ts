@@ -4,7 +4,7 @@ import { EVENT_SEO_PAGES } from './event-pages';
 const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
   'wedding-invitation-card-maker': {
     slug: 'wedding-invitation-card-maker',
-    title: 'Wedding Invitation Card Maker – Design Beautiful Cards Online | InviteHub.in',
+    title: 'Wedding Invitation Card Maker – Design Beautiful Cards Online',
     description:
       'Create stunning wedding invitation cards online in minutes. Choose from 5+ elegant templates, add your details, and download HD PNG or PDF. Free to start. Trusted by couples across India.',
     keywords: [
@@ -123,7 +123,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'marriage-invitation-card': {
     slug: 'marriage-invitation-card',
-    title: 'Marriage Invitation Card – Elegant Digital & Printable Designs | InviteHub.in',
+    title: 'Marriage Invitation Card – Elegant Digital & Printable Designs',
     description:
       'Design a beautiful marriage invitation card online. Traditional Indian, modern, royal, and floral styles. Free to preview, download from ₹49. Share instantly on WhatsApp.',
     keywords: [
@@ -236,7 +236,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'digital-wedding-card': {
     slug: 'digital-wedding-card',
-    title: 'Digital Wedding Card – Interactive Online Invitations | InviteHub.in',
+    title: 'Digital Wedding Card – Interactive Online Invitations',
     description:
       'Create stunning digital wedding cards with countdown timer, RSVP, Google Maps, and WhatsApp sharing. Eco-friendly, instant, and beautiful. Free to start.',
     keywords: [
@@ -349,7 +349,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'online-wedding-invitation': {
     slug: 'online-wedding-invitation',
-    title: 'Online Wedding Invitation – Send & Share Instantly | InviteHub.in',
+    title: 'Online Wedding Invitation – Send & Share Instantly',
     description:
       'Create and send beautiful online wedding invitations to unlimited guests. RSVP tracking, Google Maps, countdown timer. Free to start, premium from ₹49.',
     keywords: [
@@ -462,7 +462,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'wedding-card-maker': {
     slug: 'wedding-card-maker',
-    title: 'Wedding Card Maker – Design Professional Cards Instantly | InviteHub.in',
+    title: 'Wedding Card Maker – Design Professional Cards Instantly',
     description:
       'Use InviteHub\'s free wedding card maker to design professional wedding invitation cards. Live preview, 5+ templates, HD download, PDF export. From ₹49.',
     keywords: [

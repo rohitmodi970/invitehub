@@ -26,6 +26,21 @@ export function SEOPageTemplate({ page }: SEOPageTemplateProps) {
   const ctaSection = page.sections[page.sections.length - 1];
   const contentSections = page.sections.slice(1, -1);
 
+  let eventType = 'Event';
+  const kw = (page.mainKeyword || '').toLowerCase();
+  if (kw.includes('wedding') || kw.includes('marriage')) eventType = 'Wedding';
+  else if (kw.includes('birthday')) eventType = 'Birthday';
+  else if (kw.includes('engagement')) eventType = 'Engagement';
+  else if (kw.includes('baby shower')) eventType = 'Baby Shower';
+  else if (kw.includes('housewarming')) eventType = 'Housewarming';
+  else if (kw.includes('anniversary')) eventType = 'Anniversary';
+  else if (kw.includes('corporate')) eventType = 'Corporate';
+
+  const badgeText = `✨ Premium ${eventType} Invitations`;
+  const trustText = (eventType === 'Wedding' || eventType === 'Engagement' || eventType === 'Anniversary') 
+    ? "Trusted by 5,000+ couples in India"
+    : "Trusted by 5,000+ happy customers in India";
+
   return (
     <div className="min-h-screen bg-[#faf8f5] text-[#1a0e00] font-sans selection:bg-[#c9a84c] selection:text-white overflow-hidden">
       
@@ -40,7 +55,7 @@ export function SEOPageTemplate({ page }: SEOPageTemplateProps) {
         <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
           <motion.div {...fadeUp} className="max-w-2xl">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold text-[#c9a84c] bg-[#c9a84c]/10 border border-[#c9a84c]/20 mb-6 uppercase tracking-widest">
-              ✨ Premium Wedding Invitations
+              {badgeText}
             </span>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] mb-6 text-[#1a0e00]">
               {heroSection.title}
@@ -72,7 +87,7 @@ export function SEOPageTemplate({ page }: SEOPageTemplateProps) {
                 <div className="flex text-[#c9a84c] text-sm mb-1">
                   {'★★★★★'}
                 </div>
-                <p className="text-xs text-[#1a0e00]/60 font-medium">Trusted by 5,000+ couples in India</p>
+                <p className="text-xs text-[#1a0e00]/60 font-medium">{trustText}</p>
               </div>
             </div>
           </motion.div>

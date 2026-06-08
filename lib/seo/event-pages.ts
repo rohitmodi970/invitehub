@@ -3,7 +3,7 @@ import type { SEOPageContent } from './types';
 export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
   'birthday-invitation-card': {
     slug: 'birthday-invitation-card' as SEOPageContent['slug'],
-    title: 'Birthday Invitation Card Maker – Design Online Free | InviteHub.in',
+    title: 'Birthday Invitation Card Maker – Design Online Free',
     description:
       'Create beautiful birthday invitation cards online in minutes. Free templates, live preview, HD downloads. Perfect for kids and adult birthday parties across India.',
     keywords: [
@@ -67,7 +67,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'engagement-invitation': {
     slug: 'engagement-invitation' as SEOPageContent['slug'],
-    title: 'Engagement Invitation Card – Ring Ceremony Designs | InviteHub.in',
+    title: 'Engagement Invitation Card – Ring Ceremony Designs',
     description:
       'Design elegant engagement invitation cards online. Beautiful templates for ring ceremonies and engagement parties. Free preview, HD downloads from ₹49.',
     keywords: [
@@ -121,7 +121,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'baby-shower-invitation': {
     slug: 'baby-shower-invitation' as SEOPageContent['slug'],
-    title: 'Baby Shower Invitation Card – Soft & Beautiful Designs | InviteHub.in',
+    title: 'Baby Shower Invitation Card – Soft & Beautiful Designs',
     description:
       'Create adorable baby shower invitation cards online. Soft blue designs, parent names, registry notes. Free preview, share instantly.',
     keywords: [
@@ -171,7 +171,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'housewarming-invitation': {
     slug: 'housewarming-invitation' as SEOPageContent['slug'],
-    title: 'Housewarming Invitation Card – Griha Pravesh Designs | InviteHub.in',
+    title: 'Housewarming Invitation Card – Griha Pravesh Designs',
     description:
       'Design housewarming and griha pravesh invitation cards online. Fresh green templates, host names, muhurat time. Free preview, HD downloads.',
     keywords: [
@@ -221,7 +221,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'anniversary-invitation': {
     slug: 'anniversary-invitation' as SEOPageContent['slug'],
-    title: 'Anniversary Invitation Card – Celebrate Years of Love | InviteHub.in',
+    title: 'Anniversary Invitation Card – Celebrate Years of Love',
     description:
       'Design romantic anniversary invitation cards online. Milestone celebrations, couple names, years together. Free preview, HD downloads.',
     keywords: [
@@ -271,7 +271,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
 
   'corporate-event-invitation': {
     slug: 'corporate-event-invitation' as SEOPageContent['slug'],
-    title: 'Corporate Event Invitation – Professional Designs | InviteHub.in',
+    title: 'Corporate Event Invitation – Professional Designs',
     description:
       'Create professional corporate event invitation cards online. Conferences, summits, team events. Clean minimal templates, free preview.',
     keywords: [

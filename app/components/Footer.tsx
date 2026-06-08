@@ -102,7 +102,6 @@ export function Footer() {
             <ul className="space-y-2.5 text-sm">
               {[
                 { label: 'About Us', href: '/about' },
-                { label: 'Pricing', href: '/#pricing' },
                 { label: 'Contact Us', href: '/contact' },
                 { label: 'Privacy Policy', href: '/privacy' },
                 { label: 'Terms of Service', href: '/terms' },
