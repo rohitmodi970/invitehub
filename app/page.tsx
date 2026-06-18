@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 
 import { LandingPage } from "./components/landing-page";
 
-const title = "Wedding Invitation Card Maker | InviteHub.in";
+const title = "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in";
 const description =
-  "Create elegant wedding invitation cards with live preview, SEO-friendly invitation pages, and premium downloads.";
+  "Create stunning digital invitations for any occasion — weddings, birthdays, corporate events, baby showers, anniversaries, engagements & more. Live preview, WhatsApp sharing, and premium HD downloads.";
 
 export const metadata: Metadata = {
   title,
@@ -13,11 +13,31 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   keywords: [
+    // Primary — broad invitation maker
+    "invitation card maker",
+    "digital invitation maker India",
+    "online invitation card maker",
+    "free invitation maker",
+    // Birthday
+    "birthday invitation card maker",
+    "online birthday invitation",
+    "digital birthday card maker",
+    // Corporate
+    "corporate event invitation",
+    "business event invitation card",
+    "corporate party invitation maker",
+    // Wedding
     "wedding invitation card maker",
-    "digital wedding invitation",
-    "online wedding invitation",
+    "digital wedding invitation India",
+    "online wedding card maker",
+    // Other events
+    "baby shower invitation card",
+    "engagement invitation card maker",
+    "anniversary invitation card",
+    "housewarming invitation card",
+    // Brand
     "InviteHub",
-    "wedding card maker",
+    "InviteHub.in",
   ],
   openGraph: {
     title,
@@ -108,18 +128,26 @@ const faqSchema_extended = {
   mainEntity: [
     {
       "@type": "Question",
-      name: "Can I create a wedding invitation online?",
+      name: "What types of invitations can I create on InviteHub.in?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. InviteHub.in is a digital wedding invitation card maker where you can create beautiful invitations with live preview, personalized details, couple photos, and shareable invitation pages in minutes.",
+        text: "InviteHub.in supports invitations for all occasions — weddings, birthdays, corporate events, baby showers, engagements, anniversaries, housewarmings, and more. Browse 40+ premium templates across all categories.",
       },
     },
     {
       "@type": "Question",
-      name: "What templates do you offer?",
+      name: "Can I create a birthday invitation card online for free?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "InviteHub.in currently focuses on wedding invitations with five main styles: wedding, royal wedding, floral wedding, traditional Indian wedding, and modern wedding templates.",
+        text: "Yes. InviteHub.in offers free birthday invitation card templates with live preview and WhatsApp sharing. Free downloads include a subtle watermark; upgrade to \u20b949 for HD downloads without watermark.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "Can I create a corporate event or office party invitation?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Yes. InviteHub.in has professional corporate invitation templates for conferences, product launches, team parties, and business events. Fully customizable with your company details and branding.",
       },
     },
     {
@@ -127,23 +155,23 @@ const faqSchema_extended = {
       name: "How much does it cost?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "InviteHub.in is free to use with a subtle watermark. Premium plans start at ₹49 for HD PNG downloads without watermark, and ₹99 for HD PNG, PDF, and envelope design.",
+        text: "InviteHub.in is free to use with a subtle watermark. Premium plans start at \u20b949 for HD PNG downloads without watermark, and \u20b999 for HD PNG, PDF, and envelope design.",
       },
     },
     {
       "@type": "Question",
-      name: "Will the free plan include a watermark?",
+      name: "Can I share my invitation on WhatsApp?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. Free downloads will keep subtle 'Created with InviteHub.in' branding until the user upgrades to a premium plan.",
+        text: "Yes. After creating your invitation, you get a unique shareable link (invitehub.in/i/yourname) and a one-tap WhatsApp share button to instantly send invitations to all your guests.",
       },
     },
     {
       "@type": "Question",
-      name: "Can I share my invitation?",
+      name: "Can I create a wedding invitation online?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "Yes. After creating your invitation, you get a unique shareable link (invitehub.in/i/names) and a WhatsApp share option to send invitations instantly to your guests.",
+        text: "Yes. InviteHub.in offers beautiful wedding invitation templates including Traditional Indian, Elegant Gold, Royal Purple, Romantic Vintage, and more — with live preview, couple photo upload, and shareable pages.",
       },
     },
   ],
