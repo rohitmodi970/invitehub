@@ -33,7 +33,7 @@ const templateSchema = {
   '@type': 'CollectionPage',
   name: 'Invitation Templates',
   description,
-  url: 'https://invitehub.in/templates',
+  url: 'https://www.invitehub.in/templates',
   numberOfItems: TEMPLATES.length,
   mainEntity: {
     '@type': 'ItemList',
@@ -43,7 +43,7 @@ const templateSchema = {
       name: template.name,
       description: template.description,
       image: template.previewUrl,
-      url: `https://invitehub.in/templates/${template.id}`,
+      url: `https://www.invitehub.in/templates/${template.id}`,
     })),
   },
 };
@@ -56,13 +56,13 @@ const breadcrumbSchema = {
       '@type': 'ListItem',
       position: 1,
       name: 'Home',
-      item: 'https://invitehub.in',
+      item: 'https://www.invitehub.in',
     },
     {
       '@type': 'ListItem',
       position: 2,
       name: 'Templates',
-      item: 'https://invitehub.in/templates',
+      item: 'https://www.invitehub.in/templates',
     },
   ],
 };
@@ -73,6 +73,19 @@ export default function TemplatesPage() {
       <Suspense fallback={<div className="min-h-screen bg-gray-50" />}>
         <TemplateGallery />
       </Suspense>
+
+      {/* SEO-only Static Template List */}
+      <div className="sr-only">
+        <h2>All Invitation Templates</h2>
+        <ul>
+          {TEMPLATES.map((template) => (
+            <li key={template.id}>
+              <a href={`/templates/${template.id}`}>{template.name}</a>
+              <p>{template.description}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(templateSchema) }}

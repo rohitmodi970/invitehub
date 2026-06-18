@@ -21,7 +21,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://invitehub.in"),
+  metadataBase: new URL("https://www.invitehub.in"),
   title: {
     default: "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in",
     template: "%s | InviteHub.in",
@@ -32,11 +32,6 @@ export const metadata: Metadata = {
   authors: [{ name: "InviteHub.in", url: "https://invitehub.in" }],
   creator: "InviteHub.in",
   publisher: "InviteHub.in",
-  verification: {
-    // TODO: Replace with your real GSC token from:
-    // https://search.google.com/search-console → Add property → HTML tag
-    google: "REPLACE_WITH_REAL_GSC_TOKEN",
-  },
   robots: {
     index: true,
     follow: true,
@@ -54,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: "https://invitehub.in",
+    url: "https://www.invitehub.in",
     siteName: "InviteHub.in",
     title: "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in",
     description:

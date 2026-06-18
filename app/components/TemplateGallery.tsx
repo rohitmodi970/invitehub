@@ -11,13 +11,13 @@ import { TemplateCard } from '@/app/components/TemplateCard';
 import { TemplateFilters } from '@/app/components/TemplateFilters';
 import type { TemplateCategory } from '@/lib/templates/types';
 
-export function TemplateGallery() {
+export function TemplateGallery({ initialEvent }: { initialEvent?: string }) {
   const searchParams = useSearchParams();
   const eventParam = searchParams.get('event') as EventType | null;
   const categoryParam = searchParams.get('category') as TemplateCategory | null;
 
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(
-    eventParam && EVENT_TYPES.some((e) => e.id === eventParam) ? eventParam : null
+    (initialEvent as EventType) || (eventParam && EVENT_TYPES.some((e) => e.id === eventParam) ? eventParam : null)
   );
   const [selectedCategory, setSelectedCategory] = useState<TemplateCategory | null>(
     categoryParam && TEMPLATE_CATEGORIES.some((c) => c.id === categoryParam) ? categoryParam : null
