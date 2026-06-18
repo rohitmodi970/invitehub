@@ -13,31 +13,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   keywords: [
-    // Primary — broad invitation maker
     "invitation card maker",
-    "digital invitation maker India",
-    "online invitation card maker",
-    "free invitation maker",
-    // Birthday
-    "birthday invitation card maker",
-    "online birthday invitation",
-    "digital birthday card maker",
-    // Corporate
-    "corporate event invitation",
-    "business event invitation card",
-    "corporate party invitation maker",
-    // Wedding
-    "wedding invitation card maker",
-    "digital wedding invitation India",
-    "online wedding card maker",
-    // Other events
-    "baby shower invitation card",
-    "engagement invitation card maker",
-    "anniversary invitation card",
-    "housewarming invitation card",
-    // Brand
+    "digital invitation India",
     "InviteHub",
-    "InviteHub.in",
   ],
   openGraph: {
     title,
