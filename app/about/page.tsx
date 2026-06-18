@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import { AboutPageClient } from './AboutPageClient';
 
 export const metadata: Metadata = {
-  title: 'About InviteHub — Digital Invitation Card Maker for India',
+  title: "About Us | InviteHub.in — India's Digital Invitation Maker",
   description:
-    'Learn about InviteHub.in — India\'s fast-growing digital invitation card maker. Create wedding, birthday, baby shower, and corporate invitations with live preview and WhatsApp sharing.',
+    "Discover the story behind InviteHub.in. We are on a mission to redefine how India celebrates by making beautiful, premium digital invitations accessible to everyone.",
   alternates: { canonical: '/about' },
   keywords: [
     'about InviteHub',
@@ -13,9 +13,9 @@ export const metadata: Metadata = {
     'invitation card maker story',
   ],
   openGraph: {
-    title: 'About InviteHub — Digital Invitation Card Maker for India',
+    title: "About Us | InviteHub.in — India's Digital Invitation Maker",
     description:
-      'Learn how InviteHub.in is redefining digital invitations in India — beautiful templates, live preview, and instant WhatsApp sharing.',
+      "Discover the story behind InviteHub.in. We are on a mission to redefine how India celebrates by making beautiful, premium digital invitations accessible to everyone.",
     url: '/about',
     type: 'website',
   },
