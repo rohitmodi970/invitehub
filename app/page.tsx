@@ -39,27 +39,33 @@ const websiteSchema = {
   name: "InviteHub.in",
   url: "https://invitehub.in",
   description,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: "https://invitehub.in/templates?q={search_term_string}",
+    "query-input": "required name=search_term_string",
+  },
 };
 
-const faqSchema = {
+const webAppSchema = {
   "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
+  "@type": "SoftwareApplication",
+  name: "InviteHub.in",
+  applicationCategory: "DesignApplication",
+  operatingSystem: "Web",
+  url: "https://invitehub.in",
+  description,
+  offers: [
     {
-      "@type": "Question",
-      name: "Can I create a wedding invitation online?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. InviteHub.in is being built as a wedding invitation card maker with live preview and shareable invitation pages.",
-      },
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+      description: "Free plan with watermark",
     },
     {
-      "@type": "Question",
-      name: "Will the free plan include a watermark?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Yes. Free downloads will keep subtle InviteHub branding until the user upgrades.",
-      },
+      "@type": "Offer",
+      price: "49",
+      priceCurrency: "INR",
+      description: "Premium — HD PNG, no watermark",
     },
   ],
 };
@@ -85,12 +91,11 @@ const localBusinessSchema = {
   image: "https://invitehub.in/logo.png",
   description,
   url: "https://invitehub.in",
-  telephone: "+91-XXXXXXXXXX",
+  // TODO: Replace with real phone number before enabling
+  // telephone: "+91-XXXXXXXXXX",
   address: {
     "@type": "PostalAddress",
-    streetAddress: "India",
     addressLocality: "India",
-    postalCode: "",
     addressCountry: "IN",
   },
   areaServed: "IN",
@@ -151,6 +156,10 @@ export default function Home() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
       />
       <script
         type="application/ld+json"

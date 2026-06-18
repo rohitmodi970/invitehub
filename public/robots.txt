@@ -20,3 +20,4 @@ Disallow: /admin/
 Crawl-delay: 1
 
 Sitemap: https://invitehub.in/sitemap.xml
+Sitemap: https://www.invitehub.in/sitemap.xml

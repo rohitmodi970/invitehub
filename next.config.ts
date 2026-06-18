@@ -13,6 +13,18 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+
+  async redirects() {
+    return [
+      // Permanently redirect www → apex (canonical: invitehub.in)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.invitehub.in" }],
+        destination: "https://invitehub.in/:path*",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

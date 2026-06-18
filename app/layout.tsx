@@ -33,7 +33,9 @@ export const metadata: Metadata = {
   creator: "InviteHub.in",
   publisher: "InviteHub.in",
   verification: {
-    google: "google-site-verification-code-here",
+    // TODO: Replace with your real GSC token from:
+    // https://search.google.com/search-console → Add property → HTML tag
+    google: "REPLACE_WITH_REAL_GSC_TOKEN",
   },
   robots: {
     index: true,
