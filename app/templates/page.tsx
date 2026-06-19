@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import { TemplateGallery } from '@/app/components/TemplateGallery';
-import { TEMPLATES } from '@/lib/templates/data';
+import { TEMPLATES, TEMPLATE_TIERS } from '@/lib/templates/data';
 
 const title = 'Invitation Templates – Wedding, Birthday & More';
 const description =
@@ -37,14 +37,29 @@ const templateSchema = {
   numberOfItems: TEMPLATES.length,
   mainEntity: {
     '@type': 'ItemList',
-    itemListElement: TEMPLATES.map((template, index) => ({
-      '@type': 'Product',
-      position: index + 1,
-      name: template.name,
-      description: template.description,
-      image: template.previewUrl,
-      url: `https://www.invitehub.in/templates/${template.id}`,
-    })),
+    itemListElement: TEMPLATES.map((template, index) => {
+      const tier = TEMPLATE_TIERS[template.tier];
+      return {
+        '@type': 'ListItem',
+        position: index + 1,
+        item: {
+          '@type': 'Product',
+          name: template.name,
+          description: template.description,
+          image: template.previewUrl.startsWith('/')
+            ? `https://www.invitehub.in${template.previewUrl}`
+            : template.previewUrl,
+          url: `https://www.invitehub.in/templates/${template.id}`,
+          offers: {
+            '@type': 'Offer',
+            price: tier.price,
+            priceCurrency: 'INR',
+            availability: 'https://schema.org/InStock',
+            url: `https://www.invitehub.in/templates/${template.id}`,
+          },
+        },
+      };
+    }),
   },
 };
 

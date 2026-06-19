@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getTemplateById } from '@/lib/utils/template-helpers';
+import { TEMPLATE_TIERS } from '@/lib/templates/data';
 import { TemplateDetailClient } from './TemplateDetailClient';
 
 interface Props {
@@ -62,6 +63,74 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function TemplateDetailPage({ params }: Props) {
-  return <TemplateDetailClient params={params} />;
+export default async function TemplateDetailPage({ params }: Props) {
+  const { templateId } = await params;
+  const template = getTemplateById(templateId);
+
+  if (!template) {
+    notFound();
+  }
+
+  const tier = TEMPLATE_TIERS[template.tier];
+  
+  const productSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: template.name,
+    description: template.description,
+    image: template.previewUrl.startsWith('/')
+      ? `https://www.invitehub.in${template.previewUrl}`
+      : template.previewUrl,
+    url: `https://www.invitehub.in/templates/${template.id}`,
+    brand: {
+      '@type': 'Brand',
+      name: 'InviteHub',
+    },
+    offers: {
+      '@type': 'Offer',
+      price: tier.price,
+      priceCurrency: 'INR',
+      availability: 'https://schema.org/InStock',
+      url: `https://www.invitehub.in/templates/${template.id}`,
+    },
+  };
+
+  const breadcrumbSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.invitehub.in',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Templates',
+        item: 'https://www.invitehub.in/templates',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: template.name,
+        item: `https://www.invitehub.in/templates/${template.id}`,
+      },
+    ],
+  };
+
+  return (
+    <>
+      <TemplateDetailClient params={params} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+    </>
+  );
 }
