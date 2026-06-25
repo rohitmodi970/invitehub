@@ -1,4 +1,5 @@
 import type { SEOPageContent } from './types';
+import { EVENT_HERO_IMAGES } from '@/lib/images/paths';
 
 export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
   // ─────────────────────────────────────────────────────────────────────────────
@@ -22,7 +23,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'birthday invitation card',
     ogTitle: 'Birthday Invitation Card Maker | InviteHub.in',
     ogDescription: 'Design festive birthday invitation cards free. Kids & adult themes, HD downloads from ₹49.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '🎂', label: 'Kids & Adult Themes', desc: 'Superhero, princess, elegant & more' },
       { icon: '⚡', label: 'Ready in 2 Minutes', desc: 'Fill details, preview live, download' },
@@ -121,7 +122,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'engagement invitation',
     ogTitle: 'Engagement Invitation Designer | InviteHub.in',
     ogDescription: 'Create elegant engagement & sagai invitations in minutes. Ring ceremony designs. Free to start.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.engagement,
     highlights: [
       { icon: '💍', label: 'Ring Ceremony Ready', desc: 'Elegant couple-focused designs' },
       { icon: '👨‍👩‍👧', label: 'Family Details', desc: 'Add parents\' names & blessings' },
@@ -209,7 +210,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'baby shower invitation',
     ogTitle: 'Baby Shower Invitation Maker | InviteHub.in',
     ogDescription: 'Design sweet baby shower & godh bharai invitations in minutes. Free to start, share on WhatsApp.',
-    heroImage: '/Traditional Indian wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES['baby-shower'],
     highlights: [
       { icon: '👶', label: 'Baby & Godh Bharai Ready', desc: 'Warm designs for Indian families' },
       { icon: '🎁', label: 'Registry Notes', desc: 'Add Amazon India wishlist details' },
@@ -291,7 +292,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'housewarming invitation',
     ogTitle: 'Housewarming Invitation Maker | InviteHub.in',
     ogDescription: 'Create griha pravesh & housewarming invitations in minutes. Free to start.',
-    heroImage: '/Traditional Indian wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.housewarming,
     highlights: [
       { icon: '🏠', label: 'Griha Pravesh Ready', desc: 'Traditional & modern styles' },
       { icon: '🕉️', label: 'Muhurat Time', desc: 'Add auspicious timing' },
@@ -344,7 +345,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'anniversary invitation',
     ogTitle: 'Anniversary Invitation Maker | InviteHub.in',
     ogDescription: 'Celebrate milestones with beautiful anniversary invitations. Free to start.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.anniversary,
     highlights: [
       { icon: '❤️', label: 'Romantic Design', desc: 'Celebrate years of love' },
       { icon: '🎉', label: 'Milestone Ready', desc: '25th, 50th & more' },
@@ -400,7 +401,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'corporate event invitation',
     ogTitle: 'Corporate Event Invitation Maker | InviteHub.in',
     ogDescription: 'Professional event invitations for conferences, office parties & team events. Free to start.',
-    heroImage: '/Elegant gold wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.corporate,
     highlights: [
       { icon: '🏢', label: 'Professional Look', desc: 'Clean corporate styling' },
       { icon: '📅', label: 'Agenda Notes', desc: 'Dress code & schedule details' },
@@ -480,7 +481,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'kids birthday invitation card',
     ogTitle: 'Kids Birthday Invitation Card Maker | InviteHub.in',
     ogDescription: 'Fun, colorful birthday invitations for kids. Superhero, princess, unicorn themes. Free to start.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '🦸', label: 'Fun Themes', desc: 'Superhero, princess, unicorn & more' },
       { icon: '🎈', label: 'Bright & Colorful', desc: 'Kids love the festive designs' },
@@ -561,7 +562,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: '1st birthday invitation card',
     ogTitle: '1st Birthday Invitation Card Maker | InviteHub.in',
     ogDescription: 'Beautiful first birthday invitations for the most special milestone. Free to start.',
-    heroImage: '/Traditional Indian wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '🎂', label: 'Milestone Designs', desc: 'Celebrating turning 1!' },
       { icon: '👶', label: 'Baby Photo Ready', desc: 'Add baby\'s photo to the card' },
@@ -646,7 +647,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'office party invitation',
     ogTitle: 'Office Party Invitation Card Maker | InviteHub.in',
     ogDescription: 'Professional office party invitations for annual day, year-end parties & team events.',
-    heroImage: '/Elegant gold wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.corporate,
     highlights: [
       { icon: '🎉', label: 'Party-Ready Designs', desc: 'Fun yet professional look' },
       { icon: '🏢', label: 'Company Branding', desc: 'Add your company logo' },
@@ -713,7 +714,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'farewell invitation card',
     ogTitle: 'Farewell Invitation Card Maker | InviteHub.in',
     ogDescription: 'Beautiful farewell party invitations for colleagues & friends. Heartfelt designs. Free to start.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '👋', label: 'Heartfelt Designs', desc: 'Warm farewell templates' },
       { icon: '💼', label: 'Office-Appropriate', desc: 'Professional yet emotional' },
@@ -779,7 +780,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'team outing invitation',
     ogTitle: 'Team Outing Invitation Card Maker | InviteHub.in',
     ogDescription: 'Fun team outing invitations for picnics, off-sites & team-building events. Free to start.',
-    heroImage: '/Modern geometric wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.corporate,
     highlights: [
       { icon: '🏕️', label: 'Outing Ready', desc: 'Fun designs for team outings' },
       { icon: '🎯', label: 'Team Building', desc: 'Rally the whole team' },
@@ -847,7 +848,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'godh bharai invitation card',
     ogTitle: 'Godh Bharai Invitation Card Maker | InviteHub.in',
     ogDescription: 'Design beautiful godh bharai (Indian baby shower) invitations. Warm, traditional designs. Free to start.',
-    heroImage: '/Traditional Indian wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES['baby-shower'],
     highlights: [
       { icon: '🌸', label: 'Traditional Design', desc: 'Auspicious colors & motifs' },
       { icon: '🙏', label: 'Blessings Ready', desc: 'Add shubh sandesh & puja details' },
@@ -942,7 +943,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'party invitation card',
     ogTitle: 'Party Invitation Card Maker | InviteHub.in',
     ogDescription: 'Design beautiful party invitation cards online. Free templates, HD downloads from ₹49.',
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '🎉', label: 'Any Party Type', desc: 'Birthday, kitty, house party & more' },
       { icon: '⚡', label: 'Ready in 2 Minutes', desc: 'Fast and easy party planning' },
@@ -1013,7 +1014,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'kitty party invitation',
     ogTitle: 'Kitty Party Invitation Card Maker | InviteHub.in',
     ogDescription: 'Stylish kitty party invitations for ladies\' get-togethers. Free to design, share on WhatsApp.',
-    heroImage: '/Elegant gold wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '👑', label: 'Stylish Designs', desc: 'Gold, floral & chic themes' },
       { icon: '🌸', label: 'Ladies Ready', desc: 'Feminine, elegant templates' },
@@ -1090,7 +1091,7 @@ export const EVENT_SEO_PAGES: Record<string, SEOPageContent> = {
     mainKeyword: 'get together invitation card',
     ogTitle: 'Get Together Invitation Card Maker | InviteHub.in',
     ogDescription: 'Warm get-together invitations for family reunions & friend gatherings. Free to start.',
-    heroImage: '/Modern geometric wedding invitation design.png',
+    heroImage: EVENT_HERO_IMAGES.birthday,
     highlights: [
       { icon: '🤝', label: 'Reunion Ready', desc: 'Warm designs for get-togethers' },
       { icon: '👨‍👩‍👧‍👦', label: 'Family & Friends', desc: 'Any gathering, any occasion' },

@@ -2,7 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/app/components/Footer";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { OG_IMAGE, SITE_LOGO, TWITTER_IMAGE } from "@/lib/images/paths";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -56,7 +57,7 @@ export const metadata: Metadata = {
       "Create beautiful digital invitations for weddings, birthdays, corporate events, baby showers, anniversaries & more. Live preview, WhatsApp sharing, premium downloads.",
     images: [
       {
-        url: "/og-image.png",
+        url: OG_IMAGE,
         width: 1200,
         height: 630,
         alt: "InviteHub.in - Digital Invitation Card Maker for Every Occasion",
@@ -69,11 +70,11 @@ export const metadata: Metadata = {
     description:
       "Create beautiful digital invitations for weddings, birthdays, corporate events, baby showers & more. Live preview, WhatsApp sharing, premium downloads.",
     creator: "@invitehubin",
-    images: ["/twitter-image.png"],
+    images: [TWITTER_IMAGE],
   },
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: SITE_LOGO,
+    apple: SITE_LOGO,
   },
 };
 

@@ -1,5 +1,6 @@
 import type { SEOPageContent, SEOPageSlug } from './types';
 import { EVENT_SEO_PAGES } from './event-pages';
+import { templateImage } from '@/lib/images/paths';
 
 const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
   'wedding-invitation-card-maker': {
@@ -20,7 +21,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
     ogDescription:
       'Design and share beautiful wedding invitation cards in minutes. Free to start. Premium HD downloads from ₹49.',
 
-    heroImage: '/Wedding invitation on modern desk setup.png',
+    heroImage: templateImage('Wedding invitation on modern desk setup.png'),
 
     highlights: [
       { icon: '🎨', label: '5+ Premium Templates', desc: 'Traditional, Modern, Royal, Vintage & more' },
@@ -139,7 +140,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
     ogDescription:
       'Create elegant marriage invitation cards for every style — Traditional, Royal, Modern, Vintage. Free preview. Download from ₹49.',
 
-    heroImage: '/Traditional Indian wedding invitation design.png',
+    heroImage: templateImage('Traditional Indian wedding invitation design.png'),
 
     highlights: [
       { icon: '🕉️', label: 'Traditional Indian Style', desc: 'Red, gold, Sanskrit text designs' },
@@ -252,7 +253,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
     ogDescription:
       'Create interactive digital wedding cards with countdown, RSVP, and Google Maps. Share on WhatsApp instantly.',
 
-    heroImage: '/Modern geometric wedding invitation design.png',
+    heroImage: templateImage('Modern geometric wedding invitation design.png'),
 
     highlights: [
       { icon: '⏳', label: 'Live Countdown Timer', desc: 'Days, hours, minutes to your big day' },
@@ -365,7 +366,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
     ogDescription:
       'Send beautiful online wedding invitations to unlimited guests in seconds. RSVP tracking included.',
 
-    heroImage: '/Romantic vintage wedding invitation design.png',
+    heroImage: templateImage('Romantic vintage wedding invitation design.png'),
 
     highlights: [
       { icon: '📨', label: 'Unlimited Guests', desc: 'Share with everyone at no extra cost' },
@@ -478,7 +479,7 @@ const WEDDING_SEO_PAGES: Record<string, SEOPageContent> = {
     ogDescription:
       'Design beautiful wedding cards with our easy-to-use maker. 5+ templates, live preview, HD downloads. Free to start.',
 
-    heroImage: '/Elegant gold wedding invitation design.png',
+    heroImage: templateImage('Elegant gold wedding invitation design.png'),
 
     highlights: [
       { icon: '✏️', label: 'Easy Editor', desc: 'No design skills required' },

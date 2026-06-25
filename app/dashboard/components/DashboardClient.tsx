@@ -9,6 +9,7 @@ import {
   Download, Sparkles
 } from 'lucide-react';
 import Image from 'next/image';
+import { LOGO_IMAGE } from '@/lib/images/paths';
 
 interface Invitation {
   id: string;
@@ -102,7 +103,7 @@ export default function DashboardClient({ userEmail }: { userEmail: string }) {
         {/* Top Nav */}
         <div className="flex items-center justify-between mb-10">
           <Link href="/">
-            <Image src="/elegant_logo_with_domain_written.png" alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain opacity-90" />
+            <Image src={LOGO_IMAGE} alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain opacity-90" />
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/editor/elegant-gold-001"

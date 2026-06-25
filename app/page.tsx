@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 
 import { LandingPage } from "./components/landing-page";
+import { absoluteImage, SITE_LOGO } from "@/lib/images/paths";
 
 const title = "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in";
 const description =
@@ -74,7 +75,7 @@ const organizationSchema = {
   name: "InviteHub.in",
   url: "https://invitehub.in",
   description,
-  logo: "https://invitehub.in/logo.png",
+  logo: absoluteImage(SITE_LOGO),
   sameAs: [
     "https://twitter.com/invitehubin",
     "https://instagram.com/invitehubin",
@@ -86,7 +87,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: "InviteHub.in",
-  image: "https://invitehub.in/logo.png",
+  image: absoluteImage(SITE_LOGO),
   description,
   url: "https://invitehub.in",
   // TODO: Replace with real phone number before enabling

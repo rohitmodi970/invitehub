@@ -22,6 +22,8 @@ import {
   WandSparkles,
 } from "lucide-react";
 
+import { LOGO_IMAGE, templateImage } from '@/lib/images/paths';
+
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
   whileInView: { opacity: 1, y: 0 },
@@ -55,22 +57,23 @@ const featureCards = [
   },
 ];
 
+
 const templatePreviews = [
   {
-    src: "/Elegant gold wedding invitation design.png",
-    title: "Elegant Gold",
+    src: templateImage('Elegant gold wedding invitation design.png'),
+    title: 'Elegant Gold',
   },
   {
-    src: "/Modern geometric wedding invitation design.png",
-    title: "Modern Geometric",
+    src: templateImage('Modern geometric wedding invitation design.png'),
+    title: 'Modern Geometric',
   },
   {
-    src: "/Romantic vintage wedding invitation design.png",
-    title: "Romantic Vintage",
+    src: templateImage('Romantic vintage wedding invitation design.png'),
+    title: 'Romantic Vintage',
   },
   {
-    src: "/Traditional Indian wedding invitation design.png",
-    title: "Traditional Indian",
+    src: templateImage('Traditional Indian wedding invitation design.png'),
+    title: 'Traditional Indian',
   },
 ];
 
@@ -153,7 +156,7 @@ export function LandingPage() {
         >
           <div className="flex items-center w-40 sm:w-56 h-10 relative">
             <Image
-              src="/elegant_logo_with_domain_written.png"
+              src={LOGO_IMAGE}
               alt="InviteHub.in Logo"
               width={400}
               height={120}
@@ -268,7 +271,7 @@ export function LandingPage() {
               <div className="mt-5">
                 <div className="mb-4">
                   <Image
-                    src="/Wedding invitation on modern desk setup.png"
+                    src={templateImage('Wedding invitation on modern desk setup.png')}
                     alt="Invitation mockup on desk"
                     width={640}
                     height={400}

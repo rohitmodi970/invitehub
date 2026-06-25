@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getTemplateById } from '@/lib/utils/template-helpers';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
 import { TemplateDetailClient } from './TemplateDetailClient';
+import { OG_IMAGE } from '@/lib/images/paths';
 
 interface Props {
   params: Promise<{ templateId: string }>;
@@ -48,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         {
           url: template.previewUrl.startsWith('/')
             ? template.previewUrl
-            : '/og-image.png',
+            : OG_IMAGE,
           width: 1200,
           height: 630,
           alt: `${template.name} invitation template preview`,

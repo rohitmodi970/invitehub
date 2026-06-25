@@ -1,4 +1,5 @@
 import type { SEOPageContent, FAQ } from './types';
+import { OG_IMAGE, SITE_LOGO, absoluteImage } from '@/lib/images/paths';
 
 export interface SchemaConfig {
   name: string;
@@ -55,7 +56,7 @@ export function generateArticleSchema(page: SEOPageContent) {
     '@type': 'Article',
     headline: page.title,
     description: page.description,
-    image: page.ogImage || '/og-image.png',
+    image: page.ogImage || OG_IMAGE,
     datePublished: new Date().toISOString(),
     author: {
       '@type': 'Organization',
@@ -67,7 +68,7 @@ export function generateArticleSchema(page: SEOPageContent) {
       name: 'InviteHub.in',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://invitehub.in/logo.png',
+        url: absoluteImage(SITE_LOGO),
       },
     },
   };

@@ -12,6 +12,7 @@ import { EditorForm } from '@/app/editor/[templateId]/EditorForm';
 import { CheckoutFlow, PlanType } from '@/app/components/checkout/CheckoutFlow';
 import { getEnvelopeComponent } from '@/lib/templates/envelopes';
 import { downloadInvitation } from '@/lib/download';
+import { LOGO_IMAGE } from '@/lib/images/paths';
 import Image from 'next/image';
 
 export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: string }) {
@@ -105,7 +106,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
       {/* ── Top Bar ── */}
       <div className="shrink-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-10 shadow-sm">
         <div className="flex items-center gap-2">
-          <Image src="/elegant_logo_with_domain_written.png" alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain" />
+          <Image src={LOGO_IMAGE} alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain" />
           <span className="hidden sm:inline text-gray-400 text-sm ml-2">/ Editor</span>
         </div>
         <div className="flex items-center gap-2">
