@@ -2,8 +2,10 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Footer } from "@/app/components/Footer";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 import { OG_IMAGE, SITE_LOGO, TWITTER_IMAGE } from "@/lib/images/paths";
+import { PostHogProvider, PostHogPageView } from '@/app/providers';
+import { Suspense } from 'react';
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -89,9 +91,14 @@ export default function RootLayout({
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
-        {children}
-        <Analytics />
-        <Footer />
+        <PostHogProvider>
+          <Suspense fallback={null}>
+            <PostHogPageView />
+          </Suspense>
+          {children}
+          <Analytics />
+          <Footer />
+        </PostHogProvider>
       </body>
     </html>
   );
