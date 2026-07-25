@@ -35,7 +35,7 @@ const featureCards = [
     icon: WandSparkles,
     title: "Beautiful templates",
     description:
-      "Start with elegant wedding-first templates that already feel premium and shareable.",
+      "Start with elegant templates for every occasion that already feel premium and shareable.",
   },
   {
     icon: MonitorSmartphone,
@@ -60,20 +60,20 @@ const featureCards = [
 
 const templatePreviews = [
   {
+    src: templateImage('corporate-executive-navy.png'),
+    title: 'Corporate Executive',
+  },
+  {
+    src: templateImage('birthday-magazine-cover.png'),
+    title: 'Birthday Magazine',
+  },
+  {
     src: templateImage('Elegant gold wedding invitation design.png'),
-    title: 'Elegant Gold',
+    title: 'Elegant Wedding',
   },
   {
-    src: templateImage('Modern geometric wedding invitation design.png'),
-    title: 'Modern Geometric',
-  },
-  {
-    src: templateImage('Romantic vintage wedding invitation design.png'),
-    title: 'Romantic Vintage',
-  },
-  {
-    src: templateImage('Traditional Indian wedding invitation design.png'),
-    title: 'Traditional Indian',
+    src: templateImage('baby-shower-safari.png'),
+    title: 'Safari Baby Shower',
   },
 ];
 
@@ -119,9 +119,9 @@ const testimonials = [
 
 const faqs = [
   {
-    question: "What are the first templates you will launch?",
+    question: "What types of templates are available?",
     answer:
-      "Wedding, royal wedding, floral wedding, traditional Indian wedding, and modern wedding templates are first in line.",
+      "We offer a wide variety of templates for corporate events, birthdays, weddings, baby showers, and casual parties.",
   },
   {
     question: "Will the free version have a watermark?",
@@ -152,9 +152,9 @@ export function LandingPage() {
           initial={{ opacity: 0, y: -12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45 }}
-          className="flex items-center justify-between gap-4 rounded-full border border-[var(--border)] bg-[color:var(--surface)]/85 px-4 py-3 shadow-[0_10px_40px_rgba(120,64,42,0.08)] backdrop-blur"
+          className="flex items-center justify-between gap-2 sm:gap-4 rounded-full border border-[var(--border)] bg-[color:var(--surface)]/85 px-3 sm:px-4 py-2 sm:py-3 shadow-[0_10px_40px_rgba(120,64,42,0.08)] backdrop-blur"
         >
-          <div className="flex items-center w-40 sm:w-56 h-10 relative">
+          <div className="flex items-center w-32 sm:w-56 h-8 sm:h-10 relative shrink-0">
             <Image
               src={LOGO_IMAGE}
               alt="InviteHub.in Logo"
@@ -168,18 +168,19 @@ export function LandingPage() {
             {isLoggedIn && (
               <Link
                 href="/dashboard"
-                className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-white/90 px-4 py-2 text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
+                className="inline-flex items-center gap-1 sm:gap-2 rounded-full border border-[var(--border)] bg-white/90 px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--surface-soft)]"
               >
                 <LayoutDashboard className="h-4 w-4" />
-                Dashboard
+                <span className="hidden sm:inline">Dashboard</span>
               </Link>
             )}
             <Link
               href="/templates"
-              className="inline-flex items-center gap-2 rounded-full bg-[var(--accent)] px-4 py-2 text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#6f2216]"
+              className="inline-flex items-center gap-1 sm:gap-2 rounded-full bg-[var(--accent)] px-3 sm:px-4 py-2 text-xs sm:text-sm font-semibold text-white transition hover:translate-y-[-1px] hover:bg-[#6f2216]"
             >
-              Browse Templates
-              <ArrowRight className="h-4 w-4" />
+              <span className="hidden sm:inline">Browse Templates</span>
+              <span className="sm:hidden">Templates</span>
+              <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4" />
             </Link>
           </div>
         </motion.div>
@@ -191,13 +192,13 @@ export function LandingPage() {
               className="mb-6 inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-2 text-sm font-medium text-black/70 shadow-sm"
             >
               <BadgeCheck className="h-4 w-4 text-[var(--accent)]" />
-              Premium wedding invitation maker
+              Premium digital invitation maker
             </motion.div>
 
             <motion.h1
               {...fadeUp}
               transition={{ ...fadeUp.transition, delay: 0.05 }}
-              className="text-balance text-5xl font-semibold tracking-tight text-[var(--foreground)] sm:text-6xl lg:text-7xl"
+              className="text-balance text-4xl font-semibold tracking-tight text-[var(--foreground)] sm:text-6xl lg:text-7xl"
             >
               Create your invitation card now.
             </motion.h1>
@@ -260,23 +261,25 @@ export function LandingPage() {
             <div className="absolute -right-10 bottom-12 h-28 w-28 rounded-full bg-[#a33622]/20 blur-3xl" />
 
             <div className="relative overflow-hidden rounded-[2rem] border border-[var(--border)] bg-[linear-gradient(180deg,_rgba(255,255,255,0.94),_rgba(255,248,243,0.88))] p-5 shadow-[0_30px_80px_rgba(122,67,45,0.16)]">
-              <div className="flex items-center justify-between gap-4 border-b border-[var(--border)] pb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4 border-b border-[var(--border)] pb-4">
                 <div>
                   <p className="text-sm font-medium text-black/60">Live invitation preview</p>
-                  <p className="text-lg font-semibold">Ashwani & Priya</p>
+                  <p className="text-lg font-semibold">Your Event Details</p>
                 </div>
-                <div className="rounded-full bg-[var(--surface-soft)] px-3 py-2 text-xs font-semibold text-[var(--accent)]">Wedding Invitation</div>
+                <div className="self-start sm:self-auto rounded-full bg-[var(--surface-soft)] px-3 py-2 text-xs font-semibold text-[var(--accent)]">Digital Invitation</div>
               </div>
 
               <div className="mt-5">
-                <div className="mb-4">
-                  <Image
-                    src={templateImage('Wedding invitation on modern desk setup.png')}
-                    alt="Invitation mockup on desk"
-                    width={640}
-                    height={400}
-                    className="rounded-[1rem] object-cover shadow-md"
-                  />
+                <div className="mb-4 grid grid-cols-3 gap-3">
+                  <div className="relative h-28 sm:h-48 w-full overflow-hidden rounded-xl shadow-md border border-[var(--border)]">
+                    <Image src={templateImage('corporate-executive-navy.png')} alt="Corporate Invitation" fill className="object-cover" sizes="(max-width: 640px) 33vw, 200px" />
+                  </div>
+                  <div className="relative h-28 sm:h-48 w-full overflow-hidden rounded-xl shadow-md border border-[var(--border)]">
+                    <Image src={templateImage('birthday-balloon-burst.png')} alt="Birthday Invitation" fill className="object-cover" sizes="(max-width: 640px) 33vw, 200px" />
+                  </div>
+                  <div className="relative h-28 sm:h-48 w-full overflow-hidden rounded-xl shadow-md border border-[var(--border)]">
+                    <Image src={templateImage('baby-shower-safari.png')} alt="Baby Shower Invitation" fill className="object-cover" sizes="(max-width: 640px) 33vw, 200px" />
+                  </div>
                 </div>
 
                 <div className="grid gap-4 rounded-[1.5rem] bg-white p-5 shadow-sm sm:grid-cols-[0.95fr_1.05fr]">
@@ -286,15 +289,15 @@ export function LandingPage() {
                       August 2026
                     </div>
                     <p className="mt-16 text-3xl font-semibold leading-tight">Save the date for a celebration filled with joy and family.</p>
-                    <p className="mt-4 text-sm text-white/85">Couple photo, family details, venue, RSVP, and map links appear instantly in the final card.</p>
+                    <p className="mt-4 text-sm text-white/85">Photo, event details, venue, RSVP, and map links appear instantly in the final card.</p>
                   </div>
 
                   <div className="flex flex-col justify-between gap-4 rounded-[1.25rem] border border-[var(--border)] bg-[var(--surface-soft)] p-5">
                     <div className="flex items-start gap-3">
                       <TimerReset className="mt-1 h-5 w-5 text-[var(--accent)]" />
                       <div>
-                        <p className="font-semibold">Countdown timer</p>
-                        <p className="text-sm text-black/65">Show how much time is left until the wedding day.</p>
+                        <p className="font-semibold">Event countdown timer</p>
+                        <p className="text-sm text-black/65">Show how much time is left until the event day.</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
@@ -332,7 +335,7 @@ export function LandingPage() {
           </motion.div>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-4">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {templatePreviews.map((t, index) => (
             <motion.article
               key={t.title}
@@ -363,7 +366,7 @@ export function LandingPage() {
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">Features</p>
           <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Why Choose Our Invitation Maker?</h2>
           <p className="mt-4 text-lg text-black/70">
-            Our invitation maker is designed to make the process of creating a professional and attractive wedding invitation as simple as possible.
+            Our invitation maker is designed to make the process of creating a professional and attractive invitation as simple as possible.
           </p>
         </motion.div>
 
@@ -388,10 +391,10 @@ export function LandingPage() {
       <section id="how-it-works" className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
         <motion.div {...fadeUp} className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">How it works</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">How to Create Your Wedding Invitation</h2>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">How to Create Your Invitation</h2>
         </motion.div>
 
-        <div className="mt-8 grid gap-6 lg:grid-cols-3">
+        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {steps.map((step, index) => (
             <motion.div
               key={step.number}
@@ -440,7 +443,7 @@ export function LandingPage() {
       <section className="mx-auto w-full max-w-7xl px-6 py-12 sm:px-8 lg:px-12">
         <motion.div {...fadeUp} className="max-w-2xl">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[var(--accent)]">FAQ</p>
-          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Wedding invitation FAQs.</h2>
+          <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-4xl">Invitation FAQs.</h2>
         </motion.div>
 
         <div className="mt-8 grid gap-4 lg:grid-cols-3">

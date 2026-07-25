@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { LandingPage } from "./components/landing-page";
 import { absoluteImage, SITE_LOGO } from "@/lib/images/paths";
 
-const title = "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in";
+const title = "Invitation Card Maker — Corporate, Birthday, Wedding & More | InviteHub.in";
 const description =
-  "Create stunning digital invitations for any occasion — weddings, birthdays, corporate events, baby showers, anniversaries, engagements & more. Live preview, WhatsApp sharing, and premium HD downloads.";
+  "Create stunning digital invitations for any occasion — corporate events, birthdays, weddings, baby showers, anniversaries, engagements & more. Live preview, WhatsApp sharing, and premium HD downloads.";
 
 export const metadata: Metadata = {
   title,
@@ -110,7 +110,7 @@ const faqSchema_extended = {
       name: "What types of invitations can I create on InviteHub.in?",
       acceptedAnswer: {
         "@type": "Answer",
-        text: "InviteHub.in supports invitations for all occasions — weddings, birthdays, corporate events, baby showers, engagements, anniversaries, housewarmings, and more. Browse 40+ premium templates across all categories.",
+        text: "InviteHub.in supports invitations for all occasions — corporate events, birthdays, weddings, baby showers, engagements, anniversaries, housewarmings, and more. Browse 40+ premium templates across all categories.",
       },
     },
     {

@@ -24,11 +24,11 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.invitehub.in"),
   title: {
-    default: "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in",
+    default: "Invitation Card Maker — Corporate, Birthday, Wedding & More | InviteHub.in",
     template: "%s | InviteHub.in",
   },
   description:
-    "Create beautiful digital invitations for weddings, birthdays, corporate events, baby showers, anniversaries, engagements & more. Live preview, WhatsApp sharing, and premium downloads — InviteHub.in.",
+    "Create beautiful digital invitations for corporate events, birthdays, weddings, baby showers, anniversaries & more. Live preview, WhatsApp sharing, and premium downloads.",
   applicationName: "InviteHub.in",
   authors: [{ name: "InviteHub.in", url: "https://invitehub.in" }],
   creator: "InviteHub.in",
@@ -52,9 +52,9 @@ export const metadata: Metadata = {
     locale: "en_IN",
     url: "https://www.invitehub.in",
     siteName: "InviteHub.in",
-    title: "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in",
+    title: "Invitation Card Maker — Corporate, Birthday, Wedding & More | InviteHub.in",
     description:
-      "Create beautiful digital invitations for weddings, birthdays, corporate events, baby showers, anniversaries & more. Live preview, WhatsApp sharing, premium downloads.",
+      "Create beautiful digital invitations for corporate events, birthdays, weddings, baby showers, anniversaries & more. Live preview, WhatsApp sharing, premium downloads.",
     images: [
       {
         url: OG_IMAGE,
@@ -66,9 +66,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Invitation Card Maker — Wedding, Birthday, Corporate & More | InviteHub.in",
+    title: "Invitation Card Maker — Corporate, Birthday, Wedding & More | InviteHub.in",
     description:
-      "Create beautiful digital invitations for weddings, birthdays, corporate events, baby showers & more. Live preview, WhatsApp sharing, premium downloads.",
+      "Create beautiful digital invitations for corporate events, birthdays, weddings, baby showers & more. Live preview, WhatsApp sharing, premium downloads.",
     creator: "@invitehubin",
     images: [TWITTER_IMAGE],
   },

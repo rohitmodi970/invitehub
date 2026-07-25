@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 import { getSEOPageSlugs } from '@/lib/seo/pages';
 import { TEMPLATES } from '@/lib/templates/data';
+import { BLOG_POSTS } from '@/lib/blog/data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const seoPages = getSEOPageSlugs().map((slug) => ({
@@ -27,6 +28,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
+  // Blog posts
+  const blogPages = BLOG_POSTS.map((post) => ({
+    url: `https://www.invitehub.in/blog/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
   return [
     {
       url: 'https://www.invitehub.in',
@@ -43,6 +52,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...categoryPages,
     ...seoPages,
     ...templatePages,
+    ...blogPages,
+    {
+      url: 'https://www.invitehub.in/blog',
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
     {
       url: 'https://www.invitehub.in/about',
       lastModified: new Date(),
