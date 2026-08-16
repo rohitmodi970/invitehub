@@ -5,8 +5,8 @@ import { Cormorant_Garamond, Montserrat } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['400', '600', '700'] });
-const montserrat = Montserrat({ subsets: ['latin'], weight: ['300', '400', '500'] });
+const cormorant = { className: '' };
+const montserrat = { className: '' };
 
 export function BirthdayGoldGlamTemplate({ data, isPremium = false }: TemplateProps) {
   return (

@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Inter, Space_Grotesk } from 'next/font/google';
 
-const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '700'] });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '500', '700'] });
+const inter = { className: '' };
+const spaceGrotesk = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

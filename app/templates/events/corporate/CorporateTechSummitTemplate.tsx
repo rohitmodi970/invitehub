@@ -5,8 +5,8 @@ import { IBM_Plex_Sans, Space_Grotesk } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const ibmPlex = IBM_Plex_Sans({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
-const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['500', '700'] });
+const ibmPlex = { className: '' };
+const spaceGrotesk = { className: '' };
 
 export function CorporateTechSummitTemplate({ data, isPremium = false }: TemplateProps) {
   const accent = '#06b6d4';

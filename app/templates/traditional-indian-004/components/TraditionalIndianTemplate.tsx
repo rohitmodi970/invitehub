@@ -4,15 +4,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Rozha_One, Poppins } from 'next/font/google';
 
-const rozhaOne = Rozha_One({
-  subsets: ['latin'],
-  weight: '400',
-});
+const rozhaOne = { className: '' };
 
-const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-});
+const poppins = { className: '' };
 
 import type { InvitationData, TemplateProps } from '@/lib/invitations/types';
 

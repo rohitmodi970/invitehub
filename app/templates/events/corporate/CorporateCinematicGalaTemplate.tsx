@@ -1,11 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Playfair_Display, Lato } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '600', '700'], style: ['normal', 'italic'] });
-const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700'] });
+const playfair = { className: '' };
+const lato = { className: '' };
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },

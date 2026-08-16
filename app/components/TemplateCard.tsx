@@ -6,9 +6,11 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Crown, Sparkles } from 'lucide-react';
 import type { Template } from '@/lib/templates/types';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
-import { getTemplateComponent } from '@/lib/templates/registry';
 import { getSampleDataForTemplate, getTemplateEventType } from '@/lib/utils/template-helpers';
 import { getEventTypeDef } from '@/lib/events/types';
+import EventPageRenderer from '@/app/components/event-page/EventPageRenderer';
+import { getTemplateDefinition } from '@/lib/templates/engine/definitions';
+import type { EventData } from '@/lib/events/event-data';
 
 interface TemplateCardProps {
   template: Template;
@@ -22,7 +24,9 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
     premium: 'bg-blue-100 text-blue-800',
     'premium-plus': 'bg-purple-100 text-purple-800',
   };
-  const TemplateComponent = getTemplateComponent(template.id);
+  
+  const templateDef = getTemplateDefinition(template.id);
+  const sampleData = getSampleDataForTemplate(template) as EventData;
 
   return (
     <motion.div
@@ -36,7 +40,7 @@ export function TemplateCard({ template, index = 0 }: TemplateCardProps) {
           {/* Live Component Preview */}
           <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#f8f9fa] flex items-center justify-center">
             <div className="origin-top scale-[0.4] sm:scale-[0.45] w-full h-full absolute inset-0 flex items-center justify-center group-hover:scale-[0.42] sm:group-hover:scale-[0.48] transition-transform duration-500">
-              <TemplateComponent data={getSampleDataForTemplate(template)} isPremium={false} />
+               <EventPageRenderer event={sampleData} template={templateDef} />
             </div>
             {/* Click Shield */}
             <div className="absolute inset-0 z-40 bg-transparent" />

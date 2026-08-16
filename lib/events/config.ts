@@ -14,7 +14,36 @@ export interface EventFieldConfig {
   summaryConnector: string;
 }
 
+const DEFAULT_CORPORATE_FIELDS: EventFieldConfig = {
+  step1Label: 'Event',
+  step1Description: 'Title & company',
+  primaryNameLabel: 'Event Title',
+  primaryNamePlaceholder: 'e.g. Annual Tech Summit 2026',
+  secondaryNameLabel: 'Company / Organizer',
+  secondaryNamePlaceholder: 'e.g. Acme Corp',
+  photoLabel: 'Logo / Banner (Optional)',
+  familyDetailsLabel: 'Dress Code / Agenda Note (Optional)',
+  familyDetailsPlaceholder: 'e.g. Business casual · Keynote at 10 AM',
+  dateLabel: 'Event Date',
+  summaryConnector: '·',
+};
+
+const DEFAULT_PERSONAL_FIELDS: EventFieldConfig = {
+  step1Label: 'Host',
+  step1Description: 'Name & details',
+  primaryNameLabel: 'Main Person/Host',
+  primaryNamePlaceholder: 'e.g. Rahul',
+  secondaryNameLabel: 'Tagline',
+  secondaryNamePlaceholder: 'e.g. Join the celebration',
+  photoLabel: 'Photo (Optional)',
+  familyDetailsLabel: 'Family / Extra Details (Optional)',
+  familyDetailsPlaceholder: 'e.g. Hosted with love',
+  dateLabel: 'Event Date',
+  summaryConnector: '·',
+};
+
 export const EVENT_FIELD_CONFIG: Record<EventType, EventFieldConfig> = {
+  // ── Personal ──────────────────────────────────────
   wedding: {
     step1Label: 'Couple',
     step1Description: 'Names & photo',
@@ -93,17 +122,40 @@ export const EVENT_FIELD_CONFIG: Record<EventType, EventFieldConfig> = {
     dateLabel: 'Celebration Date',
     summaryConnector: '&',
   },
-  corporate: {
-    step1Label: 'Event',
-    step1Description: 'Title & company',
-    primaryNameLabel: 'Event Title',
-    primaryNamePlaceholder: 'e.g. Annual Tech Summit 2026',
-    secondaryNameLabel: 'Company / Organizer',
-    secondaryNamePlaceholder: 'e.g. Acme Corp',
-    photoLabel: 'Logo / Banner (Optional)',
-    familyDetailsLabel: 'Dress Code / Agenda Note (Optional)',
-    familyDetailsPlaceholder: 'e.g. Business casual · Keynote at 10 AM',
-    dateLabel: 'Event Date',
-    summaryConnector: '·',
+  farewell: DEFAULT_PERSONAL_FIELDS,
+
+  // ── Professional ──────────────────────────────────
+  conference: DEFAULT_CORPORATE_FIELDS,
+  corporate: DEFAULT_CORPORATE_FIELDS,
+  'product-launch': {
+    ...DEFAULT_CORPORATE_FIELDS,
+    primaryNameLabel: 'Product Name',
+    primaryNamePlaceholder: 'e.g. InviteHub 2.0',
+  },
+  retirement: {
+    ...DEFAULT_CORPORATE_FIELDS,
+    primaryNameLabel: 'Retiree Name',
+    primaryNamePlaceholder: 'e.g. Mr. Sharma',
+  },
+  webinar: {
+    ...DEFAULT_CORPORATE_FIELDS,
+    primaryNameLabel: 'Webinar Topic',
+    primaryNamePlaceholder: 'e.g. Mastering Next.js',
+  },
+  networking: DEFAULT_CORPORATE_FIELDS,
+  townhall: DEFAULT_CORPORATE_FIELDS,
+  workshop: DEFAULT_CORPORATE_FIELDS,
+  school: {
+    ...DEFAULT_CORPORATE_FIELDS,
+    primaryNameLabel: 'Event Name',
+    primaryNamePlaceholder: 'e.g. Annual Day 2026',
+    secondaryNameLabel: 'School Name',
+    secondaryNamePlaceholder: 'e.g. Delhi Public School',
+  },
+  community: {
+    ...DEFAULT_CORPORATE_FIELDS,
+    primaryNameLabel: 'Event Name',
+    primaryNamePlaceholder: 'e.g. Beach Cleanup Drive',
+    secondaryNameLabel: 'Community / Organizer',
   },
 };

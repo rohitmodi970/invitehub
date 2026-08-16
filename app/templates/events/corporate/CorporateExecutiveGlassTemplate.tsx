@@ -1,11 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Inter, Space_Grotesk } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 
-const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
-const space = Space_Grotesk({ subsets: ['latin'], weight: ['500', '700'] });
+const inter = { className: '' };
+const space = { className: '' };
 
 const slideLeft = {
   hidden: { opacity: 0, x: 40 },

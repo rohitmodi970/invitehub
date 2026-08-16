@@ -2,16 +2,15 @@
 
 import { useState, useRef } from 'react';
 import { X, Upload, Loader2, User, CalendarDays, Sparkles, ChevronRight, ChevronLeft, Check } from 'lucide-react';
-import type { InvitationData } from '@/lib/invitations/types';
-import type { EventType } from '@/lib/events/types';
+import type { EventData, EventType } from '@/lib/events/event-data';
 import { EVENT_FIELD_CONFIG } from '@/lib/events/config';
 import { getEventTypeDef } from '@/lib/events/types';
 import { supabase } from '@/lib/supabase/client';
 
 interface EditorFormProps {
-  data: InvitationData;
+  data: Partial<EventData>;
   eventType?: EventType;
-  onDataChange: (data: InvitationData) => void;
+  onDataChange: (data: Partial<EventData>) => void;
   onClose: () => void;
 }
 
@@ -47,9 +46,9 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fields = EVENT_FIELD_CONFIG[eventType];
   const steps = buildSteps(eventType);
-  const eventDef = getEventTypeDef(eventType);
+  const eventDef = getEventTypeDef(eventType) || getEventTypeDef('wedding');
 
-  const handleChange = (field: keyof InvitationData, value: string) => {
+  const handleChange = (field: keyof EventData, value: any) => {
     onDataChange({ ...data, [field]: value });
   };
 
@@ -71,7 +70,7 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
       if (uploadError) throw uploadError;
 
       const { data: publicUrlData } = supabase.storage.from('invitations').getPublicUrl(filePath);
-      handleChange('couplePhotoUrl', publicUrlData.publicUrl);
+      handleChange('coverImageUrl', publicUrlData.publicUrl);
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'Upload failed';
       alert(msg || 'Error uploading image. Please check your Supabase configuration.');
@@ -91,7 +90,7 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
       <div className="shrink-0 px-5 pt-5 pb-4 border-b border-gray-100">
         <div className="flex items-start justify-between mb-4">
           <div>
-            <h2 className="text-lg font-bold text-gray-900">Customize Invitation</h2>
+            <h2 className="text-lg font-bold text-gray-900">Customize Event</h2>
             <p className="text-xs text-gray-400 mt-0.5">{eventDef.emoji} {eventDef.label} · Live preview updates as you type</p>
           </div>
           <button
@@ -144,31 +143,38 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
       {/* ── Form Content ── */}
       <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4">
 
-        {/* Step 1: Couple Names & Photo */}
+        {/* Step 1: Core Names & Photo */}
         {step === 1 && (
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <Input
                 label={fields.primaryNameLabel}
-                value={data.brideName || ''}
-                onChange={(val) => handleChange('brideName', val)}
+                value={data.primaryName || ''}
+                onChange={(val) => handleChange('primaryName', val)}
                 placeholder={fields.primaryNamePlaceholder}
               />
               <Input
-                label={fields.secondaryNameLabel}
-                value={data.groomName || ''}
-                onChange={(val) => handleChange('groomName', val)}
-                placeholder={fields.secondaryNamePlaceholder}
+                label={fields.secondaryNameLabel || 'Secondary Name'}
+                value={data.secondaryName || ''}
+                onChange={(val) => handleChange('secondaryName', val)}
+                placeholder={fields.secondaryNamePlaceholder || 'Optional'}
               />
             </div>
+            
+            <Input
+              label="Event Title"
+              value={data.title || ''}
+              onChange={(val) => handleChange('title', val)}
+              placeholder="e.g. Rohit's Birthday Bash"
+            />
 
             {/* Photo Upload */}
             <div className="flex flex-col gap-2">
-              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{fields.photoLabel}</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{fields.photoLabel || 'Cover Image'}</label>
               <div
                 onClick={() => fileInputRef.current?.click()}
                 className={`relative cursor-pointer rounded-xl border-2 border-dashed transition-all duration-200 ${
-                  data.couplePhotoUrl
+                  data.coverImageUrl
                     ? 'border-green-300 bg-green-50'
                     : 'border-gray-200 bg-gray-50 hover:border-rose-300 hover:bg-rose-50'
                 }`}
@@ -181,11 +187,11 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
                   onChange={handleImageUpload}
                 />
                 <div className="flex items-center gap-4 p-4">
-                  {data.couplePhotoUrl ? (
+                  {data.coverImageUrl ? (
                     <>
                       <img
-                        src={data.couplePhotoUrl}
-                        alt="Couple"
+                        src={data.coverImageUrl}
+                        alt="Cover"
                         className="w-14 h-14 rounded-full object-cover border-2 border-green-400 shrink-0"
                       />
                       <div>
@@ -214,10 +220,10 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
             </div>
 
             <Input
-              label={fields.familyDetailsLabel}
+              label={fields.familyDetailsLabel || 'Host Details'}
               value={data.familyDetails || ''}
               onChange={(val) => handleChange('familyDetails', val)}
-              placeholder={fields.familyDetailsPlaceholder}
+              placeholder={fields.familyDetailsPlaceholder || 'Hosted by...'}
             />
           </div>
         )}
@@ -227,66 +233,136 @@ export function EditorForm({ data, eventType = 'wedding', onDataChange, onClose 
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="grid grid-cols-2 gap-3">
               <Input
-                label={fields.dateLabel}
-                value={data.weddingDate || ''}
-                onChange={(val) => handleChange('weddingDate', val)}
-                placeholder="e.g. 24th Nov 2026"
+                label={fields.dateLabel || 'Date'}
+                value={data.eventDate || ''}
+                onChange={(val) => handleChange('eventDate', val)}
+                type="date"
               />
               <Input
                 label="Time"
-                value={data.weddingTime || ''}
-                onChange={(val) => handleChange('weddingTime', val)}
-                placeholder="e.g. 7:00 PM"
+                value={data.eventTime || ''}
+                onChange={(val) => handleChange('eventTime', val)}
+                type="time"
               />
             </div>
-            <Input
-              label="Venue Name"
-              value={data.venueName || ''}
-              onChange={(val) => handleChange('venueName', val)}
-              placeholder="e.g. The Grand Taj Palace"
-            />
-            <Input
-              label="Full Address"
-              value={data.venueAddress || ''}
-              onChange={(val) => handleChange('venueAddress', val)}
-              placeholder="e.g. Diplomatic Enclave, New Delhi"
-            />
-            <Input
-              label="Contact Number"
-              value={data.contactNumber || ''}
-              onChange={(val) => handleChange('contactNumber', val)}
-              placeholder="e.g. +91 98765 43210"
-            />
+            
+            <div className="flex items-center gap-2 mb-2">
+              <input
+                type="checkbox"
+                id="isVirtual"
+                checked={data.isVirtual || false}
+                onChange={(e) => handleChange('isVirtual', e.target.checked)}
+                className="w-4 h-4 text-rose-500 rounded border-gray-300"
+              />
+              <label htmlFor="isVirtual" className="text-sm text-gray-700">This is a virtual event</label>
+            </div>
+
+            {data.isVirtual ? (
+              <Input
+                label="Virtual Meeting Link"
+                value={data.virtualLink || ''}
+                onChange={(val) => handleChange('virtualLink', val)}
+                placeholder="e.g. Zoom or Google Meet URL"
+              />
+            ) : (
+              <>
+                <Input
+                  label="Venue Name"
+                  value={data.venueName || ''}
+                  onChange={(val) => handleChange('venueName', val)}
+                  placeholder="e.g. The Grand Taj Palace"
+                />
+                <Input
+                  label="Full Address"
+                  value={data.venueAddress || ''}
+                  onChange={(val) => handleChange('venueAddress', val)}
+                  placeholder="e.g. Diplomatic Enclave, New Delhi"
+                />
+              </>
+            )}
+
+            <div className="grid grid-cols-2 gap-3">
+              <Input
+                label="Contact Number"
+                value={data.contactPhone || ''}
+                onChange={(val) => handleChange('contactPhone', val)}
+                placeholder="e.g. +91 98765 43210"
+              />
+              <Input
+                label="Contact Email"
+                value={data.contactEmail || ''}
+                onChange={(val) => handleChange('contactEmail', val)}
+                placeholder="e.g. hello@example.com"
+              />
+            </div>
           </div>
         )}
 
         {/* Step 3: Extras */}
         {step === 3 && (
           <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-300">
+            <Input
+              label="Tagline"
+              value={data.tagline || ''}
+              onChange={(val) => handleChange('tagline', val)}
+              placeholder="e.g. Join us for an evening of joy"
+            />
+            
             <div className="flex flex-col gap-1.5">
-              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Additional Message</label>
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Additional Message / Story</label>
               <textarea
-                value={data.additionalMessage || ''}
-                onChange={(e) => handleChange('additionalMessage', e.target.value)}
-                placeholder="e.g. Join us to celebrate our new beginning."
+                value={data.message || ''}
+                onChange={(e) => handleChange('message', e.target.value)}
+                placeholder="Tell your story or provide more details..."
                 rows={3}
                 className="px-4 py-3 rounded-xl border border-gray-200 focus:border-rose-400 focus:ring-2 focus:ring-rose-100 outline-none transition-all text-gray-900 bg-white placeholder:text-gray-300 text-sm resize-none"
               />
             </div>
+
             <Input
-              label="RSVP Details"
-              value={data.rsvpDetails || ''}
-              onChange={(val) => handleChange('rsvpDetails', val)}
-              placeholder="e.g. RSVP by 10th November"
+              label="Dress Code / Agenda"
+              value={data.dressCode || data.agenda || ''}
+              onChange={(val) => handleChange(eventType === 'wedding' ? 'dressCode' : 'agenda', val)}
+              placeholder="e.g. Formal Attire"
             />
 
+            <div className="space-y-2 mt-4 pt-4 border-t border-gray-100">
+              <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Event Features</label>
+              
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <div>
+                  <p className="text-sm font-medium text-gray-800">Collect RSVPs</p>
+                  <p className="text-xs text-gray-500">Allow guests to confirm attendance</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={data.rsvpEnabled !== false}
+                  onChange={(e) => handleChange('rsvpEnabled', e.target.checked)}
+                  className="w-5 h-5 text-rose-500 rounded border-gray-300"
+                />
+              </div>
+
+              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-xl">
+                <div>
+                  <p className="text-sm font-medium text-gray-800">Add to Calendar</p>
+                  <p className="text-xs text-gray-500">Show Google/Outlook calendar buttons</p>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={data.calendarEnabled !== false}
+                  onChange={(e) => handleChange('calendarEnabled', e.target.checked)}
+                  className="w-5 h-5 text-rose-500 rounded border-gray-300"
+                />
+              </div>
+            </div>
+
             {/* Summary Card */}
-            <div className="bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl p-4 border border-rose-100">
+            <div className="bg-gradient-to-br from-rose-50 to-orange-50 rounded-2xl p-4 border border-rose-100 mt-4">
               <p className="text-xs font-semibold text-rose-700 uppercase tracking-wider mb-3">Preview Summary</p>
               <div className="space-y-1.5 text-sm text-gray-700">
-                <p>{eventDef.emoji} <span className="font-medium">{data.brideName || '—'}</span> {fields.summaryConnector} <span className="font-medium">{data.groomName || '—'}</span></p>
-                <p>📅 {data.weddingDate || '—'} at {data.weddingTime || '—'}</p>
-                <p>📍 {data.venueName || '—'}</p>
+                <p>{eventDef.emoji} <span className="font-medium">{data.primaryName || '—'}</span> {fields.summaryConnector} <span className="font-medium">{data.secondaryName || ''}</span></p>
+                <p>📅 {data.eventDate || '—'} at {data.eventTime || '—'}</p>
+                <p>📍 {data.isVirtual ? 'Virtual' : (data.venueName || '—')}</p>
               </div>
             </div>
           </div>

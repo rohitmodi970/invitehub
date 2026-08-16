@@ -5,8 +5,8 @@ import { Cormorant_Infant, Raleway } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const cormorant = Cormorant_Infant({ subsets: ['latin'], weight: ['400', '600', '700'] });
-const raleway = Raleway({ subsets: ['latin'], weight: ['300', '400', '500'] });
+const cormorant = { className: '' };
+const raleway = { className: '' };
 
 const Star = ({ x, y, size, delay }: { x: number; y: number; size: number; delay: number }) => (
   <motion.div

@@ -4,21 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Playfair_Display, Cormorant_Garamond, Great_Vibes } from 'next/font/google';
 
-const playfair = Playfair_Display({ 
-  subsets: ['latin'], 
-  weight: ['400', '600', '700'] 
-});
+const playfair = { className: '' };
 
-const cormorant = Cormorant_Garamond({ 
-  subsets: ['latin'], 
-  weight: ['400', '500', '600', '700'],
-  style: ['normal', 'italic'] 
-});
+const cormorant = { className: '' };
 
-const greatVibes = Great_Vibes({ 
-  subsets: ['latin'], 
-  weight: '400' 
-});
+const greatVibes = { className: '' };
 
 export interface InvitationData {
   brideName: string;

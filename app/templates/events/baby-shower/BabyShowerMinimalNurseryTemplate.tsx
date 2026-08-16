@@ -5,8 +5,8 @@ import { Outfit, DM_Sans } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600'] });
-const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '500'] });
+const outfit = { className: '' };
+const dmSans = { className: '' };
 
 export function BabyShowerMinimalNurseryTemplate({ data, isPremium = false }: TemplateProps) {
   return (

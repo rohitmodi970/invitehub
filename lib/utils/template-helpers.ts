@@ -1,8 +1,8 @@
 import { TEMPLATES } from '@/lib/templates/data';
 import type { EventType } from '@/lib/events/types';
-import { getDefaultInvitationData } from '@/lib/events/defaults';
+import { getDefaultEventData } from '@/lib/events/defaults';
 import type { Template, TemplateCategory } from '@/lib/templates/types';
-import type { InvitationData } from '@/lib/invitations/types';
+import type { EventData } from '@/lib/events/event-data';
 
 export function getTemplateEventType(template: Template): EventType {
   return template.eventType ?? 'wedding';
@@ -12,8 +12,8 @@ export function getTemplatesByEventType(eventType: EventType): Template[] {
   return TEMPLATES.filter((t) => getTemplateEventType(t) === eventType);
 }
 
-export function getSampleDataForTemplate(template: Template): InvitationData {
-  return getDefaultInvitationData(getTemplateEventType(template));
+export function getSampleDataForTemplate(template: Template): Partial<EventData> {
+  return getDefaultEventData(getTemplateEventType(template));
 }
 
 export function getTemplatesByCategory(category: TemplateCategory): Template[] {

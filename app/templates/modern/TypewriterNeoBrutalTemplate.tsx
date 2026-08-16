@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Syne, Instrument_Serif } from 'next/font/google';
 
-const syne = Syne({ subsets: ['latin'], weight: ['400', '700', '800'] });
-const instrumentSerif = Instrument_Serif({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'] });
+const syne = { className: '' };
+const instrumentSerif = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import crypto from 'crypto';
-import { sendOtpEmail } from '@/lib/email';
+import { sendOtpEmail } from '@/lib/email/resend';
 
 const OTP_SECRET = process.env.OTP_SECRET || 'invitehub-secret-key-123';
 

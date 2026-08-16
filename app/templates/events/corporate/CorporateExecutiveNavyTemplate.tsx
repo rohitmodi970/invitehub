@@ -5,8 +5,8 @@ import { Libre_Baskerville, Source_Sans_3 } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const libre = Libre_Baskerville({ subsets: ['latin'], weight: ['400', '700'] });
-const sourceSans = Source_Sans_3({ subsets: ['latin'], weight: ['300', '400', '600'] });
+const libre = { className: '' };
+const sourceSans = { className: '' };
 
 export function CorporateExecutiveNavyTemplate({ data, isPremium = false }: TemplateProps) {
   return (

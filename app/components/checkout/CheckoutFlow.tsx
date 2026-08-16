@@ -4,7 +4,7 @@ import { useState, useCallback, useEffect } from 'react';
 import { PricingModal } from './PricingModal';
 import { AuthModal } from './AuthModal';
 import { PaymentModal } from './PaymentModal';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import type { EventData } from '@/lib/events/event-data';
 
 export type PlanType = 'basic' | 'print-ready' | 'digital-suite';
 
@@ -49,7 +49,7 @@ type Stage = 'pricing' | 'auth' | 'payment' | 'success';
 
 interface CheckoutFlowProps {
   templateId: string;
-  invitationData: InvitationData;
+  invitationData: Partial<EventData>;
   onClose: () => void;
   /** Called after successful payment with slug (for digital-suite redirect) */
   onSuccess: (plan: PlanType, slug?: string) => void;

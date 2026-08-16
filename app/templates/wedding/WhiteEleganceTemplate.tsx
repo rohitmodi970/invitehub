@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 import { Great_Vibes, Playfair_Display, Lato } from 'next/font/google';
 
-const greatVibes = Great_Vibes({ subsets: ['latin'], weight: '400' });
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], style: ['italic', 'normal'] });
-const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700'] });
+const greatVibes = { className: '' };
+const playfair = { className: '' };
+const lato = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

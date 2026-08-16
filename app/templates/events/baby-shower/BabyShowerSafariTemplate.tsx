@@ -5,8 +5,8 @@ import { Quicksand, Baloo_2 } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const quicksand = Quicksand({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
-const baloo = Baloo_2({ subsets: ['latin'], weight: ['600', '700'] });
+const quicksand = { className: '' };
+const baloo = { className: '' };
 
 const SafariAnimal = ({ type, x, y }: { type: 'giraffe' | 'elephant'; x: number; y: number }) => (
   <div className="absolute opacity-20 pointer-events-none" style={{ left: `${x}%`, top: `${y}%` }}>

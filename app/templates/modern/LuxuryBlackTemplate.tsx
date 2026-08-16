@@ -1,10 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cinzel, Raleway } from 'next/font/google';
 
-const cinzel = Cinzel({ subsets: ['latin'], weight: ['400', '600', '700', '900'] });
-const raleway = Raleway({ subsets: ['latin'], weight: ['200', '300', '400', '500', '600'] });
+const cinzel = { className: '' };
+const raleway = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

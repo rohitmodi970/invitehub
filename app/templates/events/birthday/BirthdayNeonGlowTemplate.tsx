@@ -5,8 +5,8 @@ import { Syne, DM_Sans } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const syne = Syne({ subsets: ['latin'], weight: ['700', '800'] });
-const dmSans = DM_Sans({ subsets: ['latin'], weight: ['400', '500'] });
+const syne = { className: '' };
+const dmSans = { className: '' };
 
 const ConfettiDot = ({ x, y, color, delay }: { x: number; y: number; color: string; delay: number }) => (
   <motion.div

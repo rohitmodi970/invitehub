@@ -5,8 +5,8 @@ import { Great_Vibes, Lato } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const greatVibes = Great_Vibes({ subsets: ['latin'], weight: ['400'] });
-const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700'] });
+const greatVibes = { className: '' };
+const lato = { className: '' };
 
 const FloralCorner = ({ flip }: { flip?: boolean }) => (
   <svg className={`absolute ${flip ? 'bottom-0 right-0 rotate-180' : 'top-0 left-0'} w-32 h-32 opacity-40 pointer-events-none`}

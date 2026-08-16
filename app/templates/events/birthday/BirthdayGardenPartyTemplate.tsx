@@ -5,8 +5,8 @@ import { Lora, Jost } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const lora = Lora({ subsets: ['latin'], weight: ['400', '600', '700'] });
-const jost = Jost({ subsets: ['latin'], weight: ['300', '400', '500'] });
+const lora = { className: '' };
+const jost = { className: '' };
 
 const LeafSprig = ({ className }: { className?: string }) => (
   <svg className={className} width="48" height="48" viewBox="0 0 48 48" fill="none">

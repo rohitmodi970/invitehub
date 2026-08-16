@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation';
-import { getTemplateById } from '@/lib/utils/template-helpers';
+import { getTemplateDefinition } from '@/lib/templates/engine/definitions';
 import { EditorWorkspace } from '@/app/editor/[templateId]/EditorWorkspace';
 
 interface EditorPageProps {
@@ -8,7 +8,7 @@ interface EditorPageProps {
 
 export default async function EditorPage({ params }: EditorPageProps) {
   const { templateId } = await params;
-  const initialTemplate = getTemplateById(templateId);
+  const initialTemplate = getTemplateDefinition(templateId);
 
   if (!initialTemplate) {
     notFound();

@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight, Download, Share2 } from 'lucide-react';
 import { getTemplateById, getRelatedTemplates, getSampleDataForTemplate, getTemplateEventType } from '@/lib/utils/template-helpers';
-import { getTemplateComponent } from '@/lib/templates/registry';
+import EventPageRenderer from '@/app/components/event-page/EventPageRenderer';
+import { getTemplateDefinition } from '@/lib/templates/engine/definitions';
+import type { EventData } from '@/lib/events/event-data';
 import { TemplateCard } from '@/app/components/TemplateCard';
 import { TEMPLATE_TIERS } from '@/lib/templates/data';
 import { getEventTypeDef } from '@/lib/events/types';
@@ -25,8 +27,8 @@ export function TemplateDetailClient({ params }: TemplateDetailClientProps) {
 
   const relatedTemplates = getRelatedTemplates(templateId);
   const tier = TEMPLATE_TIERS[template.tier];
-  const TemplateComponent = getTemplateComponent(template.id);
-  const sampleData = getSampleDataForTemplate(template);
+  const templateDef = getTemplateDefinition(template.id);
+  const sampleData = getSampleDataForTemplate(template) as EventData;
   const eventDef = getEventTypeDef(getTemplateEventType(template));
 
   return (
@@ -51,7 +53,7 @@ export function TemplateDetailClient({ params }: TemplateDetailClientProps) {
           <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }}>
             <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden bg-[#f8f9fa] shadow-2xl flex items-center justify-center">
               <div className="origin-top scale-[0.6] sm:scale-[0.8] w-full h-full absolute inset-0 flex items-center justify-center">
-                <TemplateComponent data={sampleData} isPremium={false} />
+                <EventPageRenderer event={sampleData} template={templateDef} />
               </div>
               {/* Click Shield to prevent interactions */}
               <div className="absolute inset-0 z-50 cursor-pointer" />

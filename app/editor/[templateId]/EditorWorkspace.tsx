@@ -2,28 +2,25 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { Pencil, Download, Check, ChevronLeft, ChevronRight, ImageDown } from 'lucide-react';
-import { TEMPLATES } from '@/lib/templates/data';
-import { getTemplateComponent } from '@/lib/templates/registry';
-import type { InvitationData } from '@/lib/invitations/types';
-import { getDefaultInvitationData } from '@/lib/events/defaults';
-import { getTemplateById, getTemplateEventType } from '@/lib/utils/template-helpers';
+import { Pencil, Download, Check, ChevronLeft, ChevronRight } from 'lucide-react';
+import { templateRegistry, getTemplateDefinition } from '@/lib/templates/engine/definitions';
+import type { EventData, EventType } from '@/lib/events/event-data';
+import { getDefaultEventData } from '@/lib/events/defaults';
 import { EditorForm } from '@/app/editor/[templateId]/EditorForm';
 import { CheckoutFlow, PlanType } from '@/app/components/checkout/CheckoutFlow';
-import { getEnvelopeComponent } from '@/lib/templates/envelopes';
-import { downloadInvitation } from '@/lib/download';
+import EventPageRenderer from '@/app/components/event-page/EventPageRenderer';
 import { LOGO_IMAGE } from '@/lib/images/paths';
 import Image from 'next/image';
 
 export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: string }) {
-  const initialTemplate = getTemplateById(initialTemplateId);
-  const initialEventType = initialTemplate ? getTemplateEventType(initialTemplate) : 'wedding';
+  const initialTemplate = getTemplateDefinition(initialTemplateId);
+  const initialEventType = (initialTemplate.tags?.[0] as EventType) || 'wedding';
 
   const router = useRouter();
   const carouselRef = useRef<HTMLDivElement>(null);
   const [activeTemplateId, setActiveTemplateId] = useState(initialTemplateId);
-  const [eventType, setEventType] = useState(initialEventType);
-  const [data, setData] = useState<InvitationData>(() => getDefaultInvitationData(initialEventType));
+  const [eventType, setEventType] = useState<EventType>(initialEventType);
+  const [data, setData] = useState<Partial<EventData>>(() => getDefaultEventData(initialEventType));
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
@@ -31,12 +28,12 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
 
   useEffect(() => {
     setIsMounted(true);
-    const saved = localStorage.getItem('invitehub-draft');
+    const saved = localStorage.getItem('invitehub-draft-2.0');
     if (saved) {
       try {
-        const parsed = JSON.parse(saved) as InvitationData;
+        const parsed = JSON.parse(saved) as Partial<EventData>;
         setData(parsed);
-        if (parsed.eventType) setEventType(parsed.eventType);
+        if (parsed.eventType) setEventType(parsed.eventType as EventType);
       } catch { /* ignore */ }
     }
   }, []);
@@ -47,47 +44,36 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
     }
   }, [activeTemplateId, isMounted]);
 
-  const handleDataChange = (newData: InvitationData) => {
+  const handleDataChange = (newData: Partial<EventData>) => {
     const withEvent = { ...newData, eventType };
     setData(withEvent);
-    localStorage.setItem('invitehub-draft', JSON.stringify(withEvent));
+    localStorage.setItem('invitehub-draft-2.0', JSON.stringify(withEvent));
   };
 
   const handleTemplateSwitch = (templateId: string) => {
-    const template = getTemplateById(templateId);
+    const template = getTemplateDefinition(templateId);
     if (!template) return;
-    const newEventType = getTemplateEventType(template);
+    const newEventType = (template.tags?.[0] as EventType) || 'wedding';
     setActiveTemplateId(templateId);
+    
     if (newEventType !== eventType) {
       setEventType(newEventType);
-      const defaults = getDefaultInvitationData(newEventType);
+      const defaults = getDefaultEventData(newEventType);
       setData(defaults);
-      localStorage.setItem('invitehub-draft', JSON.stringify(defaults));
+      localStorage.setItem('invitehub-draft-2.0', JSON.stringify(defaults));
     }
   };
 
-  const carouselTemplates = TEMPLATES.filter((t) => getTemplateEventType(t) === eventType);
+  const carouselTemplates = Object.values(templateRegistry)
+    .filter((t) => t.tags?.includes(eventType));
 
   const handleCheckoutSuccess = useCallback((plan: PlanType, slug?: string) => {
     setIsCheckoutOpen(false);
     if (plan === 'digital-suite' && slug) {
-      localStorage.removeItem('invitehub-draft');
-      router.push(`/i/${slug}`);
+      localStorage.removeItem('invitehub-draft-2.0');
+      router.push(`/e/${slug}`);
     }
-    // Downloads are now handled inside PaymentModal success screen
   }, [router]);
-
-  const handleFreeDownload = useCallback(async () => {
-    setIsDownloading(true);
-    try {
-      const filename = `invitehub-preview-${data.brideName}-${data.groomName}`.toLowerCase().replace(/\s+/g, '-');
-      await downloadInvitation('free-download-container', filename, 'png');
-    } catch {
-      alert('Download failed. Please try again.');
-    } finally {
-      setIsDownloading(false);
-    }
-  }, [data]);
 
   const scrollCarousel = (dir: 'left' | 'right') => {
     if (carouselRef.current) {
@@ -97,8 +83,8 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
 
   if (!isMounted) return null;
 
-  const ActiveComponent = getTemplateComponent(activeTemplateId);
-  const EnvelopeComponent = getEnvelopeComponent(activeTemplateId);
+  const activeTemplateDef = getTemplateDefinition(activeTemplateId);
+  const safeData = data as EventData; // Cast for renderer props
 
   return (
     <div className="flex flex-col h-screen overflow-hidden bg-[#f0f2f5]">
@@ -106,7 +92,7 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
       {/* ── Top Bar ── */}
       <div className="shrink-0 bg-white border-b border-gray-200 px-4 py-3 flex items-center justify-between z-10 shadow-sm">
         <div className="flex items-center gap-2">
-          <Image src={LOGO_IMAGE} alt="InviteHub.in" width={160} height={40} className="h-8 w-auto object-contain" />
+          <Image src={LOGO_IMAGE} alt="InviteHub" width={160} height={40} className="h-8 w-auto object-contain" />
           <span className="hidden sm:inline text-gray-400 text-sm ml-2">/ Editor</span>
         </div>
         <div className="flex items-center gap-2">
@@ -117,25 +103,18 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
       </div>
 
       {/* ── Preview Area ── */}
-      <div className="flex-1 overflow-hidden flex items-center justify-center p-4 sm:p-6 min-h-0">
+      <div className="flex-1 overflow-hidden flex items-center justify-center p-4 sm:p-6 min-h-0 bg-[#e5e7eb]">
         <div
-          className="relative shadow-2xl rounded-xl overflow-hidden"
-          style={{ maxHeight: '100%', maxWidth: '100%' }}
+          className="relative shadow-2xl rounded-xl overflow-hidden bg-white w-full max-w-[400px] h-full max-h-[850px]"
         >
-          <div
-            style={{
-              transform: 'scale(var(--preview-scale, 0.72))',
-              transformOrigin: 'top center',
-              display: 'inline-block',
-            }}
-          >
-            <ActiveComponent data={data} isPremium={false} />
+          <div className="w-full h-full overflow-y-auto no-scrollbar relative">
+            <EventPageRenderer event={safeData} template={activeTemplateDef} />
           </div>
 
           {/* Watermark overlay */}
-          <div className="absolute inset-x-0 bottom-0 py-2.5 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-3 z-50">
+          <div className="absolute inset-x-0 bottom-0 py-2.5 bg-gradient-to-t from-black/80 to-transparent flex items-end justify-center pb-3 z-50 pointer-events-none">
             <span className="text-white/90 text-xs font-semibold tracking-wide flex items-center gap-1.5 bg-black/40 px-3 py-1.5 rounded-full backdrop-blur-sm">
-              <span className="text-amber-400">✨</span> Watermark removed on download
+              <span className="text-amber-400">✨</span> Publish to share link
             </span>
           </div>
         </div>
@@ -159,28 +138,30 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             style={{ scrollbarWidth: 'none' }}
           >
             {carouselTemplates.map((t) => {
-              const TplComponent = getTemplateComponent(t.id);
-              const previewData = getDefaultInvitationData(eventType);
+              const isSelected = activeTemplateId === t.id;
+              // Very mini preview via zooming out the renderer 
+              const previewData = getDefaultEventData(eventType) as EventData;
+              
               return (
                 <button
                   key={t.id}
                   onClick={() => handleTemplateSwitch(t.id)}
                   className={`group relative flex flex-col items-center gap-1.5 shrink-0 transition-all duration-200 ${
-                    activeTemplateId === t.id ? 'opacity-100' : 'opacity-50 hover:opacity-80'
+                    isSelected ? 'opacity-100' : 'opacity-50 hover:opacity-80'
                   }`}
                 >
-                  <div className={`relative w-16 h-24 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                    activeTemplateId === t.id
+                  <div className={`relative w-16 h-24 rounded-lg overflow-hidden border-2 transition-all duration-200 bg-white ${
+                    isSelected
                       ? 'border-blue-600 shadow-lg shadow-blue-500/20 scale-105'
                       : 'border-transparent hover:border-gray-300'
                   }`}>
                     <div
                       className="absolute inset-0 pointer-events-none"
-                      style={{ transform: 'scale(0.13)', transformOrigin: 'top left', width: '770%', height: '770%' }}
+                      style={{ transform: 'scale(0.12)', transformOrigin: 'top left', width: '830%', height: '830%' }}
                     >
-                      <TplComponent data={previewData} isPremium={false} />
+                       <EventPageRenderer event={previewData} template={t} />
                     </div>
-                    {activeTemplateId === t.id && (
+                    {isSelected && (
                       <div className="absolute inset-0 bg-blue-600/15 flex items-center justify-center">
                         <div className="bg-blue-600 text-white rounded-full p-0.5 shadow-md">
                           <Check size={12} />
@@ -214,15 +195,12 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
             Edit
           </button>
 
-
-
-          {/* Premium download */}
           <button
             onClick={() => setIsCheckoutOpen(true)}
             className="flex-[2] flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-sm transition-all shadow-md shadow-orange-400/30 hover:shadow-lg active:scale-95"
           >
             <Download size={16} />
-            Download / Share
+            Publish / Share
           </button>
         </div>
       </div>
@@ -254,24 +232,12 @@ export function EditorWorkspace({ initialTemplateId }: { initialTemplateId: stri
         />
       )}
 
-      {/* ── Hidden renders for download ── */}
+      {/* ── Hidden render for download (used by html-to-image) ── */}
       <div style={{ position: 'absolute', left: '-9999px', top: '-9999px', pointerEvents: 'none', zIndex: -1 }}>
-        {/* Premium (no watermark) for paid downloads */}
-        <div id="download-container">
-          <ActiveComponent data={data} isPremium={true} />
+        <div id="download-container" className="w-[400px] h-[850px] bg-white">
+          <EventPageRenderer event={safeData} template={activeTemplateDef} />
         </div>
-        {/* Free (with watermark) */}
-        <div id="free-download-container">
-          <ActiveComponent data={data} isPremium={false} />
-        </div>
-        {/* Envelope design */}
-        {EnvelopeComponent && (
-          <div id="envelope-container">
-            <EnvelopeComponent data={data} />
-          </div>
-        )}
       </div>
-
     </div>
   );
 }

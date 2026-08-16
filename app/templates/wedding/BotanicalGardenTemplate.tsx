@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Cormorant_Garamond, EB_Garamond } from 'next/font/google';
 
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '600'], style: ['normal', 'italic'] });
-const ebGaramond = EB_Garamond({ subsets: ['latin'], weight: ['400', '700'], style: ['italic', 'normal'] });
+const cormorant = { className: '' };
+const ebGaramond = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

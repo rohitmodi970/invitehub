@@ -20,11 +20,23 @@ export const TWITTER_IMAGE = templateImage('twitter-image.png');
 
 /** Hero images for event-category SEO pages (must exist under public/images/templates/) */
 export const EVENT_HERO_IMAGES: Record<EventType, string> = {
+  // Personal
   wedding: templateImage('Elegant gold wedding invitation design.png'),
   birthday: templateImage('birthday-confetti.png'),
   engagement: templateImage('engagement-rings.png'),
   'baby-shower': templateImage('baby-shower-cloud.png'),
   housewarming: templateImage('housewarming-home.png'),
   anniversary: templateImage('anniversary-hearts.png'),
+  farewell: templateImage('farewell-wave.png'),
+  // Professional
   corporate: templateImage('corporate-minimal.png'),
+  conference: templateImage('corporate-minimal.png'),
+  'product-launch': templateImage('corporate-minimal.png'),
+  retirement: templateImage('corporate-minimal.png'),
+  webinar: templateImage('corporate-minimal.png'),
+  networking: templateImage('corporate-minimal.png'),
+  townhall: templateImage('corporate-minimal.png'),
+  workshop: templateImage('corporate-minimal.png'),
+  school: templateImage('corporate-minimal.png'),
+  community: templateImage('corporate-minimal.png'),
 };

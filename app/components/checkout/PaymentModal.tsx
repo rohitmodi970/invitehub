@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ShieldCheck, Loader2, CheckCircle2, Download, Share2, FileText } from 'lucide-react';
 import { Plan, PlanType } from './CheckoutFlow';
 import { ExitIntentModal } from './ExitIntentModal';
-import { InvitationData } from '@/app/templates/traditional-indian-004/components/TraditionalIndianTemplate';
+import type { EventData } from '@/lib/events/event-data';
 import { downloadInvitation } from '@/lib/download';
 
 // Extend Window to include Razorpay
@@ -39,7 +39,7 @@ interface PaymentModalProps {
   effectivePrice: number;
   discountApplied: boolean;
   templateId: string;
-  invitationData: InvitationData;
+  invitationData: Partial<EventData>;
   userEmail: string;
   userName: string;
   onSuccess: (slug?: string) => void;
@@ -95,12 +95,12 @@ export function PaymentModal({
   }, [exitShown, discountApplied]);
 
   const saveInvitation = async (): Promise<string> => {
-    const res = await fetch('/api/invitations', {
+    const res = await fetch('/api/events', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ templateId, data: invitationData }),
+      body: JSON.stringify({ ...invitationData, templateId }),
     });
-    if (!res.ok) throw new Error('Failed to save invitation');
+    if (!res.ok) throw new Error('Failed to save event');
     const { slug } = await res.json();
     return slug as string;
   };
@@ -188,9 +188,9 @@ export function PaymentModal({
   const triggerDownload = useCallback(async (format: 'png' | 'pdf') => {
     setIsDownloading(true);
     try {
-      const brideName = invitationData.brideName || 'invite';
-      const groomName = invitationData.groomName || 'card';
-      const filename = `invitehub-${brideName}-${groomName}`.toLowerCase().replace(/\s+/g, '-');
+      const primaryName = invitationData.primaryName || 'invite';
+      const secondaryName = invitationData.secondaryName || 'event';
+      const filename = `invitehub-${primaryName}-${secondaryName}`.toLowerCase().replace(/\s+/g, '-');
       await downloadInvitation('download-container', filename, format);
     } catch (err) {
       console.error('Download error:', err);
@@ -261,7 +261,7 @@ export function PaymentModal({
             {hasEnvelope && (
               <motion.button
                 whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}
-                onClick={() => downloadInvitation('envelope-container', `invitehub-envelope-${invitationData.brideName}`, 'png')}
+                onClick={() => downloadInvitation('envelope-container', `invitehub-envelope-${invitationData.primaryName || 'invite'}`, 'png')}
                 disabled={isDownloading}
                 className="w-full py-3.5 rounded-2xl font-bold text-white flex items-center justify-center gap-2 disabled:opacity-60 transition-all"
                 style={{ background: 'rgba(201,168,76,0.15)', border: '1px solid rgba(201,168,76,0.4)' }}

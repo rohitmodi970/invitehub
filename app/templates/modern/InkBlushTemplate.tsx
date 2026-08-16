@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { DM_Sans, DM_Serif_Display } from 'next/font/google';
 
-const dmSans = DM_Sans({ subsets: ['latin'], weight: ['300', '400', '500'] });
-const dmSerif = DM_Serif_Display({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'] });
+const dmSans = { className: '' };
+const dmSerif = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Tiro_Devanagari_Hindi, Poppins } from 'next/font/google';
 
-const tiroHindi = Tiro_Devanagari_Hindi({ subsets: ['devanagari', 'latin'], weight: '400', style: ['normal', 'italic'] });
-const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
+const tiroHindi = { className: '' };
+const poppins = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

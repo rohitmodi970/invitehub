@@ -4,15 +4,9 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Space_Grotesk, DM_Mono } from 'next/font/google';
 
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700'],
-});
+const spaceGrotesk = { className: '' };
 
-const dmMono = DM_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-});
+const dmMono = { className: '' };
 
 export interface InvitationData {
   brideName: string;

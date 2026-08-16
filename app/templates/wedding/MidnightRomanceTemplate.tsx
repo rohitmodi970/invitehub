@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Josefin_Sans, Alex_Brush } from 'next/font/google';
 
-const josefin = Josefin_Sans({ subsets: ['latin'], weight: ['100', '300', '400', '600'] });
-const alexBrush = Alex_Brush({ subsets: ['latin'], weight: '400' });
+const josefin = { className: '' };
+const alexBrush = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

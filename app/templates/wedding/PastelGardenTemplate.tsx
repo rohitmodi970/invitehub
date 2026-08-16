@@ -1,11 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Great_Vibes, EB_Garamond, Lato } from 'next/font/google';
 
-const greatVibes = Great_Vibes({ subsets: ['latin'], weight: '400' });
-const garamond = EB_Garamond({ subsets: ['latin'], weight: ['400', '500', '600'], style: ['italic', 'normal'] });
-const lato = Lato({ subsets: ['latin'], weight: ['300', '400', '700'] });
+const greatVibes = { className: '' };
+const garamond = { className: '' };
+const lato = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

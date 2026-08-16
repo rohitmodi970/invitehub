@@ -5,8 +5,8 @@ import { Fredoka, Nunito } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const fredoka = Fredoka({ subsets: ['latin'], weight: ['500', '600', '700'] });
-const nunito = Nunito({ subsets: ['latin'], weight: ['400', '600'] });
+const fredoka = { className: '' };
+const nunito = { className: '' };
 
 const Balloon = ({ color, x, delay }: { color: string; x: number; delay: number }) => (
   <motion.div

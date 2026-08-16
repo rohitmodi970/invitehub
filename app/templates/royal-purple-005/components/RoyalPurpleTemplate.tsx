@@ -4,21 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Cinzel_Decorative, Cormorant_Garamond, Great_Vibes } from 'next/font/google';
 
-const cinzel = Cinzel_Decorative({
-  subsets: ['latin'],
-  weight: ['400', '700'],
-});
+const cinzel = { className: '' };
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '600', '700'],
-  style: ['normal', 'italic'],
-});
+const cormorant = { className: '' };
 
-const greatVibes = Great_Vibes({
-  subsets: ['latin'],
-  weight: '400',
-});
+const greatVibes = { className: '' };
 
 export interface InvitationData {
   brideName: string;

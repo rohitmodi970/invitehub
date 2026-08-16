@@ -2,22 +2,9 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import { Lora, Montserrat, Great_Vibes } from 'next/font/google';
-
-const lora = Lora({ 
-  subsets: ['latin'], 
-  weight: ['400', '500', '600'] 
-});
-
-const montserrat = Montserrat({ 
-  subsets: ['latin'], 
-  weight: ['300', '400', '500', '600'] 
-});
-
-const greatVibes = Great_Vibes({ 
-  subsets: ['latin'], 
-  weight: '400' 
-});
+const lora = { className: '' };
+const montserrat = { className: '' };
+const greatVibes = { className: '' };
 
 export interface InvitationData {
   brideName: string;

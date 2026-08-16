@@ -4,8 +4,8 @@ import { motion } from 'framer-motion';
 import { Inter, Playfair_Display } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 
-const inter = Inter({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'] });
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '600', '700'] });
+const inter = { className: '' };
+const playfair = { className: '' };
 
 export interface EventTemplateTheme {
   headerLabel: string;

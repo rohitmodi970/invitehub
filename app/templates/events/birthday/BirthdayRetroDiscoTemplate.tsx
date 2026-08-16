@@ -5,8 +5,8 @@ import { Righteous, Rubik } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const righteous = Righteous({ subsets: ['latin'], weight: ['400'] });
-const rubik = Rubik({ subsets: ['latin'], weight: ['400', '500', '600'] });
+const righteous = { className: '' };
+const rubik = { className: '' };
 
 export function BirthdayRetroDiscoTemplate({ data, isPremium = false }: TemplateProps) {
   return (

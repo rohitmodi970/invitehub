@@ -1,11 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Rozha_One, Poppins, Great_Vibes } from 'next/font/google';
 
-const rozhaOne = Rozha_One({ subsets: ['latin'], weight: '400' });
-const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
-const greatVibes = Great_Vibes({ subsets: ['latin'], weight: '400' });
+const rozhaOne = { className: '' };
+const poppins = { className: '' };
+const greatVibes = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

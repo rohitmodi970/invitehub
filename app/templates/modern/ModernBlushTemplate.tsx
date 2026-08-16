@@ -1,10 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Cormorant_Garamond, Jost } from 'next/font/google';
 
-const cormorant = Cormorant_Garamond({ subsets: ['latin'], weight: ['300', '400', '600'], style: ['italic', 'normal'] });
-const jost = Jost({ subsets: ['latin'], weight: ['300', '400', '500', '600'] });
+const cormorant = { className: '' };
+const jost = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

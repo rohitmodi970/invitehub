@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Noto_Serif, Noto_Sans } from 'next/font/google';
 
-const notoSerif = Noto_Serif({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'] });
-const notoSans = Noto_Sans({ subsets: ['latin'], weight: ['300', '400', '500'] });
+const notoSerif = { className: '' };
+const notoSans = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

@@ -4,21 +4,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Dancing_Script, Libre_Baskerville, Great_Vibes } from 'next/font/google';
 
-const dancingScript = Dancing_Script({ 
-  subsets: ['latin'], 
-  weight: ['400', '700'] 
-});
+const dancingScript = { className: '' };
 
-const libreBaskerville = Libre_Baskerville({ 
-  subsets: ['latin'], 
-  weight: ['400', '700'],
-  style: ['normal', 'italic'] 
-});
+const libreBaskerville = { className: '' };
 
-const greatVibes = Great_Vibes({ 
-  subsets: ['latin'], 
-  weight: '400' 
-});
+const greatVibes = { className: '' };
 
 export interface InvitationData {
   brideName: string;

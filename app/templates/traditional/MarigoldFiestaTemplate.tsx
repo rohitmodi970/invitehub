@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { Yatra_One, Hind } from 'next/font/google';
 
-const yatraOne = Yatra_One({ subsets: ['latin', 'devanagari'], weight: '400' });
-const hind = Hind({ subsets: ['latin', 'devanagari'], weight: ['300', '400', '500', '600'] });
+const yatraOne = { className: '' };
+const hind = { className: '' };
 
 export interface InvitationData {
   brideName: string; groomName: string; weddingDate: string; weddingTime: string;

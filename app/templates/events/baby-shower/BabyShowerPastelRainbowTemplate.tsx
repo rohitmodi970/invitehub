@@ -5,8 +5,8 @@ import { Comfortaa, Poppins } from 'next/font/google';
 import type { TemplateProps } from '@/lib/invitations/types';
 import { EventDetailsPanel, WatermarkBadge, staggerContainer, fadeUp } from '../shared/EventDetailsPanel';
 
-const comfortaa = Comfortaa({ subsets: ['latin'], weight: ['600', '700'] });
-const poppins = Poppins({ subsets: ['latin'], weight: ['300', '400', '500'] });
+const comfortaa = { className: '' };
+const poppins = { className: '' };
 
 const RAINBOW = ['#ffb3ba', '#ffdfba', '#ffffba', '#baffc9', '#bae1ff', '#e0bbff'];
 
